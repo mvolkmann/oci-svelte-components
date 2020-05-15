@@ -30,8 +30,7 @@
   }
 
   $: classes =
-    (className ? ' ' + className : '') +
-    (value && invalid ? ' invalid' : '');
+    (className ? ' ' + className : '') + (value && invalid ? ' invalid' : '');
 
   const containerClasses = 'container' + (vertical ? ' vertical' : '');
 </script>
@@ -41,12 +40,12 @@
     {#each options as option, index}
       <div class="option">
         <input
-          checked={value === (typeof option === 'string' ? option : option.value)}
+          checked={value === getOptionValue(option)}
           id={name + index}
           {name}
           on:input={handleInput}
           type="radio"
-          value={typeof option === 'string' ? option : option.value} />
+          value={getOptionValue(option)} />
         <label for={name + index}>
           {typeof option === 'string' ? option : option.label}
         </label>

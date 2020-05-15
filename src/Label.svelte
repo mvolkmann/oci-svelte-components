@@ -8,8 +8,7 @@
   export let text;
   export let vertical = false;
 
-  const classes =
-    (className ? className : '') + (vertical ? ' vertical' : '');
+  const classes = (className ? className : '') + (vertical ? ' vertical' : '');
 </script>
 
 <label class={classes} for={id}>

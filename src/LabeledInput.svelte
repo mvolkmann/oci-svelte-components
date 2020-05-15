@@ -26,14 +26,12 @@
 
   $: {
     if (statePath) value = get($globalStore, statePath);
-    console.log('LabeledInput.svelte x: value =', value);
     props = {value};
     if (type !== 'checkbox') {
       if (minLength) props.minLength = minLength;
       if (placeholder) props.placeholder = placeholder;
     }
   }
-  $: console.log('LabeledInput.svelte x: props =', props);
 
   $: if (ref) {
     const invalidElement = ref.querySelector(':invalid');
@@ -42,7 +40,6 @@
 
   function handleInput(event) {
     let {value} = event.target;
-    console.log('LabeledInput.svelte handleInput: value =', value);
     if (type === 'checkbox') value = value === 'on';
     if (statePath) setState(statePath, value);
     dispatch('input', value);
