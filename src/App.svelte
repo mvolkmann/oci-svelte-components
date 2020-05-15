@@ -6,6 +6,7 @@
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledToggle from './LabeledToggle.svelte';
+  import ToggleButtons from './ToggleButtons.svelte';
   import {globalStore, setState} from './stores';
 
   const addressPath = 'user.profile.address';
@@ -55,6 +56,8 @@
     <LabeledInput label="Happy" statePath={happyPath} type="checkbox" />
     <LabeledToggle label="Happy" statePath={happyPath} />
     <LabeledToggle label="Happy" statePath={happyPath} vertical />
+
+    <ToggleButtons options={flavorOptions} statePath={flavorPath} />
 
     <LabeledRadioButtons
       label="Favorite Flavor"

@@ -1,13 +1,12 @@
 <script>
+  import get from 'lodash/get';
   import Labeled from './Labeled.svelte';
+  import {globalStore, setState} from './stores';
 
   export let className = '';
   export let label;
   export let statePath;
   export let vertical = false;
-
-  import get from 'lodash/get';
-  import {globalStore, setState} from './stores';
 
   $: on = get($globalStore, statePath);
 
@@ -17,9 +16,7 @@
     (vertical ? ' vertical' : '');
 
   $: toggleClasses =
-    'toggle' +
-    (on ? ' on' : '') +
-    (vertical ? ' vertical' : '');
+    'toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
 
   const handleClick = () => setState(statePath, !on);
 </script>
