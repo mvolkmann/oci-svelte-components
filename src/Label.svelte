@@ -2,18 +2,17 @@
   import Info from './Info.svelte';
 
   export let className = '';
+  export let id = '';
   export let info = '';
   export let required = false;
   export let text;
   export let vertical = false;
 
-  const cn =
-    'label' +
-    (className ? ' ' + className : '') +
-    (vertical ? ' vertical' : '');
+  const classes =
+    (className ? className : '') + (vertical ? ' vertical' : '');
 </script>
 
-<label class={cn}>
+<label class={classes} for={id}>
   <div>
     {text}
     {#if required}
@@ -27,7 +26,7 @@
 </label>
 
 <style lang="scss">
-  .label {
+  label {
     font-size: var(--label-font-size, 1rem);
     font-weight: var(--label-font-weight, bold);
   }

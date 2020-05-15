@@ -35,7 +35,7 @@
     }
   }
 
-  const cn = 'info' + (className ? ' ' + className : '');
+  const classes = 'info' + (className ? ' ' + className : '');
   const outerStyle = {'--size': CIRCLE_SIZE};
 
   let textStyle = {};
@@ -65,7 +65,7 @@
   const lines = text.split('\n');
 </script>
 
-<div class={cn} style={getStyleString(outerStyle)}>
+<div class={classes} style={getStyleString(outerStyle)}>
   <div class="circle" on:click={toggleTip}>i</div>
   <div
     class="text"

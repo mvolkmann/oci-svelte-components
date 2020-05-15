@@ -3,6 +3,7 @@
   import Label from './Label.svelte';
 
   export let className = '';
+  export let id = '';
   export let info = '';
   export let label;
   export let onLeft = true;
@@ -14,7 +15,7 @@
   let focus = false;
   let ref;
 
-  const cn =
+  $: classes =
     'labeled' +
     (className ? ' ' + className : '') +
     (focus ? ' focus' : '') +
@@ -23,9 +24,9 @@
   if (width) style.width = width;
 </script>
 
-<div bind:this={ref} class={cn}>
+<div bind:this={ref} class={classes}>
   {#if onLeft}
-    <Label {required} text={label}>
+    <Label {id} {required} text={label}>
       {#if info}
         <Info text={info} />
       {/if}
@@ -35,7 +36,7 @@
   <slot />
 
   {#if !onLeft}
-    <Label {required} text={label}>
+    <Label {id} {required} text={label}>
       {#if info}
         <Info text={info} />
       {/if}

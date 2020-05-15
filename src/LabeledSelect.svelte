@@ -18,11 +18,10 @@
 
   const dispatch = createEventDispatcher();
 
-  let focus = false;
   let invalid = false;
   let ref;
 
-  if (statePath) value = get($globalStore, statePath);
+  $: if (statePath) value = get($globalStore, statePath);
 
   $: if (ref) {
     // Adjust the select width to accommodate
@@ -37,9 +36,8 @@
     dispatch('change', value);
   }
 
-  $: cn =
+  $: classes =
     (className ? ' ' + className : '') +
-    (focus ? ' focus' : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');
 
@@ -50,10 +48,8 @@
   <div class="container">
     <select
       bind:this={ref}
-      class={cn}
-      on:blur={() => (focus = false)}
+      class={classes}
       on:change={handleChange}
-      on:focus={() => (focus = true)}
       {required}
       {value}>
       <option value="">{placeholder}</option>
@@ -91,13 +87,14 @@
     border-radius: var(--border-radius, 0);
     font-size: 1rem;
     height: 36px;
+    margin-bottom: 0;
     margin-left: 0.5rem;
     margin-top: 0.2rem;
     position: relative;
     width: fit-content;
 
-    &.focus {
-      outline: solid var(--secondary-color) 2px;
+    &:focus {
+      outline-color: var(--secondary-color);
     }
 
     &:invalid {
@@ -109,7 +106,7 @@
       align-items: flex-start;
 
       margin-left: 0;
-      margin-top: 0.2rem;
+      margin-top: 0.3rem;
     }
   }
 </style>

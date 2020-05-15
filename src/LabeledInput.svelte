@@ -13,17 +13,27 @@
   export let statePath = '';
   export let style = {};
   export let type = 'text';
-  export let value = '';
   export let vertical = false;
   export let width = '';
 
   const dispatch = createEventDispatcher();
 
-  let focus = false;
+  const id = 'labeled-input-' + Date.now();
   let invalid = false;
+  let props;
   let ref;
+  let value;
 
-  if (statePath) value = get($globalStore, statePath);
+  $: {
+    if (statePath) value = get($globalStore, statePath);
+    console.log('LabeledInput.svelte x: value =', value);
+    props = {value};
+    if (type !== 'checkbox') {
+      if (minLength) props.minLength = minLength;
+      if (placeholder) props.placeholder = placeholder;
+    }
+  }
+  $: console.log('LabeledInput.svelte x: props =', props);
 
   $: if (ref) {
     const invalidElement = ref.querySelector(':invalid');
@@ -31,40 +41,35 @@
   }
 
   function handleInput(event) {
-    const {value} = event.target;
+    let {value} = event.target;
+    console.log('LabeledInput.svelte handleInput: value =', value);
+    if (type === 'checkbox') value = value === 'on';
     if (statePath) setState(statePath, value);
     dispatch('input', value);
   }
 
   const onLeft = type !== 'checkbox' && type !== 'radio';
 
-  $: cn =
+  $: classes =
     (className ? ' ' + className : '') +
-    (focus ? ' focus' : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');
 
   if (width) style.width = width;
-
-  const props = {};
-  if (minLength) props.minLength = minLength;
 
   if (type === 'date') {
     style.paddingBottom = style.paddingTop = '5px';
   }
 </script>
 
-<Labeled {info} {label} {onLeft} {required} {vertical}>
+<Labeled {id} {info} {label} {onLeft} {required} {vertical}>
   <input
-    class={cn}
+    class={classes}
+    {id}
     on:input={handleInput}
-    on:blur={() => (focus = false)}
-    on:focus={() => (focus = true)}
-    {placeholder}
     {required}
     {style}
     {type}
-    {value}
     {...props} />
 </Labeled>
 
@@ -77,8 +82,22 @@
     margin-left: 0.5rem;
     padding: 0.5rem;
 
-    &.focus {
-      outline: solid var(--secondary-color) 2px;
+    &[type='checkbox'] {
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+
+      &:checked:after {
+        content: '\2714';
+        position: absolute;
+        left: 1px;
+        bottom: 0;
+      }
+    }
+
+    &:focus {
+      outline-color: var(--secondary-color);
     }
 
     &.invalid {
@@ -94,11 +113,15 @@
     &[type='checkbox'],
     &[type='radio'] {
       margin-left: 0;
+
+      &:focus {
+        outline: solid var(--secondary-color) 2px;
+      }
     }
 
     &.vertical {
       margin-left: 0;
-      margin-top: 0.2rem;
+      margin-top: 0.3rem;
     }
   }
 </style>

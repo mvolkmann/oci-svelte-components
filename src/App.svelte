@@ -2,12 +2,14 @@
   import get from 'lodash/get';
   import Button from './Button.svelte';
   import LabeledInput from './LabeledInput.svelte';
+  import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import {globalStore, setState} from './stores';
 
-  const colorPath = 'user.profile.favoriteColor';
+  const colorPath = 'user.favoriteColor';
   const firstNamePath = 'user.profile.firstName';
-  const happyPath = 'user.profile.happy';
+  const flavorPath = 'user.favoriteFlavor';
+  const happyPath = 'user.happy';
   const lastNamePath = 'user.profile.lastName';
   const middleNamePath = 'user.profile.middleName';
 
@@ -20,6 +22,7 @@
   $: console.log('App.svelte: $globalStore =', $globalStore);
 
   const colorOptions = ['red', 'green', 'blue'];
+  const flavorOptions = ['vanilla', 'strawberry', 'chocolate'];
 
   function handleSubmit() {
     alert('got submit');
@@ -43,9 +46,28 @@
       info={'This is\na **fancy** pants\n tooltip.'}
       label="Last Name"
       placeholder="Last Name"
-      statePath={lastNamePath} />
+      statePath={lastNamePath}
+      vertical />
 
     <LabeledInput label="Happy" statePath={happyPath} type="checkbox" />
+
+    <LabeledRadioButtons
+      label="Favorite Flavor"
+      name="flavor"
+      options={flavorOptions}
+      statePath={flavorPath} />
+
+    <LabeledRadioButtons
+      label="Favorite Flavor"
+      name="flavor2"
+      options={flavorOptions}
+      statePath={flavorPath}
+      vertical />
+
+    <LabeledSelect
+      label="Favorite Color"
+      options={colorOptions}
+      statePath={colorPath} />
 
     <LabeledSelect
       label="Favorite Color"
