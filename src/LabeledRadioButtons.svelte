@@ -78,9 +78,24 @@
   }
 
   input {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    --size: 18px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: calc(var(--size) / 2);
+    border: solid lightgray 1px;
+
     font-size: 1rem;
     margin-bottom: 0;
     margin-left: 0.5rem;
+
+    &:checked {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
 
     &:focus {
       outline: solid var(--secondary-color) 2px;

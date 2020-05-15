@@ -86,6 +86,7 @@
       position: relative;
 
       &:checked:after {
+        color: var(--primary-color);
         content: '\2714';
         position: absolute;
         left: 1px;
