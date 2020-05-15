@@ -12,7 +12,7 @@
   export let text;
 
   export let tipHeight = '0';
-  export let tipWidth = '150px';
+  export let tipWidth = 'max-content';
 
   const DISTANCE = 'calc(var(--size) + 0.5rem)';
   const CIRCLE_SIZE = '20px';

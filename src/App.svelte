@@ -16,13 +16,14 @@
   <h1>Hello {firstName} {lastName}!</h1>
 
   <LabeledInput
-    info={'This is\na **tool** tip.'}
+    info={'basic tooltip'}
     label="First Name"
     placeholder="First Name"
+    required
     statePath={firstNamePath} />
 
   <LabeledInput
-    info={'This is\nanother **tool** tip.'}
+    info={'This is\na **fancy** pants\n tooltip.'}
     label="Last Name"
     placeholder="Last Name"
     statePath={lastNamePath}

@@ -27,7 +27,6 @@
   {#each spans as {bold, text}}
     {#if bold}
       <b>{text}</b>
-      );
     {:else}{text}{/if}
   {/each}
 </div>

@@ -1,7 +1,8 @@
 <script>
-  import Labeled from './Labeled.svelte';
   import get from 'lodash/get';
   import {createEventDispatcher} from 'svelte';
+  import Info from './Info.svelte';
+  import Label from './Label.svelte';
   import {globalStore, setState} from './stores';
 
   export let className = '';
@@ -37,6 +38,7 @@
   }
 
   const cn =
+    'labeled-input' +
     (className ? ' ' + className : '') +
     (focus ? ' focus' : '') +
     (value && invalid ? ' invalid' : '') +
@@ -51,12 +53,19 @@
     style.paddingBottom = style.paddingTop = '5px';
   }
 
-  const onLeft = type !== 'checkbox' && type !== 'radio';
+  const labelOnLeft = type !== 'checkbox' && type !== 'radio';
 </script>
 
-<Labeled {info} {label} {onLeft} {required} {vertical}>
+<div bind:this={ref} class={cn}>
+  {#if labelOnLeft}
+    <Label {required} text={label}>
+      {#if info}
+        <Info text={info} />
+      {/if}
+    </Label>
+  {/if}
+
   <input
-    class={cn}
     on:input={handleInput}
     on:blur={() => (focus = false)}
     on:focus={() => (focus = true)}
@@ -66,33 +75,71 @@
     {type}
     {value}
     {...props} />
-</Labeled>
+
+  {#if !labelOnLeft}
+    <Label {required} text={label}>
+      {#if info}
+        <Info text={info} />
+      {/if}
+    </Label>
+  {/if}
+</div>
 
 <style lang="scss">
-  input {
-    border: solid lightgray 1px;
-    font-size: 1rem;
-    margin-bottom: 0;
-    margin-left: 0.5rem;
-    padding: 0.5rem;
+  .labeled-input {
+    display: flex;
+    align-items: center;
 
-    &.focus {
-      outline: solid var(--secondary-color) 2px;
+    .focus {
+      input {
+        outline: solid var(--secondary-color) 2px;
+      }
+
+      .label {
+        color: var(--secondary-color);
+      }
     }
 
     &.invalid {
-      border: solid var(--error-color, red) 1px;
+      label {
+        color: var(--error-color, red);
+      }
     }
 
-    /* For checkboxes and radio buttons where the label is on the right side,
-       add a bit of space between them. */
-    & + label {
-      margin-left: 0.3rem;
+    input {
+      border: solid lightgray 1px;
+      font-size: 1rem;
+      margin-bottom: 0;
+      margin-left: 0.5rem;
+      padding: 0.5rem;
+
+      &:invalid {
+        border: solid var(--error-color, red) 1px;
+      }
+
+      // For checkboxes and radio buttons where the label is on the right side,
+      // add a bit of space between them.
+      & + label {
+        margin-left: 0.3rem;
+      }
+    }
+
+    .required {
+      font-size: 1.2rem;
+      line-height: 14px;
+      margin-left: 5px;
+      position: relative;
+      top: 5px;
     }
 
     &.vertical {
-      margin-left: 0;
-      margin-top: 0.2rem;
+      flex-direction: column;
+      align-items: flex-start;
+
+      input {
+        margin-left: 0;
+        margin-top: 0.2rem;
+      }
     }
   }
 </style>
