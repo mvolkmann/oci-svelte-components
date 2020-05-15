@@ -1,11 +1,13 @@
 <script>
   import get from 'lodash/get';
+  import Address from './Address.svelte';
   import Button from './Button.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import {globalStore, setState} from './stores';
 
+  const addressPath = 'user.profile.address';
   const colorPath = 'user.favoriteColor';
   const firstNamePath = 'user.profile.firstName';
   const flavorPath = 'user.favoriteFlavor';
@@ -74,6 +76,8 @@
       options={colorOptions}
       statePath={colorPath}
       vertical />
+
+    <Address statePath={addressPath} vertical />
 
     <Button label="Submit" type="submit" />
   </form>

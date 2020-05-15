@@ -27,7 +27,7 @@
     // Adjust the select width to accommodate
     // the downward triangle added in the .scss file.
     const width = getComputedStyle(ref).width;
-    ref.style.width = parseInt(width) + 15 + 'px';
+    ref.style.width = parseInt(width) + 20 + 'px';
   }
 
   function handleChange(event) {
@@ -91,7 +91,8 @@
     margin-left: 0.5rem;
     margin-top: 0.2rem;
     position: relative;
-    width: fit-content;
+    /*width: fit-content;*/
+    width: max-content;
 
     &:focus {
       outline-color: var(--secondary-color);
