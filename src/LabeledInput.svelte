@@ -26,8 +26,10 @@
 
   $: {
     if (statePath) value = get($globalStore, statePath);
-    props = {value};
-    if (type !== 'checkbox') {
+    if (type === 'checkbox') {
+      props = {checked: typeof value === 'boolean' ? value : value === 'on'};
+    } else {
+      props = {value};
       if (minLength) props.minLength = minLength;
       if (placeholder) props.placeholder = placeholder;
     }
@@ -39,8 +41,8 @@
   }
 
   function handleInput(event) {
-    let {value} = event.target;
-    if (type === 'checkbox') value = value === 'on';
+    const {target} = event;
+    const value = type === 'checkbox' ? target.checked : target.value;
     if (statePath) setState(statePath, value);
     dispatch('input', value);
   }
