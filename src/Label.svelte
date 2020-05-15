@@ -29,7 +29,7 @@
 <style lang="scss">
   .label {
     font-size: var(--label-font-size, 1rem);
-    font-weight: bold;
+    font-weight: var(--label-font-weight, bold);
   }
 
   div {

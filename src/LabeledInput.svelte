@@ -33,10 +33,12 @@
   function handleInput(event) {
     const {value} = event.target;
     if (statePath) setState(statePath, value);
-    dispatch('change', value);
+    dispatch('input', value);
   }
 
-  const cn =
+  const onLeft = type !== 'checkbox' && type !== 'radio';
+
+  $: cn =
     (className ? ' ' + className : '') +
     (focus ? ' focus' : '') +
     (value && invalid ? ' invalid' : '') +
@@ -50,8 +52,6 @@
   if (type === 'date') {
     style.paddingBottom = style.paddingTop = '5px';
   }
-
-  const onLeft = type !== 'checkbox' && type !== 'radio';
 </script>
 
 <Labeled {info} {label} {onLeft} {required} {vertical}>
@@ -71,6 +71,7 @@
 <style lang="scss">
   input {
     border: solid lightgray 1px;
+    border-radius: var(--border-radius, 0);
     font-size: 1rem;
     margin-bottom: 0;
     margin-left: 0.5rem;
@@ -85,9 +86,14 @@
     }
 
     /* For checkboxes and radio buttons where the label is on the right side,
-       add a bit of space between them. */
-    & + label {
-      margin-left: 0.3rem;
+       add a bit of space to the left of the label. */
+    & + :global(label) {
+      margin-left: 0.5rem;
+    }
+
+    &[type='checkbox'],
+    &[type='radio'] {
+      margin-left: 0;
     }
 
     &.vertical {

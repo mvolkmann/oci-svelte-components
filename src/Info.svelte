@@ -31,7 +31,7 @@
     if (tipHeight === '0') {
       // offsetHeight is not known until it is rendered.
       // The timeout allows that to happen.
-      setTimeout(() => tipHeight = tipRef.offsetHeight + 'px');
+      setTimeout(() => (tipHeight = tipRef.offsetHeight + 'px'));
     }
   }
 
@@ -90,7 +90,7 @@
     justify-content: center;
     align-items: center;
 
-    background-color: var(--secondary-color, orange);
+    background-color: var(--secondary-color);
     border: none;
     border-radius: calc(var(--size) / 2);
     color: white;
@@ -102,9 +102,9 @@
   }
 
   .text {
-    background-color: white;
-    border: solid gray 1px;
-    color: black;
+    background-color: var(--secondary-color);
+    border: none;
+    color: white;
     font-weight: normal;
     padding: 0.5rem;
     position: absolute;

@@ -1,9 +1,6 @@
 <script>
-  import get from 'lodash/get';
-  import {createEventDispatcher} from 'svelte';
   import Info from './Info.svelte';
   import Label from './Label.svelte';
-  import {globalStore, setState} from './stores';
 
   export let className = '';
   export let info = '';
@@ -50,6 +47,8 @@
   .labeled {
     display: flex;
     align-items: center;
+
+    margin-bottom: 1rem;
 
     .focus {
       input {

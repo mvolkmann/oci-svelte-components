@@ -1,3 +1,13 @@
+:root {
+  --border-radius: 4px;
+  --button-font-weight: bold;
+  --error-color: red;
+  --label-font-size: 1rem;
+  --label-font-weight: bold;
+  --primary-color: cornflowerblue;
+  --secondary-color: orange;
+}
+
 html,
 body {
   position: relative;
@@ -68,4 +78,8 @@ button:not(:disabled):active {
 
 button:focus {
   border-color: #666;
+}
+
+select::after {
+  content: 'after';
 }
