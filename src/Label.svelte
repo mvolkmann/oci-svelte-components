@@ -24,7 +24,7 @@
   <slot />
 </label>
 
-<style lang="scss">
+<style>
   label {
     font-size: var(--label-font-size, 1rem);
     font-weight: var(--label-font-weight, bold);
@@ -42,9 +42,9 @@
   .vertical {
     display: flex;
     flex-direction: column;
+  }
 
-    div {
-      display: block;
-    }
+  .vertical div {
+    display: block;
   }
 </style>

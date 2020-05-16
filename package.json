@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "oci-svelte-components",
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
@@ -23,7 +23,6 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-svelte3": "^2.7.3",
     "jest": "^26.0.1",
-    "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "prettier-plugin-svelte": "^1.1.0",
     "rollup": "^2.10.2",

@@ -25,7 +25,7 @@
 
   $: if (ref) {
     // Adjust the select width to accommodate
-    // the downward triangle added in the .scss file.
+    // the downward triangle added in the CSS below.
     const width = getComputedStyle(ref).width;
     ref.style.width = parseInt(width) + 20 + 'px';
   }
@@ -62,18 +62,18 @@
   </div>
 </Labeled>
 
-<style lang="scss">
+<style>
   .container {
     display: inline-block;
     position: relative;
+  }
 
-    &::after {
-      content: '\25bc';
-      pointer-events: none;
-      position: absolute;
-      top: 12px;
-      right: 5px;
-    }
+  .container::after {
+    content: '\25bc';
+    pointer-events: none;
+    position: absolute;
+    top: 12px;
+    right: 5px;
   }
 
   select {
@@ -93,21 +93,21 @@
     position: relative;
     /*width: fit-content;*/
     width: max-content;
+  }
 
-    &:focus {
-      outline-color: var(--secondary-color);
-    }
+  select:focus {
+    outline-color: var(--secondary-color);
+  }
 
-    &:invalid {
-      border: solid var(--error-color, red) 1px;
-    }
+  select:invalid {
+    border: solid var(--error-color, red) 1px;
+  }
 
-    &.vertical {
-      flex-direction: column;
-      align-items: flex-start;
+  select.vertical {
+    flex-direction: column;
+    align-items: flex-start;
 
-      margin-left: 0;
-      margin-top: 0.3rem;
-    }
+    margin-left: 0;
+    margin-top: 0.3rem;
   }
 </style>

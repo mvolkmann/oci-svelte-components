@@ -54,27 +54,10 @@
   </div>
 </Labeled>
 
-<style lang="scss">
+<style>
   .container {
     display: inline-flex;
     align-items: center;
-
-    .option {
-      display: flex;
-      align-items: center;
-    }
-
-    &.vertical {
-      flex-direction: column;
-      align-items: flex-start;
-
-      margin-left: 0;
-      margin-top: 0.3rem;
-
-      .option {
-        margin-bottom: 0.5rem;
-      }
-    }
   }
 
   input {
@@ -91,24 +74,39 @@
     font-size: 1rem;
     margin-bottom: 0;
     margin-left: 0.5rem;
+  }
 
-    &:checked {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
+  input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
 
-    &:focus {
-      outline: solid var(--secondary-color) 2px;
-    }
+  input:focus {
+    outline: solid var(--secondary-color) 2px;
   }
 
   label {
     margin-left: 0.5rem;
   }
 
+  .option {
+    display: flex;
+    align-items: center;
+  }
+
   .vertical {
-    input:first-of-type {
-      margin-left: 0;
-    }
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-left: 0;
+    margin-top: 0.3rem;
+  }
+
+  .vertical input:first-of-type {
+    margin-left: 0;
+  }
+
+  .vertical .option {
+    margin-bottom: 0.5rem;
   }
 </style>

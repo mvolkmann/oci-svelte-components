@@ -72,7 +72,7 @@
     {...props} />
 </Labeled>
 
-<style lang="scss">
+<style>
   input {
     border: solid lightgray 1px;
     border-radius: var(--border-radius, 0);
@@ -80,48 +80,49 @@
     margin-bottom: 0;
     margin-left: 0.5rem;
     padding: 0.5rem;
+  }
 
-    &[type='checkbox'] {
-      appearance: none;
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      position: relative;
+  input[type='checkbox'] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+  }
 
-      &:checked:after {
-        color: var(--primary-color);
-        content: '\2714';
-        position: absolute;
-        left: 1px;
-        bottom: 0;
-      }
-    }
+  input[type='checkbox']:checked:after {
+    color: var(--primary-color);
+    content: '\2714';
+    position: absolute;
+    left: 1px;
+    bottom: 0;
+  }
 
-    &:focus {
-      outline-color: var(--secondary-color);
-    }
+  input[type='checkbox']:focus {
+    outline-color: var(--secondary-color);
+  }
 
-    &.invalid {
-      border: solid var(--error-color, red) 1px;
-    }
+  input[type='checkbox']:invalid {
+    border: solid var(--error-color, red) 1px;
+  }
 
-    /* For checkboxes and radio buttons where the label is on the right side,
-       add a bit of space to the left of the label. */
-    & + :global(label) {
-      margin-left: 0.5rem;
-    }
+  /* For checkboxes and radio buttons where the label is on the right side,
+      add a bit of space to the left of the label. */
+  input[type='checkbox'] + :global(label) {
+    margin-left: 0.5rem;
+  }
 
-    &[type='checkbox'],
-    &[type='radio'] {
-      margin-left: 0;
+  input[type='checkbox'],
+  input[type='radio'] {
+    margin-left: 0;
+  }
 
-      &:focus {
-        outline: solid var(--secondary-color) 2px;
-      }
-    }
+  input[type='checkbox']:focus,
+  input[type='radio']:focus {
+    outline: solid var(--secondary-color) 2px;
+  }
 
-    &.vertical {
-      margin-left: 0;
-      margin-top: 0.3rem;
-    }
+  .vertical {
+    margin-left: 0;
+    margin-top: 0.3rem;
   }
 </style>

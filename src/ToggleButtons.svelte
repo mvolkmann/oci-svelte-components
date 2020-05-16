@@ -20,7 +20,7 @@
     const result = typeof option === 'object' ? option.value : option;
     console.log('ToggleButtons.svelte getPairValue: result =', result);
     return result;
-  }
+  };
 
   const setValue = option => setState(statePath, getPairValue(option));
 </script>
@@ -37,53 +37,53 @@
   {/each}
 </div>
 
-<style lang="scss">
+<style>
+  button {
+    --height: 40px;
+    --border-radius: calc(var(--height) / 2);
+
+    display: flex;
+    align-items: center;
+
+    background-color: lightgray;
+    border: none;
+    border-left: solid black 1px;
+    border-radius: 0;
+    color: black;
+    outline: none;
+    height: var(--height);
+    padding: 0 1rem;
+  }
+
+  button:first-of-type {
+    border-left: none;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+
+  button:last-of-type {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+
+  button.selected {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  button.selected svg {
+    color: white;
+  }
+
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  .icon svg {
+    color: black;
+  }
+
   .toggle-buttons {
     display: flex;
-
-    button {
-      --height: 40px;
-      --border-radius: calc(var(--height) / 2);
-
-      display: flex;
-      align-items: center;
-
-      background-color: lightgray;
-      border: none;
-      border-left: solid black 1px;
-      border-radius: 0;
-      color: black;
-      outline: none;
-      height: var(--height);
-      padding: 0 1rem;
-
-      &.selected {
-        background-color: var(--primary-color);
-        color: white;
-
-        svg {
-          color: white;
-        }
-      }
-
-      &:first-of-type {
-        border-left: none;
-        border-top-left-radius: var(--border-radius);
-        border-bottom-left-radius: var(--border-radius);
-      }
-
-      &:last-of-type {
-        border-top-right-radius: var(--border-radius);
-        border-bottom-right-radius: var(--border-radius);
-      }
-    }
-
-    .icon {
-      margin-right: 0.5rem;
-
-      svg {
-        color: black;
-      }
-    }
   }
 </style>

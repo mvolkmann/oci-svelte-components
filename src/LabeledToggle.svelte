@@ -27,7 +27,7 @@
   </div>
 </Labeled>
 
-<style lang="scss">
+<style>
   .toggle {
     --padding: 2px;
     --size: 25px;
@@ -46,44 +46,39 @@
     margin-left: 0.5rem;
     padding: var(--padding);
     position: relative;
+  }
 
-    &:focus {
-      outline: solid var(--secondary-color) 2px;
-    }
+  .toggle:focus {
+    outline: solid var(--secondary-color) 2px;
+  }
 
-    &.on {
-      background-color: var(--primary-color);
+  .toggle.on {
+    background-color: var(--primary-color);
+  }
 
-      .thumb {
-        left: calc(var(--size) * 0.88);
-      }
-    }
+  .toggle.on .thumb {
+    left: calc(var(--size) * 0.88);
+  }
 
-    &.spread {
-      justify-content: space-between;
-      width: 100%;
-    }
+  .thumb {
+    --thumb-size: calc(var(--size) - (var(--padding) * 2));
 
-    .thumb {
-      --thumb-size: calc(var(--size) - (var(--padding) * 2));
+    position: absolute;
+    left: var(--padding);
+    top: calc(var(--padding) - var(--border-width));
 
-      position: absolute;
-      left: var(--padding);
-      top: calc(var(--padding) - var(--border-width));
+    height: var(--thumb-size);
+    width: var(--thumb-size);
 
-      height: var(--thumb-size);
-      width: var(--thumb-size);
+    background-color: var(--thumb-color);
+    border-radius: calc(var(--thumb-size) / 2);
 
-      background-color: var(--thumb-color);
-      border-radius: calc(var(--thumb-size) / 2);
+    transition-duration: 0.3s;
+    transition-property: left;
+  }
 
-      transition-duration: 0.3s;
-      transition-property: left;
-    }
-
-    &.vertical {
-      margin-left: 0;
-      margin-top: 0.5rem;
-    }
+  .vertical {
+    margin-left: 0;
+    margin-top: 0.5rem;
   }
 </style>
