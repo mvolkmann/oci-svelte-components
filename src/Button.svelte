@@ -12,11 +12,11 @@
     'button' + (className ? ' ' + className : '') + (asLink ? ' as-link' : '');
 </script>
 
-<button className={classes} on:click={() => dispatch('click')} {type}>
+<button class={classes} on:click={() => dispatch('click')} {type}>
   {label}
 </button>
 
-<style lang="scss">
+<style>
   button {
     background-color: var(--primary-color);
     border: none;
@@ -27,20 +27,20 @@
     font-weight: bold;
     padding: 0.5rem 1rem;
     text-transform: uppercase;
+  }
 
-    &.as-link {
-      background-color: transparent;
-      border: none !important;
-      color: var(--primary-color);
-      font-weight: 300;
-      padding-left: 0;
-      padding-right: 0;
-      text-decoration: underline;
-      text-transform: none;
-    }
+  button.as-link {
+    background-color: transparent;
+    border: none !important;
+    color: var(--primary-color);
+    font-weight: 300;
+    padding-left: 0;
+    padding-right: 0;
+    text-decoration: underline;
+    text-transform: none;
+  }
 
-    &:focus {
-      outline-color: var(--secondary-color);
-    }
+  button:focus {
+    outline-color: var(--secondary-color);
   }
 </style>
