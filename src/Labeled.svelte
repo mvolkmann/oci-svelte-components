@@ -53,20 +53,8 @@
     margin-left: 0.5rem;
   }
 
-  .focus input {
-    outline: solid var(--secondary-color) 2px;
-  }
-
-  .focus .label {
+  .focus :global(label) {
     color: var(--secondary-color);
-  }
-
-  input:invalid {
-    border: solid var(--error-color, red) 1px;
-  }
-
-  .invalid label {
-    color: var(--error-color, red);
   }
 
   .vertical {
