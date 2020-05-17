@@ -8,6 +8,8 @@
   export let statePath;
   export let vertical = false;
 
+  const id = 'labeled-input-' + Date.now();
+
   $: on = get($globalStore, statePath);
 
   $: classes =
@@ -21,10 +23,10 @@
   const handleClick = () => setState(statePath, !on);
 </script>
 
-<Labeled className={classes} {label}>
-  <div class={toggleClasses} on:click={handleClick}>
+<Labeled className={classes} {id} {label}>
+  <button class={toggleClasses} on:click={handleClick} type="button">
     <div class="thumb" />
-  </div>
+  </button>
 </Labeled>
 
 <style>
@@ -43,6 +45,7 @@
     width: calc(var(--size) * 1.8);
     border: none;
     border-radius: calc(var(--size) / 2);
+    margin-bottom: 0;
     padding: var(--padding);
     position: relative;
   }

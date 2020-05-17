@@ -61,6 +61,10 @@
     border-bottom-left-radius: var(--border-radius);
   }
 
+  button:focus {
+    outline: solid var(--secondary-color) 2px;
+  }
+
   button:last-of-type {
     border-top-right-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
