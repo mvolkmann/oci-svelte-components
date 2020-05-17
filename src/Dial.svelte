@@ -11,15 +11,17 @@
   const STROKE_WIDTH = 40;
   const HALF_STROKE = STROKE_WIDTH / 2;
 
-  const SWEEP = 0;
+  const GAP = 20;
+  const SWEEP = 1;
   const TEXT_HEIGHT_GUESS = 43;
-  const TEXT_WIDTH_GUESS = 125;
+  const TEXT_WIDTH_GUESS = 60;
   const X_AXIS_ROTATION = 0;
 
   const classes = 'dial' + (className ? ' ' + className : '');
   const halfSize = size / 2;
+  console.log('Dial.svelte x: halfSize =', halfSize);
   const radius = halfSize - HALF_STROKE;
-  const startDegrees = -80;
+  const startDegrees = 270 - GAP / 2;
   const styles = `height: ${size}; width: ${size}`;
 
   $: value = get($globalStore, statePath) || 0;
@@ -30,7 +32,7 @@
   }
 
   function getPath(percent) {
-    const endDegrees = startDegrees + (340 * percent) / 100;
+    const endDegrees = startDegrees - ((360 - GAP) * percent) / 100;
     const startAngle = degreesToRadians(startDegrees);
     const endAngle = degreesToRadians(endDegrees);
 
@@ -63,14 +65,8 @@
       stroke="var(--primary-color)"
       stroke-width={STROKE_WIDTH}
       d={getPath(percent)} />
-    <text
-      x={halfSize - TEXT_WIDTH_GUESS / 2}
-      y={halfSize - TEXT_HEIGHT_GUESS / 2}>
-      {text}
-    </text>
-    <text
-      x={halfSize - TEXT_WIDTH_GUESS / 2}
-      y={halfSize + TEXT_HEIGHT_GUESS / 2}>
+    <text x={halfSize - TEXT_WIDTH_GUESS / 2} y={halfSize}>{text}</text>
+    <text x={halfSize - TEXT_WIDTH_GUESS / 2} y={halfSize + TEXT_HEIGHT_GUESS}>
       {value}
     </text>
   </svg>
