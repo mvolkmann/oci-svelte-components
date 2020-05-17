@@ -4,7 +4,7 @@
   export let asLink = false;
   export let className = '';
   export let label;
-  export let type = 'text'; // not 'submit'
+  export let type = 'button'; // not 'submit'
 
   const dispatch = createEventDispatcher();
 
@@ -18,7 +18,7 @@
 
 <style>
   button {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color, gray);
     border: none;
     border-radius: var(--border-radius, 0);
     color: white;
