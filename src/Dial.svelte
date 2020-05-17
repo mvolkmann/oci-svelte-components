@@ -6,26 +6,29 @@
   export let max = 100;
   export let size = 300;
   export let statePath;
-  export let text = '';
+  export let label = '';
 
   const STROKE_WIDTH = 40;
   const HALF_STROKE = STROKE_WIDTH / 2;
 
   const GAP = 20;
   const SWEEP = 1;
-  const TEXT_HEIGHT_GUESS = 43;
-  const TEXT_WIDTH_GUESS = 60;
   const X_AXIS_ROTATION = 0;
 
   const classes = 'dial' + (className ? ' ' + className : '');
   const halfSize = size / 2;
-  console.log('Dial.svelte x: halfSize =', halfSize);
   const radius = halfSize - HALF_STROKE;
   const startDegrees = 270 - GAP / 2;
   const styles = `height: ${size}; width: ${size}`;
 
+  let ref;
+
   $: value = get($globalStore, statePath) || 0;
   $: percent = (value / max) * 100;
+  $: if (ref) {
+    ref.style.height = size + 'px';
+    ref.style.width = size + 'px';
+  }
 
   function degreesToRadians(degrees) {
     return (degrees * Math.PI) / 180;
@@ -49,7 +52,7 @@
   }
 </script>
 
-<div className={classes} style={styles}>
+<div bind:this={ref} class={classes} style={styles}>
   <svg
     className="arc"
     viewBox={`0 0 ${size} ${size}`}
@@ -65,27 +68,35 @@
       stroke="var(--primary-color)"
       stroke-width={STROKE_WIDTH}
       d={getPath(percent)} />
-    <text x={halfSize - TEXT_WIDTH_GUESS / 2} y={halfSize}>{text}</text>
-    <text x={halfSize - TEXT_WIDTH_GUESS / 2} y={halfSize + TEXT_HEIGHT_GUESS}>
-      {value}
-    </text>
   </svg>
+  <div class="label">{label}</div>
+  <div class="value">{value}</div>
 </div>
 
 <style>
   .dial {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     background-color: transparent;
-    display: inline-block;
     margin: var(--dial-margin, 1.25rem);
     padding: 0 !important;
+    position: relative;
   }
 
   svg {
+    position: absolute;
     color: var(--dial-svg-color, var(--white));
   }
 
-  text {
-    font-size: var(--dial-text-font-size, 2.25rem);
+  .label {
+    font-size: var(--dial-label-font-size, 2.25rem);
     font-weight: bold;
+  }
+
+  .value {
+    font-size: var(--dial-value-font-size, 1.5rem);
   }
 </style>

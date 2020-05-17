@@ -19,7 +19,6 @@
 
   let containerRef;
   let dx = 0;
-  let dragging = false;
   let thumbRef;
   let value = 0;
 
@@ -59,16 +58,15 @@
   }
 
   function handleMouseDown(event) {
+    // Prevent beginning text selection outside this component.
+    event.preventDefault();
+    thumbRef.focus();
     dx = event.offsetX;
-    dragging = true;
-  }
-
-  function handleMouseLeave() {
-    dragging = false;
   }
 
   function handleMouseMove(event) {
-    if (!dragging) return;
+    // Bail if the first mouse button isn't down.
+    if (event.buttons !== 1) return;
 
     const newLeft = Math.ceil(event.clientX - dx - trackLeft);
     if (MIN_LEFT <= newLeft && newLeft <= maxLeft) {
@@ -80,10 +78,6 @@
       dispatch('input', value);
     }
   }
-
-  function handleMouseUp() {
-    dragging = false;
-  }
 </script>
 
 <Labeled className={classes} {label}>
@@ -92,9 +86,7 @@
     class="container"
     on:keydown={handleKeyDown}
     on:mousedown={handleMouseDown}
-    on:mouseleave={handleMouseLeave}
-    on:mousemove={handleMouseMove}
-    on:mouseup={handleMouseUp}>
+    on:mousemove={handleMouseMove}>
     <div class={trackClasses} style={'width: ' + width}>
       <div
         bind:this={thumbRef}

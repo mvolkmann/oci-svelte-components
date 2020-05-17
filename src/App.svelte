@@ -93,7 +93,7 @@
       type="number" />
     <LabeledSlider label="Age" statePath="user.age" />
     <LabeledSlider label="Age" statePath="user.age" vertical width="20rem" />
-    <Dial statePath="user.age" text="Age" />
+    <Dial label="Age" statePath="user.age" />
 
     <Address statePath={addressPath} vertical />
 
