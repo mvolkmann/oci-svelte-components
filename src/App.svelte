@@ -7,6 +7,7 @@
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledSlider from './LabeledSlider.svelte';
+  import LabeledState from './LabeledState.svelte';
   import LabeledToggle from './LabeledToggle.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
   import {globalStore, setState} from './stores';
@@ -94,6 +95,12 @@
     <LabeledSlider label="Age" statePath="user.age" />
     <LabeledSlider label="Age" statePath="user.age" vertical width="20rem" />
     <Dial label="Age" statePath="user.age" />
+    <LabeledState label="Age" statePath="user.age" />
+    <LabeledState
+      formatter={n => n + 100}
+      label="Age"
+      statePath="user.age"
+      vertical />
 
     <Address statePath={addressPath} vertical />
 
