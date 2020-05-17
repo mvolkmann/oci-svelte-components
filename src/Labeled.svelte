@@ -26,21 +26,13 @@
 
 <div bind:this={ref} class={classes}>
   {#if onLeft}
-    <Label {id} {required} text={label}>
-      {#if info}
-        <Info text={info} />
-      {/if}
-    </Label>
+    <Label {id} {info} {required} text={label} />
   {/if}
 
   <slot />
 
   {#if !onLeft}
-    <Label {id} {required} text={label}>
-      {#if info}
-        <Info text={info} />
-      {/if}
-    </Label>
+    <Label {id} {info} {required} text={label} />
   {/if}
 </div>
 
