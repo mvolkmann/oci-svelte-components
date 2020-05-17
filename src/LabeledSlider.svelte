@@ -17,9 +17,9 @@
   const MIN_LEFT = -HALF_THUMB_SIZE;
   const dispatch = createEventDispatcher();
 
+  let containerRef;
   let dx = 0;
   let dragging = false;
-  let trackRef;
   let thumbRef;
   let value = 0;
 
@@ -32,8 +32,8 @@
   $: trackLeft = thumbRef
     ? thumbRef.parentElement.getBoundingClientRect().left
     : 0;
-  $: if (trackRef) {
-    trackRef.style.setProperty('--thumb-size', THUMB_SIZE + 'px');
+  $: if (containerRef) {
+    containerRef.style.setProperty('--thumb-size', THUMB_SIZE + 'px');
   }
 
   $: maxLeft = thumbRef
@@ -63,6 +63,10 @@
     dragging = true;
   }
 
+  function handleMouseLeave() {
+    dragging = false;
+  }
+
   function handleMouseMove(event) {
     if (!dragging) return;
 
@@ -83,20 +87,31 @@
 </script>
 
 <Labeled className={classes} {label}>
-  <div class={trackClasses} bind:this={trackRef} style={'width: ' + width}>
-    <div
-      bind:this={thumbRef}
-      class="thumb"
-      on:keydown={handleKeyDown}
-      on:mousedown={handleMouseDown}
-      on:mousemove={handleMouseMove}
-      on:mouseup={handleMouseUp}
-      style={'left: ' + left}
-      tabindex="0" />
+  <div
+    bind:this={containerRef}
+    class="container"
+    on:keydown={handleKeyDown}
+    on:mousedown={handleMouseDown}
+    on:mouseleave={handleMouseLeave}
+    on:mousemove={handleMouseMove}
+    on:mouseup={handleMouseUp}>
+    <div class={trackClasses} style={'width: ' + width}>
+      <div
+        bind:this={thumbRef}
+        class="thumb"
+        style={'left: ' + left}
+        tabindex="0" />
+    </div>
   </div>
 </Labeled>
 
 <style>
+  .container {
+    --track-height: 6px;
+
+    height: calc(var(--thumb-size) + var(--track-height) - 2px);
+  }
+
   .labeled-slider {
     display: inline-flex;
     align-items: center;
@@ -119,8 +134,6 @@
   }
 
   .track {
-    --track-height: 6px;
-
     background-color: lightgray;
     border: none;
     display: inline-block;
