@@ -28,7 +28,6 @@
   $: percentToUse = Math.min(Math.max(percent, 0), 1);
   $: left =
     'calc(' + width + ' * ' + percentToUse + ' - ' + HALF_THUMB_SIZE + 'px)';
-  $: trackStyle = 'width: ' + width;
 
   $: trackLeft = thumbRef
     ? thumbRef.parentElement.getBoundingClientRect().left
@@ -41,10 +40,23 @@
     ? thumbRef.parentElement.getBoundingClientRect().width - HALF_THUMB_SIZE
     : 0;
 
-  $: classes =
+  const classes =
     'labeled-slider' +
     (className ? ' ' + className : '') +
     (vertical ? ' vertical' : '');
+
+  const trackClasses = 'track' + (vertical ? ' vertical' : '');
+
+  function handleKeyDown(event) {
+    const {key} = event;
+    if (key === 'ArrowLeft') {
+      const newValue = value - 1;
+      if (newValue >= min) setState(statePath, newValue);
+    } else if (key === 'ArrowRight') {
+      const newValue = value + 1;
+      if (newValue <= max) setState(statePath, newValue);
+    }
+  }
 
   function handleMouseDown(event) {
     dx = event.offsetX;
@@ -71,14 +83,16 @@
 </script>
 
 <Labeled className={classes} {label}>
-  <div class="track" bind:this={trackRef} style={trackStyle}>
+  <div class={trackClasses} bind:this={trackRef} style={'width: ' + width}>
     <div
       bind:this={thumbRef}
       class="thumb"
+      on:keydown={handleKeyDown}
       on:mousedown={handleMouseDown}
       on:mousemove={handleMouseMove}
       on:mouseup={handleMouseUp}
-      style={'left: ' + left} />
+      style={'left: ' + left}
+      tabindex="0" />
   </div>
 </Labeled>
 
@@ -100,6 +114,10 @@
     width: var(--thumb-size);
   }
 
+  .thumb:focus {
+    outline: solid var(--secondary-color) 3px;
+  }
+
   .track {
     --track-height: 6px;
 
@@ -114,9 +132,6 @@
   .vertical {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .vertical input {
-    margin-left: 0;
+    margin-top: calc(var(--thumb-size) / 2 - var(--track-height) / 2);
   }
 </style>
