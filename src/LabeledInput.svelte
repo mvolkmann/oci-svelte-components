@@ -47,7 +47,7 @@
     dispatch('input', value);
   }
 
-  const onLeft = type !== 'checkbox' && type !== 'radio';
+  const onRight = type === 'checkbox' || type === 'radio';
 
   $: classes =
     (className ? ' ' + className : '') +
@@ -61,7 +61,7 @@
   }
 </script>
 
-<Labeled {id} {info} {label} {onLeft} {required} {vertical}>
+<Labeled {id} {info} {label} {onRight} {required} {vertical}>
   <input
     class={classes}
     {id}
@@ -78,7 +78,6 @@
     border-radius: var(--border-radius, 0);
     font-size: 1rem;
     margin-bottom: 0;
-    margin-left: 0.5rem;
     padding: 0.5rem;
   }
 
@@ -97,32 +96,16 @@
     bottom: 0;
   }
 
-  input[type='checkbox']:focus {
+  input:focus {
     outline-color: var(--secondary-color);
   }
 
-  input[type='checkbox']:invalid {
+  input:invalid {
     border: solid var(--error-color, red) 1px;
-  }
-
-  /* For checkboxes and radio buttons where the label is on the right side,
-      add a bit of space to the left of the label. */
-  input[type='checkbox'] + :global(label) {
-    margin-left: 0.5rem;
-  }
-
-  input[type='checkbox'],
-  input[type='radio'] {
-    margin-left: 0;
   }
 
   input[type='checkbox']:focus,
   input[type='radio']:focus {
     outline: solid var(--secondary-color) 2px;
-  }
-
-  .vertical {
-    margin-left: 0;
-    margin-top: 0.3rem;
   }
 </style>

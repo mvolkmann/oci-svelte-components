@@ -43,7 +43,6 @@
     width: calc(var(--size) * 1.8);
     border: none;
     border-radius: calc(var(--size) / 2);
-    margin-left: 0.5rem;
     padding: var(--padding);
     position: relative;
   }
@@ -75,10 +74,5 @@
 
     transition-duration: 0.3s;
     transition-property: left;
-  }
-
-  .vertical {
-    margin-left: 0;
-    margin-top: 0.5rem;
   }
 </style>

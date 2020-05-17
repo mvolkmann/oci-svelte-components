@@ -1,11 +1,7 @@
 import {action} from '@storybook/addon-actions';
-
 import DemoButton from './DemoButton.svelte';
 
-export default {
-  title: 'DemoButton',
-  component: DemoButton
-};
+export default {title: 'DemoButton'};
 
 export const Text = () => ({
   Component: DemoButton,

@@ -25,6 +25,10 @@
 
   .required {
     color: var(--error-color, red);
+    font-size: 1.2rem;
+    line-height: 0.8rem;
     margin-left: 0.2rem;
+    position: relative;
+    top: 5px;
   }
 </style>

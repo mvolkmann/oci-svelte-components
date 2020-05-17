@@ -85,5 +85,6 @@
 
   .toggle-buttons {
     display: flex;
+    margin-bottom: 0.5rem;
   }
 </style>
