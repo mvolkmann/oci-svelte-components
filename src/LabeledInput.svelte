@@ -7,6 +7,8 @@
   export let className = '';
   export let info = '';
   export let label;
+  export let max = undefined;
+  export let min = undefined;
   export let minLength = 0;
   export let placeholder = '';
   export let required = false;
@@ -30,6 +32,8 @@
       props = {checked: typeof value === 'boolean' ? value : value === 'on'};
     } else {
       props = {value};
+      if (max) props.max = max;
+      if (min) props.min = min;
       if (minLength) props.minLength = minLength;
       if (placeholder) props.placeholder = placeholder;
     }
@@ -50,6 +54,7 @@
   const onRight = type === 'checkbox' || type === 'radio';
 
   $: classes =
+    'labeled-input' +
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');

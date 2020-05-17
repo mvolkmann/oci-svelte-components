@@ -4,8 +4,8 @@ exports[`Button should match snapshot 1`] = `
 <body>
   <div>
     <button
-      class="button svelte-17cn4oz"
-      type="text"
+      class="button svelte-1baku7m"
+      type="button"
     >
       Press Me
     </button>

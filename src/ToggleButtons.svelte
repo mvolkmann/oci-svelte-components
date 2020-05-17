@@ -7,20 +7,15 @@
   export let options;
   export let statePath;
 
-  $: console.log('ToggleButtons.svelte x: statePath =', statePath);
   $: value = get($globalStore, statePath);
-  $: console.log('ToggleButtons.svelte x: value =', value);
 
   const classes = 'toggle-buttons' + (className ? ' ' + className : '');
 
   const getPairText = option =>
     typeof option === 'object' ? option.text || option.value : option;
 
-  const getPairValue = option => {
-    const result = typeof option === 'object' ? option.value : option;
-    console.log('ToggleButtons.svelte getPairValue: result =', result);
-    return result;
-  };
+  const getPairValue = option =>
+    typeof option === 'object' ? option.value : option;
 
   const setValue = option => setState(statePath, getPairValue(option));
 </script>

@@ -1,14 +1,19 @@
 <script>
+  //import {get} from 'lodash';
   import get from 'lodash/get';
   import LabeledCountrySelect from './LabeledCountrySelect.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledStateSelect from './LabeledStateSelect.svelte';
   import {globalStore, setState} from './stores';
+  console.log('Address.svelte x: globalStore =', globalStore);
 
   export let statePath;
   export let vertical = false;
 
-  $: countryCode = get($globalStore, statePath + '.country');
+  let countryCode = '';
+
+  $: countryCode = get ? get($globalStore, statePath + '.country') : '';
+
   $: zipLabel =
     countryCode === 'USA' ? 'Zip' : countryCode === 'CAN' ? 'Postal Code' : '';
 

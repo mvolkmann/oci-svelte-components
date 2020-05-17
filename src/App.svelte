@@ -5,6 +5,7 @@
   import LabeledInput from './LabeledInput.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
+  import LabeledSlider from './LabeledSlider.svelte';
   import LabeledToggle from './LabeledToggle.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
   import {globalStore, setState} from './stores';
@@ -82,6 +83,15 @@
       options={colorOptions}
       statePath={colorPath}
       vertical />
+
+    <LabeledInput
+      label="Age"
+      min="0"
+      max="100"
+      statePath="user.age"
+      type="number" />
+    <LabeledSlider label="Age" statePath="user.age" />
+    <LabeledSlider label="Age" statePath="user.age" vertical width="20rem" />
 
     <Address statePath={addressPath} vertical />
 
