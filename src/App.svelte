@@ -2,6 +2,7 @@
   import get from 'lodash/get';
   import Address from './Address.svelte';
   import Button from './Button.svelte';
+  import Dial from './Dial.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
@@ -92,6 +93,7 @@
       type="number" />
     <LabeledSlider label="Age" statePath="user.age" />
     <LabeledSlider label="Age" statePath="user.age" vertical width="20rem" />
+    <Dial statePath="user.age" text="Age" />
 
     <Address statePath={addressPath} vertical />
 
