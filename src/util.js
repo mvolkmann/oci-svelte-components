@@ -13,6 +13,8 @@ const MONTHS = [
   'December'
 ];
 
+let lastId = 0;
+
 export function formatCurrency(
   amount,
   languageCode = 'en-US',
@@ -76,6 +78,11 @@ export function getCurrencyFormatter(
     style: 'currency',
     currency: currencyCode
   });
+}
+
+export function getId(prefix = '') {
+  lastId++;
+  return prefix + lastId;
 }
 
 export function getNumberFormatter() {

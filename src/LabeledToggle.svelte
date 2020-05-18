@@ -3,6 +3,7 @@
   import {createEventDispatcher} from 'svelte';
   import Labeled from './Labeled.svelte';
   import {globalStore, update} from './stores';
+  import {getId} from './util';
 
   export let className = '';
   export let label;
@@ -12,7 +13,7 @@
   export let vertical = false;
 
   const dispatch = createEventDispatcher();
-  const id = 'labeled-input-' + Date.now();
+  const id = getId('labeled-input-');
 
   $: if (path) on = get($store, path);
 
@@ -24,10 +25,13 @@
   $: toggleClasses =
     'osc-labeled-toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
 
-  const handleClick = () => update(store, path, !on, dispatch);
+  const handleClick = () => {
+    console.log('LabeledToggle.svelte handleClick: entered');
+    update(store, path, !on, dispatch);
+  };
 </script>
 
-<Labeled className={classes} {id} {label}>
+<Labeled className={classes} {id} {label} on:click={handleClick}>
   <button class={toggleClasses} on:click={handleClick} type="button">
     <div class="thumb" />
   </button>

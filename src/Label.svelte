@@ -7,7 +7,7 @@
   export let text;
 </script>
 
-<label for={id}>
+<label for={id} on:click>
   {text}
   {#if required}
     <span class="required">*</span>

@@ -45,11 +45,12 @@
   import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
   import Icon from './Icon.svelte';
   import Toast from './Toast.svelte';
+  import {getId} from './util';
 
   export let children;
   export let className = '';
   export let horizontal = false;
-  export let id = 'accordion-' + Date.now();
+  export let id = getId('accordion-');
   export let titles;
 
   const classes =
@@ -65,11 +66,11 @@
 <div className={classes} {id}>
   {#each titles as title, index}
     <div className="drawer" key={title}>
-      <button on:click={() => toggleDrawer(id, index)}>
+      <button on:click={() => toggleDrawer(id, index)} type="button">
         <div className="title">{title}</div>
         <Icon icon={faChevronCircleRight} />
       </button>
-      <div className={`content content${index}`}>{children[index]}</div>
+      <div className={`content content${index}`}>children[index]</div>
     </div>
   {/each}
   {#if errorMessage}

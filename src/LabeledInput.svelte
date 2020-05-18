@@ -3,6 +3,7 @@
   import {createEventDispatcher} from 'svelte';
   import Labeled from './Labeled.svelte';
   import {globalStore, update} from './stores';
+  import {getId} from './util';
 
   export let className = '';
   export let info = '';
@@ -22,7 +23,7 @@
 
   const dispatch = createEventDispatcher();
 
-  const id = 'labeled-input-' + Date.now();
+  const id = getId('labeled-input-');
   let invalid = false;
   let props;
   let ref;

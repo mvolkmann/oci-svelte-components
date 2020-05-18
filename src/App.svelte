@@ -3,6 +3,7 @@
   import * as brands from '@fortawesome/free-brands-svg-icons';
 
   import get from 'lodash-es/get';
+  import Accordion from './Accordion.svelte';
   import Address from './Address.svelte';
   import Button from './Button.svelte';
   import Dial from './Dial.svelte';
@@ -25,6 +26,8 @@
   const happyPath = 'user.happy';
   const lastNamePath = 'user.profile.lastName';
   const middleNamePath = 'user.profile.middleName';
+
+  const titles = ['Title #1', 'Title #2', 'Title #3'];
 
   update(globalStore, firstNamePath, 'John');
   update(globalStore, lastNamePath, 'Doe');
@@ -114,6 +117,12 @@
       vertical />
 
     <Address path={addressPath} vertical />
+
+    <Accordion {titles}>
+      <h1>Drawer #1</h1>
+      <h1>Drawer #2</h1>
+      <h1>Drawer #3</h1>
+    </Accordion>
 
     <Button label="Submit" type="submit" />
   </form>
