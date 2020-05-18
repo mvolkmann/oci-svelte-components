@@ -6,8 +6,8 @@ describe('Address', () => {
   afterEach(cleanup);
 
   test('should match snapshot', () => {
-    const statePath = 'user.profile.address';
-    const {container} = render(Address, {statePath});
+    const path = 'user.profile.address';
+    const {container} = render(Address, {path});
     expect(container).toMatchSnapshot();
   });
 });

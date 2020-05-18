@@ -3,18 +3,20 @@
   import options from './countries';
 
   export let className = '';
+  export let path = undefined;
   export let placeholder = '';
   export let required = false;
-  export let statePath;
+  export let store = undefined;
   export let vertical = false;
 </script>
 
 <LabeledSelect
   {className}
   label="Country"
-  on:change
+  on:value
   {options}
+  {path}
   {placeholder}
   {required}
-  {statePath}
+  {store}
   {vertical} />

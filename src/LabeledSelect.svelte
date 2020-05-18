@@ -1,16 +1,17 @@
 <script>
-  import Labeled from './Labeled.svelte';
   import get from 'lodash-es/get';
   import {createEventDispatcher} from 'svelte';
-  import {globalStore, setState} from './stores';
+  import Labeled from './Labeled.svelte';
+  import {globalStore, update} from './stores';
 
   export let className = '';
   export let info = '';
   export let label;
   export let options;
+  export let path = undefined;
   export let placeholder = '';
   export let required = false;
-  export let statePath = '';
+  export let store = undefined;
   export let style = {};
   export let value = '';
   export let vertical = false;
@@ -21,7 +22,8 @@
   let invalid = false;
   let ref;
 
-  $: if (statePath) value = get($globalStore, statePath);
+  if (path && !store) store = globalStore;
+  $: if (path) value = get($store, path);
 
   $: if (ref) {
     // Adjust the select width to accommodate
@@ -30,11 +32,8 @@
     ref.style.width = parseInt(width) + 20 + 'px';
   }
 
-  function handleChange(event) {
-    const {value} = event.target;
-    if (statePath) setState(statePath, value);
-    dispatch('change', value);
-  }
+  const handleChange = event =>
+    update(store, path, event.target.value, dispatch);
 
   $: classes =
     (className ? ' ' + className : '') +

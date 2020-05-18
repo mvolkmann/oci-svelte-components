@@ -1,6 +1,6 @@
 <script>
   import get from 'lodash-es/get';
-  import {globalStore, setState} from './stores';
+  import {globalStore, update} from './stores';
 
   export let component;
   export let path;
@@ -11,7 +11,7 @@
   delete props.component;
   delete props.path;
 
-  const update = event => setState(path, event.detail);
+  const handleValue = event => update(globalStore, path, event.detail);
 </script>
 
-<svelte:component this={component} {value} on:value={update} {...props} />
+<svelte:component this={component} {value} on:value={handleValue} {...props} />

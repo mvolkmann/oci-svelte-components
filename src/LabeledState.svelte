@@ -6,12 +6,15 @@
   export let className = '';
   export let formatter = undefined;
   export let label;
-  export let statePath;
+  export let path = undefined;
+  export let store = undefined;
   export let vertical = false;
+
+  if (path && !store) store = globalStore;
 
   let value = '';
   $: {
-    value = get($globalStore, statePath) || 0;
+    value = get($store, path) || 0;
     if (formatter) value = formatter(value);
   }
 </script>

@@ -2,13 +2,14 @@
   import get from 'lodash-es/get';
   import {createEventDispatcher} from 'svelte';
   import Labeled from './Labeled.svelte';
-  import {globalStore, setState} from './stores';
+  import {globalStore, update} from './stores';
 
   export let className = '';
   export let label;
   export let max = 100;
   export let min = 0;
-  export let statePath;
+  export let path = undefined;
+  export let store = undefined;
   export let vertical = false;
   export let width = '10rem';
 
@@ -22,7 +23,9 @@
   let thumbRef;
   let value = 0;
 
-  $: value = get($globalStore, statePath) || 0;
+  if (path && !store) store = globalStore;
+  $: if (path) value = get($store, path);
+
   $: percent = (value - min) / (max - min);
   $: percentToUse = Math.min(Math.max(percent, 0), 1);
   $: left =
@@ -50,10 +53,10 @@
     const {key} = event;
     if (key === 'ArrowLeft') {
       const newValue = value - 1;
-      if (newValue >= min) setState(statePath, newValue);
+      if (newValue >= min) update(store, path, newValue, dispatch);
     } else if (key === 'ArrowRight') {
       const newValue = value + 1;
-      if (newValue <= max) setState(statePath, newValue);
+      if (newValue <= max) update(store, path, newValue, dispatch);
     }
   }
 
@@ -74,8 +77,7 @@
 
       const percent = (newLeft - MIN_LEFT) / (maxLeft - MIN_LEFT);
       const value = Math.round(min + (max - min) * percent);
-      setState(statePath, value);
-      dispatch('input', value);
+      update(store, path, value, dispatch);
     }
   }
 </script>

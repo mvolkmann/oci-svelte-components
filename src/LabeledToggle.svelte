@@ -1,16 +1,20 @@
 <script>
   import get from 'lodash-es/get';
+  import {createEventDispatcher} from 'svelte';
   import Labeled from './Labeled.svelte';
-  import {globalStore, setState} from './stores';
+  import {globalStore, update} from './stores';
 
   export let className = '';
   export let label;
-  export let statePath;
+  export let path = undefined;
+  export let store = undefined;
   export let vertical = false;
 
+  const dispatch = createEventDispatcher();
   const id = 'labeled-input-' + Date.now();
 
-  $: on = get($globalStore, statePath);
+  if (path && !store) store = globalStore;
+  $: on = get($store, path);
 
   $: classes =
     'toggle' +
@@ -20,7 +24,7 @@
   $: toggleClasses =
     'toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
 
-  const handleClick = () => setState(statePath, !on);
+  const handleClick = () => update(store, path, !on, dispatch);
 </script>
 
 <Labeled className={classes} {id} {label}>

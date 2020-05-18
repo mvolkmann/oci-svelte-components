@@ -2,15 +2,16 @@
   import Labeled from './Labeled.svelte';
   import get from 'lodash-es/get';
   import {createEventDispatcher} from 'svelte';
-  import {globalStore, setState} from './stores';
+  import {globalStore, update} from './stores';
 
   export let className = '';
   export let info = '';
   export let label;
   export let name;
   export let options;
+  export let path = undefined;
   export let required = false;
-  export let statePath = '';
+  export let store = undefined;
   export let vertical = false;
 
   const dispatch = createEventDispatcher();
@@ -18,16 +19,14 @@
   let invalid = false;
   let value;
 
-  $: if (statePath) value = get($globalStore, statePath);
+  if (path && !store) store = globalStore;
+  $: if (path) value = get($store, path);
 
   const getOptionValue = option =>
     typeof option === 'string' ? option : option.value;
 
-  function handleInput(event) {
-    const {value} = event.target;
-    if (statePath) setState(statePath, value);
-    dispatch('input', value);
-  }
+  const handleInput = event =>
+    update(store, path, event.target.value, dispatch);
 
   $: classes =
     (className ? ' ' + className : '') + (value && invalid ? ' invalid' : '');

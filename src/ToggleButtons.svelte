@@ -1,13 +1,19 @@
 <script>
   import get from 'lodash-es/get';
+  import {createEventDispatcher} from 'svelte';
   //import Icon from './Icon.svelte';
-  import {globalStore, setState} from './stores';
+  import {globalStore, update} from './stores';
 
   export let className = '';
   export let options;
-  export let statePath;
+  export let path = undefined;
+  export let store = undefined;
+  export let value = undefined;
 
-  $: value = get($globalStore, statePath);
+  const dispatch = createEventDispatcher();
+
+  if (path && !store) store = globalStore;
+  $: if (path) value = get($store, path);
 
   const classes = 'toggle-buttons' + (className ? ' ' + className : '');
 
@@ -17,7 +23,8 @@
   const getPairValue = option =>
     typeof option === 'object' ? option.value : option;
 
-  const setValue = option => setState(statePath, getPairValue(option));
+  const setValue = option =>
+    update(store, path, getPairValue(option), dispatch);
 </script>
 
 <div class={classes}>

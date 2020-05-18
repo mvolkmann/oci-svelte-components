@@ -5,9 +5,10 @@
 
   export let className = '';
   export let countryCode;
+  export let path = undefined;
   export let placeholder = '';
   export let required = false;
-  export let statePath;
+  export let store = undefined;
   export let vertical = false;
 
   $: label =
@@ -26,8 +27,9 @@
     {className}
     {label}
     {options}
+    {path}
     {placeholder}
     {required}
-    {statePath}
+    {store}
     {vertical} />
 {/if}

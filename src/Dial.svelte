@@ -3,10 +3,11 @@
   import {globalStore} from './stores';
 
   export let className = '';
-  export let max = 100;
-  export let size = 300;
-  export let statePath;
   export let label = '';
+  export let max = 100;
+  export let path = undefined;
+  export let size = 300;
+  export let store = undefined;
 
   const STROKE_WIDTH = 40;
   const HALF_STROKE = STROKE_WIDTH / 2;
@@ -23,7 +24,9 @@
 
   let ref;
 
-  $: value = get($globalStore, statePath) || 0;
+  if (path && !store) store = globalStore;
+  $: value = get($store, path) || 0;
+
   $: percent = (value / max) * 100;
   $: if (ref) {
     ref.style.height = size + 'px';

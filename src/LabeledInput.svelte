@@ -1,6 +1,8 @@
 <script>
-  import Labeled from './Labeled.svelte';
+  import get from 'lodash-es/get';
   import {createEventDispatcher} from 'svelte';
+  import Labeled from './Labeled.svelte';
+  import {globalStore, update} from './stores';
 
   export let className = '';
   export let info = '';
@@ -8,11 +10,13 @@
   export let max = undefined;
   export let min = undefined;
   export let minLength = 0;
+  export let path = undefined;
   export let placeholder = '';
   export let required = false;
+  export let store = undefined;
   export let style = {};
   export let type = 'text';
-  export let value;
+  export let value = undefined;
   export let vertical = false;
   export let width = '';
 
@@ -22,6 +26,9 @@
   let invalid = false;
   let props;
   let ref;
+
+  if (path && !store) store = globalStore;
+  $: if (path) value = get($store, path);
 
   $: {
     if (type === 'checkbox') {
@@ -43,8 +50,7 @@
   function handleInput(event) {
     const {target} = event;
     const value = type === 'checkbox' ? target.checked : target.value;
-    dispatch('input', value);
-    dispatch('value', value);
+    update(store, path, value, dispatch);
   }
 
   const onRight = type === 'checkbox' || type === 'radio';

@@ -4,7 +4,6 @@
   import Button from './Button.svelte';
   import Dial from './Dial.svelte';
   import LabeledInput from './LabeledInput.svelte';
-  import LabeledInputPath from './LabeledInputPath.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledSlider from './LabeledSlider.svelte';
@@ -12,7 +11,7 @@
   import LabeledToggle from './LabeledToggle.svelte';
   import State from './State.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
-  import {globalStore, setState} from './stores';
+  import {globalStore, update} from './stores';
 
   const addressPath = 'user.profile.address';
   const colorPath = 'user.favoriteColor';
@@ -22,8 +21,8 @@
   const lastNamePath = 'user.profile.lastName';
   const middleNamePath = 'user.profile.middleName';
 
-  setState(firstNamePath, 'John');
-  setState(lastNamePath, 'Doe');
+  update(globalStore, firstNamePath, 'John');
+  update(globalStore, lastNamePath, 'Doe');
 
   $: firstName = get($globalStore, firstNamePath);
   $: lastName = get($globalStore, lastNamePath);
@@ -42,70 +41,65 @@
   <h1>Hello {firstName} {lastName}!</h1>
 
   <form on:submit|preventDefault={handleSubmit}>
-    <LabeledInputPath
+    <LabeledInput
       info={'basic tooltip'}
       label="First Name"
+      path={firstNamePath}
       placeholder="First Name"
-      required
-      statePath={firstNamePath} />
+      required />
 
-    <LabeledInputPath label="Middle Name" statePath={middleNamePath} />
+    <LabeledInput label="Middle Name" path={middleNamePath} />
     <State component={LabeledInput} label="Middle Name" path={middleNamePath} />
 
-    <LabeledInputPath
+    <LabeledInput
       info={'This is\na **fancy** pants\n tooltip.'}
       label="Last Name"
+      path={lastNamePath}
       placeholder="Last Name"
-      statePath={lastNamePath}
       vertical />
 
-    <LabeledInputPath label="Happy" statePath={happyPath} type="checkbox" />
-    <LabeledToggle label="Happy" statePath={happyPath} />
-    <LabeledToggle label="Happy" statePath={happyPath} vertical />
+    <LabeledInput label="Happy" path={happyPath} type="checkbox" />
+    <LabeledToggle label="Happy" path={happyPath} />
+    <LabeledToggle label="Happy" path={happyPath} vertical />
 
-    <ToggleButtons options={flavorOptions} statePath={flavorPath} />
+    <ToggleButtons options={flavorOptions} path={flavorPath} />
 
     <LabeledRadioButtons
       label="Favorite Flavor"
       name="flavor"
       options={flavorOptions}
-      statePath={flavorPath} />
+      path={flavorPath} />
 
     <LabeledRadioButtons
       label="Favorite Flavor"
       name="flavor2"
       options={flavorOptions}
-      statePath={flavorPath}
+      path={flavorPath}
       vertical />
 
     <LabeledSelect
       label="Favorite Color"
       options={colorOptions}
-      statePath={colorPath} />
+      path={colorPath} />
 
     <LabeledSelect
       label="Favorite Color"
       options={colorOptions}
-      statePath={colorPath}
+      path={colorPath}
       vertical />
 
-    <LabeledInputPath
-      label="Age"
-      min="0"
-      max="100"
-      statePath="user.age"
-      type="number" />
-    <LabeledSlider label="Age" statePath="user.age" />
-    <LabeledSlider label="Age" statePath="user.age" vertical width="20rem" />
-    <Dial label="Age" statePath="user.age" />
-    <LabeledState label="Age" statePath="user.age" />
+    <LabeledInput label="Age" min="0" max="100" path="user.age" type="number" />
+    <LabeledSlider label="Age" path="user.age" />
+    <LabeledSlider label="Age" path="user.age" vertical width="20rem" />
+    <Dial label="Age" path="user.age" />
+    <LabeledState label="Age" path="user.age" />
     <LabeledState
       formatter={n => Number(n) + 100}
       label="Age"
-      statePath="user.age"
+      path="user.age"
       vertical />
 
-    <Address statePath={addressPath} vertical />
+    <Address path={addressPath} vertical />
 
     <Button label="Submit" type="submit" />
   </form>
