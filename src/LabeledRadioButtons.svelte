@@ -11,7 +11,7 @@
   export let options;
   export let path = undefined;
   export let required = false;
-  export let store = undefined;
+  export let store = globalStore;
   export let vertical = false;
 
   const dispatch = createEventDispatcher();
@@ -19,7 +19,6 @@
   let invalid = false;
   let value;
 
-  if (path && !store) store = globalStore;
   $: if (path) value = get($store, path);
 
   const getOptionValue = option =>

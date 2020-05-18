@@ -7,7 +7,8 @@
   export let max = 100;
   export let path = undefined;
   export let size = 300;
-  export let store = undefined;
+  export let store = globalStore;
+  export let value = undefined;
 
   const STROKE_WIDTH = 40;
   const HALF_STROKE = STROKE_WIDTH / 2;
@@ -24,8 +25,7 @@
 
   let ref;
 
-  if (path && !store) store = globalStore;
-  $: value = get($store, path) || 0;
+  $: if (path) value = get($store, path) || 0;
 
   $: percent = (value / max) * 100;
   $: if (ref) {

@@ -10,6 +10,7 @@
   import LabeledState from './LabeledState.svelte';
   import LabeledToggle from './LabeledToggle.svelte';
   import State from './State.svelte';
+  import Toast from './Toast.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
   import {globalStore, update} from './stores';
 
@@ -61,6 +62,10 @@
     <LabeledInput label="Happy" path={happyPath} type="checkbox" />
     <LabeledToggle label="Happy" path={happyPath} />
     <LabeledToggle label="Happy" path={happyPath} vertical />
+    <Toast
+      message="I am glad\nyou are happy!"
+      path={happyPath}
+      timeoutMs={3000} />
 
     <ToggleButtons options={flavorOptions} path={flavorPath} />
 

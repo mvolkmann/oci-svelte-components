@@ -11,7 +11,7 @@
   export let path = undefined;
   export let placeholder = '';
   export let required = false;
-  export let store = undefined;
+  export let store = globalStore;
   export let style = {};
   export let value = '';
   export let vertical = false;
@@ -22,7 +22,6 @@
   let invalid = false;
   let ref;
 
-  if (path && !store) store = globalStore;
   $: if (path) value = get($store, path);
 
   $: if (ref) {

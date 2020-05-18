@@ -6,15 +6,15 @@
 
   export let className = '';
   export let label;
+  export let on = undefined;
   export let path = undefined;
-  export let store = undefined;
+  export let store = globalStore;
   export let vertical = false;
 
   const dispatch = createEventDispatcher();
   const id = 'labeled-input-' + Date.now();
 
-  if (path && !store) store = globalStore;
-  $: on = get($store, path);
+  $: if (path) on = get($store, path);
 
   $: classes =
     'osc-labeled-toggle' +

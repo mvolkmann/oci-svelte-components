@@ -7,12 +7,11 @@
   export let className = '';
   export let options;
   export let path = undefined;
-  export let store = undefined;
+  export let store = globalStore;
   export let value = undefined;
 
   const dispatch = createEventDispatcher();
 
-  if (path && !store) store = globalStore;
   $: if (path) value = get($store, path);
 
   const classes = 'osc-toggle-buttons' + (className ? ' ' + className : '');

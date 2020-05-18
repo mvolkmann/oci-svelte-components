@@ -13,7 +13,7 @@
   export let path = undefined;
   export let placeholder = '';
   export let required = false;
-  export let store = undefined;
+  export let store = globalStore;
   export let style = {};
   export let type = 'text';
   export let value = undefined;
@@ -27,7 +27,6 @@
   let props;
   let ref;
 
-  if (path && !store) store = globalStore;
   $: if (path) value = get($store, path);
 
   $: {

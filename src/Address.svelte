@@ -7,12 +7,11 @@
   console.log('Address.svelte x: globalStore =', globalStore);
 
   export let path; // required for now
-  export let store = undefined;
+  export let store = globalStore;
   export let vertical = false;
 
   let countryCode = '';
 
-  if (!store) store = globalStore;
   $: countryCode = get($store, path + '.country');
 
   $: zipLabel =

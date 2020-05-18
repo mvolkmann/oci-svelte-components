@@ -9,7 +9,7 @@
   export let max = 100;
   export let min = 0;
   export let path = undefined;
-  export let store = undefined;
+  export let store = globalStore;
   export let vertical = false;
   export let width = '10rem';
 
@@ -23,7 +23,6 @@
   let thumbRef;
   let value = 0;
 
-  if (path && !store) store = globalStore;
   $: if (path) value = get($store, path);
 
   $: percent = (value - min) / (max - min);
