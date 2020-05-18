@@ -1,8 +1,6 @@
 <script>
   import Labeled from './Labeled.svelte';
-  import get from 'lodash/get';
   import {createEventDispatcher} from 'svelte';
-  import {globalStore, setState} from './stores';
 
   export let className = '';
   export let info = '';
@@ -12,9 +10,9 @@
   export let minLength = 0;
   export let placeholder = '';
   export let required = false;
-  export let statePath = '';
   export let style = {};
   export let type = 'text';
+  export let value;
   export let vertical = false;
   export let width = '';
 
@@ -24,10 +22,8 @@
   let invalid = false;
   let props;
   let ref;
-  let value;
 
   $: {
-    if (statePath) value = get($globalStore, statePath);
     if (type === 'checkbox') {
       props = {checked: typeof value === 'boolean' ? value : value === 'on'};
     } else {
@@ -47,7 +43,6 @@
   function handleInput(event) {
     const {target} = event;
     const value = type === 'checkbox' ? target.checked : target.value;
-    if (statePath) setState(statePath, value);
     dispatch('input', value);
   }
 

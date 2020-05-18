@@ -3,7 +3,7 @@
   import Address from './Address.svelte';
   import Button from './Button.svelte';
   import Dial from './Dial.svelte';
-  import LabeledInput from './LabeledInput.svelte';
+  import LabeledInputPath from './LabeledInputPath.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledSlider from './LabeledSlider.svelte';
@@ -40,23 +40,23 @@
   <h1>Hello {firstName} {lastName}!</h1>
 
   <form on:submit|preventDefault={handleSubmit}>
-    <LabeledInput
+    <LabeledInputPath
       info={'basic tooltip'}
       label="First Name"
       placeholder="First Name"
       required
       statePath={firstNamePath} />
 
-    <LabeledInput label="Middle Name" statePath={middleNamePath} />
+    <LabeledInputPath label="Middle Name" statePath={middleNamePath} />
 
-    <LabeledInput
+    <LabeledInputPath
       info={'This is\na **fancy** pants\n tooltip.'}
       label="Last Name"
       placeholder="Last Name"
       statePath={lastNamePath}
       vertical />
 
-    <LabeledInput label="Happy" statePath={happyPath} type="checkbox" />
+    <LabeledInputPath label="Happy" statePath={happyPath} type="checkbox" />
     <LabeledToggle label="Happy" statePath={happyPath} />
     <LabeledToggle label="Happy" statePath={happyPath} vertical />
 
@@ -86,7 +86,7 @@
       statePath={colorPath}
       vertical />
 
-    <LabeledInput
+    <LabeledInputPath
       label="Age"
       min="0"
       max="100"
