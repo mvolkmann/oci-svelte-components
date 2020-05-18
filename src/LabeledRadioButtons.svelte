@@ -103,11 +103,15 @@
     margin-top: 0.3rem;
   }
 
-  .vertical input:first-of-type {
+  .vertical > .option > input:first-of-type {
     margin-left: 0;
   }
 
-  .vertical .option {
+  .vertical > .option {
     margin-bottom: 0.5rem;
+  }
+
+  .vertical > .option > label {
+    margin-bottom: 0;
   }
 </style>
