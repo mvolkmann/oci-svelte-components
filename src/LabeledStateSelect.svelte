@@ -1,7 +1,7 @@
 <script>
   import LabeledSelect from './LabeledSelect.svelte';
-  import canadaOptions from './canadian-provinces.json';
-  import usOptions from './us-states.json';
+  import canadaOptions from './canadian-provinces';
+  import usOptions from './us-states';
 
   export let className = '';
   export let countryCode;

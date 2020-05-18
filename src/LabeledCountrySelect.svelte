@@ -1,6 +1,6 @@
 <script>
   import LabeledSelect from './LabeledSelect.svelte';
-  import options from './countries.json';
+  import options from './countries';
 
   export let className = '';
   export let placeholder = '';

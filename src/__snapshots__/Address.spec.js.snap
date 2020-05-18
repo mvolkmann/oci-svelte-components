@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Address should match snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="address"
+    >
+      <div
+        class="labeled svelte-c961mk"
+      >
+        <label
+          class="svelte-6uk5cr"
+          for=""
+        >
+          Country
+           
+           
+        </label>
+         
+        <div
+          class="container svelte-1qumlju"
+        >
+          <select
+            class=" svelte-1qumlju"
+          >
+            <option
+              value=""
+            >
+              
+            </option>
+            <option
+              value="AUS"
+            >
+              Australia
+               
+            </option>
+            <option
+              value="BRA"
+            >
+              Brazil
+               
+            </option>
+            <option
+              value="CAN"
+            >
+              Canada
+               
+            </option>
+            <option
+              value="CHN"
+            >
+              China
+               
+            </option>
+            <option
+              value="FRA"
+            >
+              France
+               
+            </option>
+            <option
+              value="DEU"
+            >
+              Germany
+               
+            </option>
+            <option
+              value="IND"
+            >
+              India
+               
+            </option>
+            <option
+              value="ITA"
+            >
+              Italy
+               
+            </option>
+            <option
+              value="JPN"
+            >
+              Japan
+               
+            </option>
+            <option
+              value="MEX"
+            >
+              Mexico
+               
+            </option>
+            <option
+              value="NOR"
+            >
+              Norway
+               
+            </option>
+            <option
+              value="POL"
+            >
+              Poland
+               
+            </option>
+            <option
+              value="RUS"
+            >
+              Russia
+               
+            </option>
+            <option
+              value="ESP"
+            >
+              Spain
+               
+            </option>
+            <option
+              value="SWE"
+            >
+              Sweden
+               
+            </option>
+            <option
+              value="CHE"
+            >
+              Switzerland
+               
+            </option>
+            <option
+              value="GBR"
+            >
+              United Kingdom
+               
+            </option>
+            <option
+              value="USA"
+            >
+              United States of America
+               
+            </option>
+          </select>
+        </div>
+         
+      </div>
+       
+    </div>
+  </div>
+</body>
+`;
