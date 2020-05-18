@@ -7,10 +7,10 @@ exports[`Address should match snapshot 1`] = `
       class="address"
     >
       <div
-        class="labeled svelte-c961mk"
+        class="osc-labeled svelte-1tulwxk"
       >
         <label
-          class="svelte-6uk5cr"
+          class="svelte-74lyeh"
           for=""
         >
           Country
@@ -19,10 +19,10 @@ exports[`Address should match snapshot 1`] = `
         </label>
          
         <div
-          class="container svelte-1qumlju"
+          class="container svelte-seedhc"
         >
           <select
-            class=" svelte-1qumlju"
+            class="osc-labeled-select svelte-seedhc"
           >
             <option
               value=""

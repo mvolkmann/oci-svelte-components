@@ -20,14 +20,16 @@
   let ref;
   let showToast = false;
 
-  $: showToast = get($store, path);
-  $: if (not) showToast = !showToast;
-  $: if (showToast && timeoutMs) setTimeout(closeToast, timeoutMs);
-  $: if (ref) {
-    if (showToast) {
-      ref.classList.add('show');
-    } else {
-      ref.classList.remove('show');
+  $: {
+    showToast = get($store, path);
+    if (not) showToast = !showToast;
+    if (showToast && timeoutMs) setTimeout(closeToast, timeoutMs);
+    if (ref) {
+      if (showToast) {
+        ref.classList.add('show');
+      } else {
+        ref.classList.remove('show');
+      }
     }
   }
 

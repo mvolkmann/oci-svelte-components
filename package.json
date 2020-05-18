@@ -42,6 +42,10 @@
     "svelte-preprocess": "^3.7.4"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "fa-svelte": "^3.1.0",
     "lodash-es": "^4.17.15",
     "sirv-cli": "^0.4.5"
   }

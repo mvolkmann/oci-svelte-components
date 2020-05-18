@@ -1,4 +1,6 @@
 <script context="module">
+  import {stringsToSentence} from './util';
+
   export function toggleDrawer(id, index) {
     const drawerElements = document.querySelectorAll(`#${id} > .drawer`);
 
@@ -40,9 +42,9 @@
 </script>
 
 <script>
-  //import Icon from './icon';
-  //import Toast from './toast';
-  import {stringsToSentence} from './util';
+  import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
+  import Icon from './Icon.svelte';
+  import Toast from './Toast.svelte';
 
   export let children;
   export let className = '';
@@ -55,152 +57,135 @@
     (className ? ' ' + className : '') +
     (horizontal ? ' horizontal' : '');
   const fnMap = {};
-  const phraseStyle = {color: 'white', display: 'block'};
-  const phrases = errorMessage
-    .split('\n')
-    .map(text => ({text, style: phraseStyle}));
+  let errorMessage = '';
 
-  let errorMessage;
-
-  fnMap[id] = msg => errorMessage = msg;
+  fnMap[id] = msg => (errorMessage = msg);
 </script>
 
-<div className={cn} id={id} style={style}>
+<div className={classes} {id}>
   {#each titles as title, index}
     <div className="drawer" key={title}>
-      <button onClick={() => toggleDrawer(id, index)}>
+      <button on:click={() => toggleDrawer(id, index)}>
         <div className="title">{title}</div>
-        <Icon icon="chevron-circle-right" size="1x" />
+        <Icon icon={faChevronCircleRight} />
       </button>
       <div className={`content content${index}`}>{children[index]}</div>
     </div>
   {/each}
-  {errorMessage && (
+  {#if errorMessage}
     <Toast
       backgroundColor="var(--error-color)"
-      on:close={() => setErrorMessage('')}
-      phrases={phrases}
-      // timeoutMs={3000}
-    />
-  )}
+      on:close={() => (errorMessage = '')}
+      message={errorMessage} />
+  {/if}
 </div>
 
 <style>
   .accordion {
     --transition-duration: 0.5s;
+  }
 
-    .drawer {
-      & > button {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  .drawer > button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        background-color: var(--light-gray, lightgray);
-        border: none;
-        border-radius: 0;
-        color: black;
-        margin-top: 0.5rem;
-        outline: none;
-        padding: 1rem;
-        width: 100%;
+    background-color: var(--light-gray, lightgray);
+    border: none;
+    border-radius: 0;
+    color: black;
+    margin-top: 0.5rem;
+    outline: none;
+    padding: 1rem;
+    width: 100%;
+  }
 
-        & > .icon {
-          background-color: transparent;
-          border: none;
-          outline: none;
-          transition-duration: var(--transition-duration);
-          transition-property: transform;
-          transform: rotate(0deg);
+  .drawer > button > .icon {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    transition-duration: var(--transition-duration);
+    transition-property: transform;
+    transform: rotate(0deg);
+  }
 
-          svg {
-            color: var(--secondary-color);
-          }
-        }
+  .drawer > button > .icon svg {
+    color: var(--secondary-color);
+  }
 
-        .title {
-          font-size: 1.2rem;
-        }
-      }
+  .drawer .title {
+    font-size: 1.2rem;
+  }
 
-      & > .content {
-        max-height: 0;
-        overflow-y: auto;
-        transition-duration: var(--transition-duration);
-        transition-property: height, max-height;
-      }
+  .drawer > .content {
+    max-height: 0;
+    overflow-y: auto;
+    transition-duration: var(--transition-duration);
+    transition-property: height, max-height;
+  }
 
-      &.open {
-        & > button {
-          background-color: var(--secondary-color);
-          color: white;
+  .drawer.open > button {
+    background-color: var(--secondary-color);
+    color: white;
+  }
 
-          & > .icon {
-            transform: rotate(90deg);
+  .drawer.open > button > .icon {
+    transform: rotate(90deg);
+  }
 
-            svg {
-              color: white;
-            }
-          }
-        }
+  .drawer.open > button > .icon svg {
+    color: white;
+  }
 
-        .content {
-          border-bottom: solid lightgray 1px;
-          border-left: solid lightgray 1px;
-          border-right: solid lightgray 1px;
-          padding: 0.5rem;
+  .drawer.open .content {
+    border-bottom: solid lightgray 1px;
+    border-left: solid lightgray 1px;
+    border-right: solid lightgray 1px;
+    padding: 0.5rem;
 
-          // Transition of height does not work when set to "auto".
-          //max-height: 50px;
+    /* Transition of height does not work when set to "auto". */
+    /*max-height: 50px;*/
 
-          max-height: 100vh;
-        }
-      }
-    }
+    max-height: 100vh;
+  }
 
-    &.horizontal {
-      position: relative;
+  .accordion.horizontal {
+    position: relative;
+  }
 
-      .drawer {
-        --drawer-width: 300px;
-        width: var(--drawer-width);
+  .accordion.horizontal .drawer {
+    --drawer-width: 300px;
+    width: var(--drawer-width);
+  }
 
-        & > button {
-          border-bottom: solid var(--secondary-color) 1px;
-          color: white;
-          margin-bottom: 0;
-          margin-top: 0;
-        }
+  .accordion.horizontal .drawer > button {
+    border-bottom: solid var(--secondary-color) 1px;
+    color: white;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
 
-        & > .content {
-          position: absolute;
-          left: calc(var(--drawer-width) + 1rem);
-          top: 0;
+  .accordion.horizontal .drawer > .content {
+    position: absolute;
+    left: calc(var(--drawer-width) + 1rem);
+    top: 0;
 
-          margin-top: 0;
-          transition-duration: unset;
-        }
+    margin-top: 0;
+    transition-duration: unset;
+  }
 
-        &.open {
-          .content {
-            border: solid var(--primary-color) 2px;
-            padding: 2rem;
-          }
+  .accordion.horizontal .drawer.open .content {
+    border: solid var(--primary-color) 2px;
+    padding: 2rem;
+  }
 
-          .icon {
-            transform: none;
-          }
-        }
-      }
-    }
+  .accordion.horizontal .drawer.open .icon {
+    transform: none;
+  }
 
-    @media (max-width: 760px) {
-      .drawer {
-        & > button {
-          .title {
-            font-size: 1rem;
-          }
-        }
-      }
+  @media (max-width: 760px) {
+    .drawer > button .title {
+      font-size: 1rem;
     }
   }
 </style>

@@ -1,8 +1,12 @@
 <script>
+  import * as solid from '@fortawesome/free-solid-svg-icons';
+  import * as brands from '@fortawesome/free-brands-svg-icons';
+
   import get from 'lodash-es/get';
   import Address from './Address.svelte';
   import Button from './Button.svelte';
   import Dial from './Dial.svelte';
+  import Icon from './Icon.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
@@ -42,6 +46,11 @@
   <h1>Hello {firstName} {lastName}!</h1>
 
   <form on:submit|preventDefault={handleSubmit}>
+    <Icon className="icon" icon={solid.faHeart} />
+    <Icon className="icon" icon={brands.faJs} />
+    <Icon className="icon" icon={brands.faNode} />
+    <Icon className="icon" icon={brands.faNpm} />
+
     <LabeledInput
       info={'basic tooltip'}
       label="First Name"
@@ -114,6 +123,11 @@
   main {
     margin: 0 auto;
     padding: 1rem;
+  }
+
+  form :global(.icon) {
+    color: green;
+    font-size: 5rem;
   }
 
   h1 {
