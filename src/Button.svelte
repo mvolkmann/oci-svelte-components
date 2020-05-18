@@ -9,7 +9,9 @@
   const dispatch = createEventDispatcher();
 
   const classes =
-    'button' + (className ? ' ' + className : '') + (asLink ? ' as-link' : '');
+    'osc-button' +
+    (className ? ' ' + className : '') +
+    (asLink ? ' as-link' : '');
 </script>
 
 <button class={classes} on:click={() => dispatch('click')} {type}>
@@ -18,12 +20,12 @@
 
 <style>
   button {
-    background-color: var(--primary-color, gray);
+    background-color: var(--osc-primary-color, gray);
     border: none;
-    border-radius: var(--border-radius, 0);
+    border-radius: var(--osc-border-radius, 0);
     color: white;
     display: inline-block;
-    font-size: var(--button-font-size, 1rem);
+    font-size: var(--osc-button-font-size, 1rem);
     font-weight: bold;
     padding: 0.5rem 1rem;
     text-transform: uppercase;
@@ -32,7 +34,7 @@
   button.as-link {
     background-color: transparent;
     border: none !important;
-    color: var(--primary-color);
+    color: var(--osc-primary-color);
     font-weight: 300;
     padding-left: 0;
     padding-right: 0;
@@ -41,6 +43,6 @@
   }
 
   button:focus {
-    outline-color: var(--secondary-color);
+    outline-color: var(--osc-secondary-color);
   }
 </style>

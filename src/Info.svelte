@@ -35,7 +35,7 @@
     }
   }
 
-  const classes = 'info' + (className ? ' ' + className : '');
+  const classes = 'osc-info' + (className ? ' ' + className : '');
   const outerStyle = {'--size': CIRCLE_SIZE};
 
   let textStyle = {};
@@ -80,7 +80,7 @@
 
 <style>
   /* The --size variable is set in info.tsx. */
-  .info {
+  .osc-info {
     display: inline-block;
     position: relative;
   }
@@ -90,7 +90,7 @@
     justify-content: center;
     align-items: center;
 
-    background-color: var(--secondary-color);
+    background-color: var(--osc-secondary-color);
     border: none;
     border-radius: calc(var(--size) / 2);
     color: white;
@@ -102,7 +102,7 @@
   }
 
   .text {
-    background-color: var(--secondary-color);
+    background-color: var(--osc-secondary-color);
     border: none;
     color: white;
     font-weight: normal;

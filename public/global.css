@@ -1,11 +1,11 @@
 :root {
-  --border-radius: 4px;
-  --button-font-weight: bold;
-  --error-color: red;
-  --label-font-size: 1rem;
-  --label-font-weight: bold;
-  --primary-color: cornflowerblue;
-  --secondary-color: orange;
+  --osc-border-radius: 4px;
+  --osc-button-font-weight: bold;
+  --osc-error-color: red;
+  --osc-label-font-size: 1rem;
+  --osc-label-font-weight: bold;
+  --osc-primary-color: cornflowerblue;
+  --osc-secondary-color: orange;
 }
 
 html,

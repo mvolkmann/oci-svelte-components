@@ -56,7 +56,7 @@
   const onRight = type === 'checkbox' || type === 'radio';
 
   $: classes =
-    'labeled-input' +
+    'osc-labeled-input' +
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');
@@ -82,7 +82,7 @@
 <style>
   input {
     border: solid lightgray 1px;
-    border-radius: var(--border-radius, 0);
+    border-radius: var(--osc-border-radius, 0);
     font-size: 1rem;
     margin-bottom: 0;
     padding: 0.5rem;
@@ -96,7 +96,7 @@
   }
 
   input[type='checkbox']:checked:after {
-    color: var(--primary-color);
+    color: var(--osc-primary-color);
     content: '\2714';
     position: absolute;
     left: 1px;
@@ -104,15 +104,15 @@
   }
 
   input:focus {
-    outline-color: var(--secondary-color);
+    outline-color: var(--osc-secondary-color);
   }
 
   input:invalid {
-    border: solid var(--error-color, red) 1px;
+    border: solid var(--osc-error-color, red) 1px;
   }
 
   input[type='checkbox']:focus,
   input[type='radio']:focus {
-    outline: solid var(--secondary-color) 2px;
+    outline: solid var(--osc-secondary-color) 2px;
   }
 </style>

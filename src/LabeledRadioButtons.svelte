@@ -29,7 +29,9 @@
     update(store, path, event.target.value, dispatch);
 
   $: classes =
-    (className ? ' ' + className : '') + (value && invalid ? ' invalid' : '');
+    'osc-labeled-radio-buttons' +
+    (className ? ' ' + className : '') +
+    (value && invalid ? ' invalid' : '');
 
   const containerClasses = 'container' + (vertical ? ' vertical' : '');
 </script>
@@ -76,12 +78,12 @@
   }
 
   input:checked {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: var(--osc-primary-color);
+    border-color: var(--osc-primary-color);
   }
 
   input:focus {
-    outline: solid var(--secondary-color) 2px;
+    outline: solid var(--osc-secondary-color) 2px;
   }
 
   label {

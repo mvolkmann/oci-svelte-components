@@ -16,7 +16,7 @@
   const SWEEP = 1;
   const X_AXIS_ROTATION = 0;
 
-  const classes = 'dial' + (className ? ' ' + className : '');
+  const classes = 'osc-dial' + (className ? ' ' + className : '');
   const halfSize = size / 2;
   const radius = halfSize - HALF_STROKE;
   const startDegrees = 270 - GAP / 2;
@@ -63,12 +63,12 @@
     height={size}>
     <path
       fill="none"
-      stroke="var(--secondary-color)"
+      stroke="var(--osc-secondary-color)"
       stroke-width={STROKE_WIDTH}
       d={getPath(100)} />
     <path
       fill="none"
-      stroke="var(--primary-color)"
+      stroke="var(--osc-primary-color)"
       stroke-width={STROKE_WIDTH}
       d={getPath(percent)} />
   </svg>
@@ -77,29 +77,29 @@
 </div>
 
 <style>
-  .dial {
+  .osc-dial {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     background-color: transparent;
-    margin: var(--dial-margin, 1.25rem);
+    margin: var(--osc-dial-margin, 1.25rem) 0;
     padding: 0 !important;
     position: relative;
   }
 
   svg {
     position: absolute;
-    color: var(--dial-svg-color, var(--white));
+    color: var(--osc-dial-svg-color, var(--white));
   }
 
   .label {
-    font-size: var(--dial-label-font-size, 2.25rem);
+    font-size: var(--osc-dial-label-font-size, 2.25rem);
     font-weight: bold;
   }
 
   .value {
-    font-size: var(--dial-value-font-size, 1.5rem);
+    font-size: var(--osc-dial-value-font-size, 1.5rem);
   }
 </style>

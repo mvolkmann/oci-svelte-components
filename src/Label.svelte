@@ -19,12 +19,12 @@
 
 <style>
   label {
-    font-size: var(--label-font-size, 1rem);
-    font-weight: var(--label-font-weight, bold);
+    font-size: var(--osc-label-font-size, 1rem);
+    font-weight: var(--osc-label-font-weight, bold);
   }
 
   .required {
-    color: var(--error-color, red);
+    color: var(--osc-error-color, red);
     font-size: 1.2rem;
     line-height: 0.8rem;
     margin-left: 0.2rem;

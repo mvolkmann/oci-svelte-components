@@ -16,7 +16,7 @@
   let style = {};
 
   $: classes =
-    'labeled' +
+    'osc-labeled' +
     (className ? ' ' + className : '') +
     (focus ? ' focus' : '') +
     (onRight ? ' on-right' : '') +
@@ -38,23 +38,23 @@
 </div>
 
 <style>
-  .labeled {
+  .osc-labeled {
     display: flex;
     align-items: center;
 
     margin-bottom: 1rem;
   }
 
-  .labeled:not(.on-right) > :global(label) {
+  .osc-labeled:not(.on-right) > :global(label) {
     margin-right: 0.5rem;
   }
 
-  .labeled.on-right > :global(label) {
+  .osc-labeled.on-right > :global(label) {
     margin-left: 0.5rem;
   }
 
   .focus :global(label) {
-    color: var(--secondary-color);
+    color: var(--osc-secondary-color);
   }
 
   .vertical {

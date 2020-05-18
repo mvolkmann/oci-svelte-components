@@ -36,6 +36,7 @@
     update(store, path, event.target.value, dispatch);
 
   $: classes =
+    'osc-labeled-select' +
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');
@@ -83,7 +84,7 @@
     -moz-appearance: none;
     -webkit-appearance: none;
 
-    border-radius: var(--border-radius, 0);
+    border-radius: var(--osc-border-radius, 0);
     font-size: 1rem;
     height: 36px;
     margin-bottom: 0;
@@ -95,11 +96,11 @@
   }
 
   select:focus {
-    outline-color: var(--secondary-color);
+    outline-color: var(--osc-secondary-color);
   }
 
   select:invalid {
-    border: solid var(--error-color, red) 1px;
+    border: solid var(--osc-error-color, red) 1px;
   }
 
   select.vertical {

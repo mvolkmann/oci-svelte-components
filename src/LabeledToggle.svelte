@@ -17,12 +17,12 @@
   $: on = get($store, path);
 
   $: classes =
-    'toggle' +
+    'osc-labeled-toggle' +
     (className ? ' ' + className : '') +
     (vertical ? ' vertical' : '');
 
   $: toggleClasses =
-    'toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
+    'osc-labeled-toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
 
   const handleClick = () => update(store, path, !on, dispatch);
 </script>
@@ -34,16 +34,16 @@
 </Labeled>
 
 <style>
-  .toggle {
+  .osc-labeled-toggle {
     --padding: 2px;
     --size: 25px;
     --thumb-color: white;
-    --toggle-color: var(--primary-color);
+    --toggle-color: var(--osc-primary-color);
 
     display: flex;
     align-items: center;
 
-    background-color: var(--secondary-color);
+    background-color: var(--osc-secondary-color);
     box-sizing: border-box;
     height: var(--size);
     width: calc(var(--size) * 1.8);
@@ -54,15 +54,15 @@
     position: relative;
   }
 
-  .toggle:focus {
-    outline: solid var(--secondary-color) 2px;
+  .osc-labeled-toggle:focus {
+    outline: solid var(--osc-secondary-color) 2px;
   }
 
-  .toggle.on {
-    background-color: var(--primary-color);
+  .osc-labeled-toggle.on {
+    background-color: var(--osc-primary-color);
   }
 
-  .toggle.on .thumb {
+  .osc-labeled-toggle.on .thumb {
     left: calc(var(--size) * 0.88);
   }
 

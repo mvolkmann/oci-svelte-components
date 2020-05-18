@@ -15,7 +15,7 @@
   if (path && !store) store = globalStore;
   $: if (path) value = get($store, path);
 
-  const classes = 'toggle-buttons' + (className ? ' ' + className : '');
+  const classes = 'osc-toggle-buttons' + (className ? ' ' + className : '');
 
   const getPairText = option =>
     typeof option === 'object' ? option.text || option.value : option;
@@ -64,7 +64,7 @@
   }
 
   button:focus {
-    outline: solid var(--secondary-color) 2px;
+    outline: solid var(--osc-secondary-color) 2px;
   }
 
   button:last-of-type {
@@ -73,7 +73,7 @@
   }
 
   button.selected {
-    background-color: var(--primary-color);
+    background-color: var(--osc-primary-color);
     color: white;
   }
 
@@ -89,7 +89,7 @@
     color: black;
   }
 
-  .toggle-buttons {
+  .osc-toggle-buttons {
     display: flex;
     margin-bottom: 0.5rem;
   }
