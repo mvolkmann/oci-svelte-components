@@ -1,14 +1,16 @@
 <script>
-  import get from 'lodash/get';
+  import get from 'lodash-es/get';
   import Address from './Address.svelte';
   import Button from './Button.svelte';
   import Dial from './Dial.svelte';
+  import LabeledInput from './LabeledInput.svelte';
   import LabeledInputPath from './LabeledInputPath.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledSlider from './LabeledSlider.svelte';
   import LabeledState from './LabeledState.svelte';
   import LabeledToggle from './LabeledToggle.svelte';
+  import State from './State.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
   import {globalStore, setState} from './stores';
 
@@ -48,6 +50,7 @@
       statePath={firstNamePath} />
 
     <LabeledInputPath label="Middle Name" statePath={middleNamePath} />
+    <State component={LabeledInput} label="Middle Name" path={middleNamePath} />
 
     <LabeledInputPath
       info={'This is\na **fancy** pants\n tooltip.'}
@@ -97,7 +100,7 @@
     <Dial label="Age" statePath="user.age" />
     <LabeledState label="Age" statePath="user.age" />
     <LabeledState
-      formatter={n => n + 100}
+      formatter={n => Number(n) + 100}
       label="Age"
       statePath="user.age"
       vertical />

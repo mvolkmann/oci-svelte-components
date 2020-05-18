@@ -1,5 +1,5 @@
 <script>
-  import get from 'lodash/get';
+  import get from 'lodash-es/get';
   import {createEventDispatcher} from 'svelte';
   import LabeledInput from './LabeledInput.svelte';
   import {globalStore, setState} from './stores';

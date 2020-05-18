@@ -44,6 +44,7 @@
     const {target} = event;
     const value = type === 'checkbox' ? target.checked : target.value;
     dispatch('input', value);
+    dispatch('value', value);
   }
 
   const onRight = type === 'checkbox' || type === 'radio';

@@ -1,6 +1,6 @@
+import get from 'lodash-es/get';
+import set from 'lodash-es/set';
 import {get as getStore, writable} from 'svelte/store';
-import get from 'lodash/get';
-import set from 'lodash/set';
 
 export const globalStore = writable({});
 

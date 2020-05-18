@@ -1,6 +1,5 @@
 <script>
-  //import {get} from 'lodash';
-  import get from 'lodash/get';
+  import get from 'lodash-es/get';
   import LabeledCountrySelect from './LabeledCountrySelect.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledStateSelect from './LabeledStateSelect.svelte';

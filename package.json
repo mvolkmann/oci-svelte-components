@@ -5,7 +5,7 @@
     "build": "rollup -c",
     "build-storybook": "build-storybook",
     "dev": "rollup -c -w",
-    "format": "prettier --write '{public,src}/**/*.{css,html,js,svelte}'",
+    "format": "prettier --write '**/*.{css,html,js,svelte}'",
     "lint": "eslint --fix --quiet src --ext .js,.svelte",
     "reinstall": "rm -rf node_modules package-lock.json && npm install",
     "start": "sirv public",
@@ -42,7 +42,7 @@
     "svelte-preprocess": "^3.7.4"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
     "sirv-cli": "^0.4.5"
   }
 }

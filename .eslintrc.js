@@ -3,21 +3,21 @@ module.exports = {
     browser: true,
     es6: true,
     jest: true,
-    node: true,
+    node: true
   },
   extends: ['eslint:recommended', 'plugin:import/recommended'],
   overrides: [
     {
       files: ['**/*.svelte'],
-      processor: 'svelte3/svelte3',
-    },
+      processor: 'svelte3/svelte3'
+    }
   ],
   parserOptions: {
     ecmaVersion: 2019,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['import', 'svelte3'],
   settings: {
-    'svelte3/ignore-styles': () => true,
-  },
+    'svelte3/ignore-styles': () => true
+  }
 };

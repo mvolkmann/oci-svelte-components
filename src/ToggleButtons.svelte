@@ -1,5 +1,5 @@
 <script>
-  import get from 'lodash/get';
+  import get from 'lodash-es/get';
   //import Icon from './Icon.svelte';
   import {globalStore, setState} from './stores';
 

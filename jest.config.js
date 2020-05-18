@@ -5,5 +5,6 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svelte$': 'svelte-jester'
   },
+  transformIgnorePatterns: ['node_modules/(?!(lodash-es)/)'],
   verbose: true
 };
