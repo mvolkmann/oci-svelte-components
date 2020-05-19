@@ -7,6 +7,7 @@
   import Address from './Address.svelte';
   import Button from './Button.svelte';
   import Dial from './Dial.svelte';
+  import Hello from './Hello.svelte';
   import Icon from './Icon.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
@@ -27,7 +28,9 @@
   const lastNamePath = 'user.profile.lastName';
   const middleNamePath = 'user.profile.middleName';
 
-  const titles = ['Title #1', 'Title #2', 'Title #3'];
+  const drawerComponents = [Hello, Hello, Hello];
+  const drawerProps = [{name: 'Mark'}, {name: 'Tami'}, {name: 'Dasher'}];
+  const drawerTitles = ['Title #1', 'Title #2', 'Title #3'];
 
   let isHappy = false;
   let showToast = false;
@@ -130,11 +133,12 @@
 
     <Address path={addressPath} vertical />
 
-    <Accordion {titles}>
-      <h1>Drawer #1</h1>
-      <h1>Drawer #2</h1>
-      <h1>Drawer #3</h1>
-    </Accordion>
+    <div>
+      <Accordion
+        components={drawerComponents}
+        props={drawerProps}
+        titles={drawerTitles} />
+    </div>
 
     <Button label="Submit" type="submit" />
   </form>

@@ -3,6 +3,10 @@
 
   export function toggleDrawer(id, index) {
     const drawerElements = document.querySelectorAll(`#${id} > .drawer`);
+    console.log(
+      'Accordion.svelte toggleDrawer: drawerElements =',
+      drawerElements
+    );
 
     let openDrawer;
 
@@ -47,10 +51,11 @@
   import Toast from './Toast.svelte';
   import {getId} from './util';
 
-  export let children;
   export let className = '';
+  export let components;
   export let horizontal = false;
   export let id = getId('accordion-');
+  export let props;
   export let titles;
 
   const classes =
@@ -63,14 +68,16 @@
   fnMap[id] = msg => (errorMessage = msg);
 </script>
 
-<div className={classes} {id}>
+<div class={classes} {id}>
   {#each titles as title, index}
-    <div className="drawer" key={title}>
+    <div class="drawer" key={title}>
       <button on:click={() => toggleDrawer(id, index)} type="button">
-        <div className="title">{title}</div>
+        <div class="title">{title}</div>
         <Icon icon={faChevronCircleRight} />
       </button>
-      <div className={`content content${index}`}>children[index]</div>
+      <div class="content">
+        <svelte:component this={components[index]} {...props[index]} />
+      </div>
     </div>
   {/each}
   {#if errorMessage}
@@ -82,8 +89,10 @@
 </div>
 
 <style>
-  .accordion {
+  .osc-accordion {
     --transition-duration: 0.5s;
+    display: inline-block;
+    margin-bottom: 1rem;
   }
 
   .drawer > button {
@@ -95,7 +104,7 @@
     border: none;
     border-radius: 0;
     color: black;
-    margin-top: 0.5rem;
+    margin: 0.5rem 0 0 0;
     outline: none;
     padding: 1rem;
     width: 100%;
