@@ -6,9 +6,11 @@
   import Accordion from './Accordion.svelte';
   import Address from './Address.svelte';
   import Button from './Button.svelte';
+  import Carousel from './Carousel.svelte';
   import Dial from './Dial.svelte';
   import Hello from './Hello.svelte';
   import Icon from './Icon.svelte';
+  import Image from './Image.svelte';
   import LabeledInput from './LabeledInput.svelte';
   import LabeledRadioButtons from './LabeledRadioButtons.svelte';
   import LabeledSelect from './LabeledSelect.svelte';
@@ -45,6 +47,22 @@
       props: {name: 'Dasher'}
     }
   ];
+
+  const images = [
+    {description: 'Dasher', url: 'images/whippet.jpg'},
+    {description: 'Maisey', url: 'images/treeing-walker-coonhound.jpg'},
+    {description: 'Ramsay', url: 'images/native-american-indian-dog.jpg'},
+    {description: 'Oscar', url: 'images/german-shorthaired-pointer.jpg'}
+  ];
+  const carouselElementWidth = 200;
+  const carouselData = images.map(({description, url}) => ({
+    component: Image,
+    props: {
+      description,
+      url,
+      width: carouselElementWidth + 'px'
+    }
+  }));
 
   let isHappy = false;
   let showToast = false;
@@ -152,6 +170,14 @@
 
     <div>
       <Accordion data={accordionData} drawerWidth="200px" horizontal />
+    </div>
+
+    <div>
+      <Carousel
+        elements={carouselData}
+        elementWidth={carouselElementWidth}
+        height={396}
+        showDots />
     </div>
 
     <Button label="Submit" type="submit" />
