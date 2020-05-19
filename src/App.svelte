@@ -89,8 +89,6 @@
     <Toast
       message="I am so glad\nyou are happy!"
       bind:show={showToast}
-      position="right"
-      side="top"
       timeoutMs={3000} />
 
     <ToggleButtons options={flavorOptions} path={flavorPath} />

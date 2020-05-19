@@ -17,42 +17,6 @@
     if (onClose) onClose();
   }
 
-  function setHorizontalPosition() {
-    switch (position) {
-      case 'left':
-        toastStyle.left = 0;
-        break;
-      case 'right':
-        toastStyle.right = 0;
-        break;
-      case 'center':
-        toastStyle.left = 0;
-        toastStyle.right = 0;
-        toastStyle['margin-left'] = 'auto';
-        toastStyle['margin-right'] = 'auto';
-        break;
-      default:
-        throw new Error(`Toast invalid horizontal position prop "${position}"`);
-    }
-  }
-
-  function setVerticalPosition() {
-    switch (position) {
-      case 'top':
-        toastStyle.top = 0;
-        break;
-      case 'bottom':
-        toastStyle.bottom = 0;
-        break;
-      case 'center':
-        toastStyle.top = '50%';
-        toastStyle.transform = 'translateY(-50%)';
-        break;
-      default:
-        throw new Error(`Toast invalid vertical position prop "${position}"`);
-    }
-  }
-
   const lines = message.split('\\n');
 
   const toastStyle = {
@@ -61,26 +25,46 @@
     width
   };
 
-  //$: toastStyle[side] = show ? 0 : '-100%';
-  $: switch (side) {
+  $: toastStyle[side] = show ? 0 : '-100%';
+
+  switch (side) {
     case 'bottom':
-      toastStyle.bottom = show ? 0 : '-100%';
-      setHorizontalPosition();
-      break;
-
-    case 'left':
-      toastStyle.left = show ? 0 : '-100%';
-      setVerticalPosition();
-      break;
-
-    case 'right':
-      toastStyle.right = show ? 0 : '-100%';
-      setVerticalPosition();
-      break;
-
     case 'top':
-      toastStyle.top = show ? 0 : '-100%';
-      setHorizontalPosition();
+      switch (position) {
+        case 'left':
+          toastStyle.left = 0;
+          break;
+        case 'right':
+          toastStyle.right = 0;
+          break;
+        case 'center':
+          toastStyle.left = 0;
+          toastStyle.right = 0;
+          toastStyle['margin-left'] = 'auto';
+          toastStyle['margin-right'] = 'auto';
+          break;
+        default:
+          throw new Error(
+            `Toast invalid horizontal position prop "${position}"`
+          );
+      }
+      break;
+    case 'left':
+    case 'right':
+      switch (position) {
+        case 'top':
+          toastStyle.top = 0;
+          break;
+        case 'bottom':
+          toastStyle.bottom = 0;
+          break;
+        case 'center':
+          toastStyle.top = '50%';
+          toastStyle.transform = 'translateY(-50%)';
+          break;
+        default:
+          throw new Error(`Toast invalid vertical position prop "${position}"`);
+      }
       break;
     default:
       throw new Error(`Toast invalid side prop "${side}"`);
