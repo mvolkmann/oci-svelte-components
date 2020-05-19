@@ -1,6 +1,4 @@
 <script>
-  import {onMount} from 'svelte';
-
   export let className = '';
   export let elements;
   export let elementMargin = 0;
@@ -12,18 +10,20 @@
   let pageIndex = 0;
   let containerRef;
 
-  console.log('Carousel.svelte x: elements =', elements);
   const classes = 'carousel' + (className ? ' ' + className : '');
-  const maxPageIndex = Math.ceil(elements.length / elementsPerPage) - 1;
-  const advanceWidth = (elementWidth + elementMargin) * elementsPerPage;
-  const pageWidth = elementMargin + advanceWidth;
-  const centerStyle = `height: ${height}px; width: ${pageWidth}px;`;
-  const containerStyle = `padding-left: ${elementMargin}px;`;
-  const elementStyle = `margin-right: ${elementMargin}px;`;
 
-  onMount(() => {
-    containerRef.style.setProperty('--element-margin', elementMargin + 'px');
-  });
+  $: maxPageIndex = Math.ceil(elements.length / elementsPerPage) - 1;
+  $: advanceWidth = (elementWidth + elementMargin) * elementsPerPage;
+  $: pageWidth = elementMargin + advanceWidth;
+  $: centerStyle = `height: ${height}px; width: ${pageWidth}px;`;
+  $: containerStyle = `padding-left: ${elementMargin}px;`;
+
+  $: if (containerRef) {
+    const elements = containerRef.querySelectorAll('*');
+    for (const element of elements) {
+      element.style.marginRight = elementMargin + 'px';
+    }
+  }
 
   $: updateLeft(pageIndex);
 
@@ -52,10 +52,7 @@
     <div class="center" style={centerStyle}>
       <div bind:this={containerRef} class="container" style={containerStyle}>
         {#each elements as element}
-          <svelte:component
-            this={element.component}
-            style={elementStyle}
-            {...element.props} />
+          <svelte:component this={element.component} {...element.props} />
         {/each}
       </div>
     </div>
@@ -107,8 +104,6 @@
   }
 
   .container {
-    --element-margin: 0;
-
     display: flex;
     align-items: center;
 
@@ -117,10 +112,6 @@
     left: 0;
     transition-duration: 1s;
     transition-property: left;
-  }
-
-  .container > * {
-    margin: 0 var(--element-margin);
   }
 
   .dot {

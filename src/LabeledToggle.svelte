@@ -25,10 +25,7 @@
   $: toggleClasses =
     'osc-labeled-toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
 
-  const handleClick = () => {
-    console.log('LabeledToggle.svelte handleClick: entered');
-    update(store, path, !on, dispatch);
-  };
+  const handleClick = () => update(store, path, !on, dispatch);
 </script>
 
 <Labeled className={classes} {id} {label} on:click={handleClick}>
@@ -42,12 +39,12 @@
     --padding: 2px;
     --size: 25px;
     --thumb-color: white;
-    --toggle-color: var(--osc-primary-color);
+    --toggle-color: var(--osc-primary-color, cornflowerblue);
 
     display: flex;
     align-items: center;
 
-    background-color: var(--osc-secondary-color);
+    background-color: var(--osc-secondary-color, orange);
     box-sizing: border-box;
     height: var(--size);
     width: calc(var(--size) * 1.8);
@@ -59,11 +56,11 @@
   }
 
   .osc-labeled-toggle:focus {
-    outline: solid var(--osc-secondary-color) 2px;
+    outline: solid var(--osc-secondary-color, orange) 2px;
   }
 
   .osc-labeled-toggle.on {
-    background-color: var(--osc-primary-color);
+    background-color: var(--osc-primary-color, cornflowerblue);
   }
 
   .osc-labeled-toggle.on .thumb {

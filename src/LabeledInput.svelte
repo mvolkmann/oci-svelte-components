@@ -49,7 +49,12 @@
 
   function handleInput(event) {
     const {target} = event;
-    const value = type === 'checkbox' ? target.checked : target.value;
+    const value =
+      type === 'number'
+        ? Number(target.value)
+        : type === 'checkbox'
+        ? target.checked
+        : target.value;
     update(store, path, value, dispatch);
   }
 

@@ -6,8 +6,8 @@
   export let style = '';
   export let width = undefined;
 
-  if (height) style += `height: ${height};`;
-  if (width) style += `width: ${width};`;
+  if (height) style += `; height: ${height}`;
+  if (width) style += `; width: ${width}`;
 
   const classes = 'image' + (className ? ' ' + className : '');
 </script>
@@ -19,6 +19,7 @@
     display: inline-block;
     object-fit: contain;
     padding: 0;
-    vertical-align: center;
+    height: var(--image-height);
+    width: var(--image-width);
   }
 </style>
