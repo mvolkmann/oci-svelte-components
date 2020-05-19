@@ -42,13 +42,11 @@
   // Detect change from unhappy to happy.
   $: if (!isHappy && $globalStore.user.happy) {
     isHappy = true;
-    showToast = true;
+    showToast = true; // only on change to happy
   }
 
-  // Detect change from happy to unhappy.
-  $: if (isHappy && !$globalStore.user.happy) {
-    isHappy = false;
-  }
+  // Detect change to unhappy.
+  $: if (!$globalStore.user.happy) isHappy = false;
 
   const colorOptions = ['red', 'green', 'blue'];
   const flavorOptions = ['vanilla', 'strawberry', 'chocolate'];
@@ -88,7 +86,7 @@
     <LabeledToggle label="Happy" path={happyPath} />
     <LabeledToggle label="Happy" path={happyPath} vertical />
     <Toast
-      message="I am glad\nyou are happy!"
+      message="I am so glad\nyou are happy!"
       bind:show={showToast}
       timeoutMs={3000} />
 

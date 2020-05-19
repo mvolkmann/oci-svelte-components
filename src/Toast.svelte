@@ -1,7 +1,7 @@
 <script>
   import {getStyleString} from './util';
 
-  export let backgroundColor = 'black';
+  export let backgroundColor = 'var(--osc-primary-color)';
   export let color = 'white';
   export let className = '';
   export let onClose = undefined;
@@ -11,11 +11,11 @@
   export let width = 'fit-content';
 
   const lines = message.split('\\n');
-  const toastStyle = {
+  const toastStyle = getStyleString({
     '--background-color': backgroundColor,
     color,
     width
-  };
+  });
 
   $: classes =
     'osc-toast' + (className ? ' ' + className : '') + (show ? ' show' : '');
@@ -28,7 +28,7 @@
   $: if (show && timeoutMs) setTimeout(closeToast, timeoutMs);
 </script>
 
-<div class={classes} style={getStyleString(toastStyle)}>
+<div class={classes} style={toastStyle}>
   <button className="close" on:click={closeToast} type="button">
     &#10006;
   </button>
