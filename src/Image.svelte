@@ -3,9 +3,9 @@
   export let description;
   export let height = undefined;
   export let url;
+  export let style = '';
   export let width = undefined;
 
-  let style = '';
   if (height) style += `height: ${height};`;
   if (width) style += `width: ${width};`;
 

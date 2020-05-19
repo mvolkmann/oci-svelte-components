@@ -14,12 +14,14 @@
 
   const classes = 'carousel' + (className ? ' ' + className : '');
   const maxPageIndex = Math.ceil(elements.length / elementsPerPage) - 1;
-  const pageWidth = (elementWidth + elementMargin * 2) * elementsPerPage;
-  const centerStyle = `height: ${height}px; width: ${pageWidth}px`;
+  const advanceWidth = (elementWidth + elementMargin) * elementsPerPage;
+  const pageWidth = elementMargin + advanceWidth;
+  const centerStyle = `height: ${height}px; width: ${pageWidth}px;`;
+  const containerStyle = `padding-left: ${elementMargin}px;`;
+  const elementStyle = `margin-right: ${elementMargin}px;`;
 
   onMount(() => {
     containerRef.style.setProperty('--element-margin', elementMargin + 'px');
-    //updateLeft(0);
   });
 
   $: updateLeft(pageIndex);
@@ -34,7 +36,7 @@
 
   function updateLeft(pageIndex) {
     if (containerRef) {
-      containerRef.style.left = -pageIndex * pageWidth + 'px';
+      containerRef.style.left = -pageIndex * advanceWidth + 'px';
     }
   }
 </script>
@@ -47,9 +49,12 @@
       </button>
     </div>
     <div class="center" style={centerStyle}>
-      <div class="container" bind:this={containerRef}>
+      <div bind:this={containerRef} class="container" style={containerStyle}>
         {#each elements as element}
-          <svelte:component this={element.component} {...element.props} />
+          <svelte:component
+            this={element.component}
+            style={elementStyle}
+            {...element.props} />
         {/each}
       </div>
     </div>
