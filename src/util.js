@@ -95,12 +95,6 @@ export function goHome() {
   window.location.href = href.substring(0, index);
 }
 
-export function getStyleString(styleObj) {
-  return Object.entries(styleObj)
-    .map(([key, value]) => key + ': ' + value)
-    .join('; ');
-}
-
 export function indexOfNth(str, substring, n) {
   let index;
   let times = 0;
@@ -137,4 +131,10 @@ export function stringsToSentence(strings) {
     : length === 2
     ? strings[0] + ' and ' + strings[1]
     : strings.slice(0, length - 1).join(', ') + ', and ' + strings[length - 1];
+}
+
+export function styleObjectToString(styleObj) {
+  return Object.entries(styleObj)
+    .map(([key, value]) => key + ': ' + value)
+    .join('; ');
 }

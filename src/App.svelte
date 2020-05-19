@@ -44,6 +44,7 @@
     isHappy = true;
     showToast = true; // only on change to happy
   }
+  $: console.log('App.svelte x: showToast =', showToast);
 
   // Detect change to unhappy.
   $: if (!$globalStore.user.happy) isHappy = false;
@@ -88,6 +89,8 @@
     <Toast
       message="I am so glad\nyou are happy!"
       bind:show={showToast}
+      position="right"
+      side="top"
       timeoutMs={3000} />
 
     <ToggleButtons options={flavorOptions} path={flavorPath} />

@@ -1,5 +1,5 @@
 <script>
-  import {getStyleString} from './util';
+  import {styleObjectToString} from './util';
   import Line from './Line.svelte';
 
   export let className = '';
@@ -60,13 +60,13 @@
   const lines = text.split('\n');
 </script>
 
-<div class={classes} style={getStyleString(outerStyle)}>
+<div class={classes} style={styleObjectToString(outerStyle)}>
   <div class="circle" on:click={toggleTip}>i</div>
   <div
     class="text"
     on:click={toggleTip}
     bind:this={tipRef}
-    style={getStyleString(textStyle)}>
+    style={styleObjectToString(textStyle)}>
     {#each lines as line}
       <Line {line} />
     {/each}
