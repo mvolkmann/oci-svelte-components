@@ -175,6 +175,13 @@
     <div>
       <Carousel
         elements={carouselData}
+        elementWidth={carouselElementWidth}
+        height={396}
+        showDots />
+    </div>
+    <div>
+      <Carousel
+        elements={carouselData}
         elementMargin={20}
         elementsPerPage={2}
         elementWidth={carouselElementWidth}

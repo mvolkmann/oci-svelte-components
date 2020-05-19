@@ -9,7 +9,7 @@
     "lint": "eslint --fix --quiet src --ext .js,.svelte",
     "reinstall": "rm -rf node_modules package-lock.json && npm install",
     "start": "sirv public",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -s ./public",
     "test": "jest src",
     "test:watch": "npm run test -- --watch"
   },

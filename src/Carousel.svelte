@@ -12,6 +12,7 @@
   let pageIndex = 0;
   let containerRef;
 
+  console.log('Carousel.svelte x: elements =', elements);
   const classes = 'carousel' + (className ? ' ' + className : '');
   const maxPageIndex = Math.ceil(elements.length / elementsPerPage) - 1;
   const advanceWidth = (elementWidth + elementMargin) * elementsPerPage;
