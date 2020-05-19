@@ -45,6 +45,7 @@
 
 <style>
   .osc-icon svg {
+    background-color: transparent;
     color: var(--osc-primary-color, black);
   }
 </style>

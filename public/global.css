@@ -6,6 +6,7 @@
   --osc-label-font-weight: bold;
   --osc-primary-color: cornflowerblue;
   --osc-secondary-color: orange;
+  --osc-transition-duration: 0.5s;
 }
 
 html,

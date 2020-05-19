@@ -3,20 +3,25 @@
 
   export function toggleDrawer(id, index) {
     const drawerElements = document.querySelectorAll(`#${id} > .drawer`);
-    console.log(
-      'Accordion.svelte toggleDrawer: drawerElements =',
-      drawerElements
-    );
+    const drawers = Array.from(drawerElements);
+    const selectedDrawer = drawers[index];
 
     let openDrawer;
 
-    // Close all the drawers.
-    Array.from(drawerElements).forEach((drawer, i) => {
-      let isOpen = drawer.classList.contains('open');
+    for (const drawer of drawers) {
+      const isOpen = drawer.classList.contains('open');
+
+      let degrees = 0;
 
       // If this is the drawer being toggled and it is not currently open,
       // we need to remember to open it.
-      if (i === index && !isOpen) openDrawer = drawer;
+      if (drawer === selectedDrawer && !isOpen) {
+        openDrawer = drawer;
+        degrees = 90;
+      }
+
+      const icon = drawer.querySelector('.osc-icon');
+      icon.style.transform = `rotate(${degrees}deg)`;
 
       if (isOpen) {
         // If the drawer being closed contains an invalid form, display a toast.
@@ -36,10 +41,10 @@
           const setErrorMessage = fnMap[id];
           setErrorMessage(message);
         }
-      }
 
-      drawer.classList.remove('open');
-    });
+        drawer.classList.remove('open');
+      }
+    }
 
     if (openDrawer) openDrawer.classList.add('open');
   }
@@ -82,45 +87,26 @@
   {/each}
   {#if errorMessage}
     <Toast
-      backgroundColor="var(--error-color)"
+      backgroundColor="var(--osc-error-color)"
       on:close={() => (errorMessage = '')}
       message={errorMessage} />
   {/if}
 </div>
 
 <style>
-  .osc-accordion {
-    --transition-duration: 0.5s;
-    display: inline-block;
-    margin-bottom: 1rem;
-  }
-
   .drawer > button {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    background-color: var(--light-gray, lightgray);
+    background-color: var(--osc-primary-color);
     border: none;
     border-radius: 0;
-    color: black;
+    color: white;
     margin: 0.5rem 0 0 0;
     outline: none;
     padding: 1rem;
     width: 100%;
-  }
-
-  .drawer > button > .icon {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    transition-duration: var(--transition-duration);
-    transition-property: transform;
-    transform: rotate(0deg);
-  }
-
-  .drawer > button > .icon svg {
-    color: var(--secondary-color);
   }
 
   .drawer .title {
@@ -128,54 +114,46 @@
   }
 
   .drawer > .content {
-    max-height: 0;
-    overflow-y: auto;
-    transition-duration: var(--transition-duration);
-    transition-property: height, max-height;
-  }
-
-  .drawer.open > button {
-    background-color: var(--secondary-color);
-    color: white;
-  }
-
-  .drawer.open > button > .icon {
-    transform: rotate(90deg);
-  }
-
-  .drawer.open > button > .icon svg {
-    color: white;
-  }
-
-  .drawer.open .content {
     border-bottom: solid lightgray 1px;
     border-left: solid lightgray 1px;
     border-right: solid lightgray 1px;
-    padding: 0.5rem;
+    max-height: 0;
+    overflow-y: auto;
+    padding: 0 0.5rem;
+    transition-duration: var(--osc-transition-duration, 0.5s);
+  }
 
-    /* Transition of height does not work when set to "auto". */
-    /*max-height: 50px;*/
-
+  /* Must use :global here because the "open" class
+     is added via DOM manipulation.
+     Otherwise Svelte will think this selector is not used. */
+  :global(.drawer.open) .content {
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
     max-height: 100vh;
   }
 
-  .accordion.horizontal {
+  :global(.osc-icon) {
+    transition-duration: var(--osc-transition-duration, 0.5s);
+    transition-property: transform;
+  }
+
+  .horizontal {
     position: relative;
   }
 
-  .accordion.horizontal .drawer {
+  .horizontal .drawer {
     --drawer-width: 300px;
     width: var(--drawer-width);
   }
 
-  .accordion.horizontal .drawer > button {
-    border-bottom: solid var(--secondary-color) 1px;
+  .horizontal .drawer > button {
+    border-bottom: solid var(--osc-secondary-color) 1px;
     color: white;
     margin-bottom: 0;
     margin-top: 0;
   }
 
-  .accordion.horizontal .drawer > .content {
+  .horizontal .drawer > .content {
     position: absolute;
     left: calc(var(--drawer-width) + 1rem);
     top: 0;
@@ -184,17 +162,24 @@
     transition-duration: unset;
   }
 
-  .accordion.horizontal .drawer.open .content {
-    border: solid var(--primary-color) 2px;
+  /*
+  .horizontal :global(.open) .content {
+    border: solid var(--osc-primary-color) 2px;
     padding: 2rem;
   }
 
-  .accordion.horizontal .drawer.open .icon {
+  .horizontal :global(.open) .osc-icon {
     transform: none;
+  }
+  */
+
+  .osc-accordion {
+    display: inline-block;
+    margin-bottom: 1rem;
   }
 
   @media (max-width: 760px) {
-    .drawer > button .title {
+    .drawer .title {
       font-size: 1rem;
     }
   }
