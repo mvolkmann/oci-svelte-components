@@ -1,6 +1,8 @@
 <script context="module">
   import {stringsToSentence} from './util';
 
+  // This is in the module context so it can be imported
+  // and called from outside this component.
   export function toggleDrawer(id, index) {
     const drawerElements = document.querySelectorAll(`#${id} > .drawer`);
     const drawers = Array.from(drawerElements);
@@ -51,37 +53,41 @@
 </script>
 
 <script>
+  import {onMount} from 'svelte';
   import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
   import Icon from './Icon.svelte';
   import Toast from './Toast.svelte';
   import {getId} from './util';
 
   export let className = '';
-  export let components;
+  export let data;
+  export let drawerWidth = 'auto';
   export let horizontal = false;
   export let id = getId('accordion-');
-  export let props;
-  export let titles;
 
   const classes =
     'osc-accordion' +
     (className ? ' ' + className : '') +
     (horizontal ? ' horizontal' : '');
   const fnMap = {};
+
   let errorMessage = '';
+  let ref;
 
   fnMap[id] = msg => (errorMessage = msg);
+
+  onMount(() => ref.style.setProperty('--drawer-width', drawerWidth));
 </script>
 
-<div class={classes} {id}>
-  {#each titles as title, index}
+<div bind:this={ref} class={classes} {id}>
+  {#each data as {component, props, title}, index}
     <div class="drawer" key={title}>
       <button on:click={() => toggleDrawer(id, index)} type="button">
         <div class="title">{title}</div>
         <Icon icon={faChevronCircleRight} />
       </button>
       <div class="content">
-        <svelte:component this={components[index]} {...props[index]} />
+        <svelte:component this={component} {...props} />
       </div>
     </div>
   {/each}
@@ -149,7 +155,7 @@
   }
 
   .horizontal .drawer {
-    --drawer-width: 300px;
+    display: flex;
     width: var(--drawer-width);
   }
 

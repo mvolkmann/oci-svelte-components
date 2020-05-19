@@ -28,9 +28,23 @@
   const lastNamePath = 'user.profile.lastName';
   const middleNamePath = 'user.profile.middleName';
 
-  const drawerComponents = [Hello, Hello, Hello];
-  const drawerProps = [{name: 'Mark'}, {name: 'Tami'}, {name: 'Dasher'}];
-  const drawerTitles = ['Title #1', 'Title #2', 'Title #3'];
+  const accordionData = [
+    {
+      title: 'Title #1',
+      component: Hello,
+      props: {name: 'Mark'}
+    },
+    {
+      title: 'Title #2',
+      component: Hello,
+      props: {name: 'Tami'}
+    },
+    {
+      title: 'Title #3',
+      component: Hello,
+      props: {name: 'Dasher'}
+    }
+  ];
 
   let isHappy = false;
   let showToast = false;
@@ -133,18 +147,11 @@
     <Address path={addressPath} vertical />
 
     <div>
-      <Accordion
-        components={drawerComponents}
-        props={drawerProps}
-        titles={drawerTitles} />
+      <Accordion data={accordionData} />
     </div>
 
     <div>
-      <Accordion
-        components={drawerComponents}
-        horizontal
-        props={drawerProps}
-        titles={drawerTitles} />
+      <Accordion data={accordionData} drawerWidth="200px" horizontal />
     </div>
 
     <Button label="Submit" type="submit" />
