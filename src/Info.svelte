@@ -1,4 +1,5 @@
 <script>
+  import {getStyleString} from './util';
   import Line from './Line.svelte';
 
   export let className = '';
@@ -19,12 +20,6 @@
 
   let showTip = false;
   let tipRef;
-
-  function getStyleString(styleObj) {
-    return Object.entries(styleObj)
-      .map(([key, value]) => key + ': ' + value)
-      .join('; ');
-  }
 
   function toggleTip() {
     showTip = !showTip;

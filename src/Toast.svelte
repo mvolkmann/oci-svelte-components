@@ -1,46 +1,34 @@
 <script>
-  import get from 'lodash-es/get';
-  import {globalStore, update} from './stores';
+  import {getStyleString} from './util';
 
   export let backgroundColor = 'black';
   export let color = 'white';
   export let className = '';
-  export let not = false;
   export let onClose = undefined;
   export let message;
-  export let path;
-  export let store = globalStore;
+  export let show;
   export let timeoutMs = undefined;
   export let width = 'fit-content';
 
-  const cn = 'osc-toast' + (className ? ' ' + className : '');
   const lines = message.split('\\n');
-  const toastStyle = `--background-color: ${backgroundColor}; color: ${color}; width: ${width}`;
+  const toastStyle = {
+    '--background-color': backgroundColor,
+    color,
+    width
+  };
 
-  let ref;
-  let showToast = false;
-
-  $: {
-    showToast = get($store, path);
-    if (not) showToast = !showToast;
-    if (showToast && timeoutMs) setTimeout(closeToast, timeoutMs);
-    if (ref) {
-      if (showToast) {
-        ref.classList.add('show');
-      } else {
-        ref.classList.remove('show');
-      }
-    }
-  }
+  $: classes =
+    'osc-toast' + (className ? ' ' + className : '') + (show ? ' show' : '');
 
   function closeToast() {
-    if (path && showToast) update(store, path, not);
-    ref.classList.remove('show-toast');
+    show = false;
     if (onClose) onClose();
   }
+
+  $: if (show && timeoutMs) setTimeout(closeToast, timeoutMs);
 </script>
 
-<div class={cn} bind:this={ref} style={toastStyle}>
+<div class={classes} style={getStyleString(toastStyle)}>
   <button className="close" on:click={closeToast} type="button">
     &#10006;
   </button>

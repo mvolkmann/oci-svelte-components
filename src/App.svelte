@@ -29,13 +29,26 @@
 
   const titles = ['Title #1', 'Title #2', 'Title #3'];
 
+  let isHappy = false;
+  let showToast = false;
+
   update(globalStore, firstNamePath, 'John');
   update(globalStore, lastNamePath, 'Doe');
 
   $: firstName = get($globalStore, firstNamePath);
   $: lastName = get($globalStore, lastNamePath);
-
   $: console.log('App.svelte: $globalStore =', $globalStore);
+
+  // Detect change from unhappy to happy.
+  $: if (!isHappy && $globalStore.user.happy) {
+    isHappy = true;
+    showToast = true;
+  }
+
+  // Detect change from happy to unhappy.
+  $: if (isHappy && !$globalStore.user.happy) {
+    isHappy = false;
+  }
 
   const colorOptions = ['red', 'green', 'blue'];
   const flavorOptions = ['vanilla', 'strawberry', 'chocolate'];
@@ -76,7 +89,7 @@
     <LabeledToggle label="Happy" path={happyPath} vertical />
     <Toast
       message="I am glad\nyou are happy!"
-      path={happyPath}
+      bind:show={showToast}
       timeoutMs={3000} />
 
     <ToggleButtons options={flavorOptions} path={flavorPath} />

@@ -1,5 +1,4 @@
 <script>
-  import {createEventDispatcher} from 'svelte';
   import Label from './Label.svelte';
 
   export let className = '';
@@ -10,8 +9,6 @@
   export let required = false;
   export let vertical = false;
   export let width = '';
-
-  const dispatch = createEventDispatcher();
 
   //TODO: How does this ever get set to true?
   let focus = false;
@@ -26,19 +23,17 @@
     (vertical ? ' vertical' : '');
 
   if (width) style.width = width;
-
-  const handleClick = () => dispatch('click');
 </script>
 
 <div bind:this={ref} class={classes}>
   {#if !onRight}
-    <Label {id} {info} on:click={handleClick} {required} text={label} />
+    <Label {id} {info} on:click {required} text={label} />
   {/if}
 
   <slot />
 
   {#if onRight}
-    <Label {id} {info} on:click={handleClick} {required} text={label} />
+    <Label {id} {info} on:click {required} text={label} />
   {/if}
 </div>
 

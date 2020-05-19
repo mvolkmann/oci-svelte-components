@@ -95,6 +95,12 @@ export function goHome() {
   window.location.href = href.substring(0, index);
 }
 
+export function getStyleString(styleObj) {
+  return Object.entries(styleObj)
+    .map(([key, value]) => key + ': ' + value)
+    .join('; ');
+}
+
 export function indexOfNth(str, substring, n) {
   let index;
   let times = 0;
