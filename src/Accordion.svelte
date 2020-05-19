@@ -103,10 +103,14 @@
     border: none;
     border-radius: 0;
     color: white;
-    margin: 0.5rem 0 0 0;
+    margin: 0;
     outline: none;
     padding: 1rem;
     width: 100%;
+  }
+
+  .drawer:not(:first-of-type) > button {
+    margin-top: 0.5rem;
   }
 
   .drawer .title {
@@ -114,9 +118,11 @@
   }
 
   .drawer > .content {
-    border-bottom: solid lightgray 1px;
-    border-left: solid lightgray 1px;
-    border-right: solid lightgray 1px;
+    border-color: var(--osc-primary-color);
+    border-style: solid;
+    border-bottom-width: 0;
+    border-left-width: 2px;
+    border-right-width: 2px;
     max-height: 0;
     overflow-y: auto;
     padding: 0 0.5rem;
@@ -127,6 +133,7 @@
      is added via DOM manipulation.
      Otherwise Svelte will think this selector is not used. */
   :global(.drawer.open) .content {
+    border-bottom-width: 2px;
     padding-bottom: 0.5rem;
     padding-top: 0.5rem;
     max-height: 100vh;
@@ -146,14 +153,8 @@
     width: var(--drawer-width);
   }
 
-  .horizontal .drawer > button {
-    border-bottom: solid var(--osc-secondary-color) 1px;
-    color: white;
-    margin-bottom: 0;
-    margin-top: 0;
-  }
-
   .horizontal .drawer > .content {
+    border: none;
     position: absolute;
     left: calc(var(--drawer-width) + 1rem);
     top: 0;
@@ -162,16 +163,15 @@
     transition-duration: unset;
   }
 
-  /*
-  .horizontal :global(.open) .content {
+  .horizontal :global(.open .content) {
     border: solid var(--osc-primary-color) 2px;
     padding: 2rem;
   }
 
-  .horizontal :global(.open) .osc-icon {
-    transform: none;
+  .horizontal :global(.open .osc-icon) {
+    color: var(--osc-secondary-color);
+    transform: none !important;
   }
-  */
 
   .osc-accordion {
     display: inline-block;

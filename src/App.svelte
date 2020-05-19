@@ -47,7 +47,6 @@
     isHappy = true;
     showToast = true; // only on change to happy
   }
-  $: console.log('App.svelte x: showToast =', showToast);
 
   // Detect change to unhappy.
   $: if (!$globalStore.user.happy) isHappy = false;
@@ -136,6 +135,14 @@
     <div>
       <Accordion
         components={drawerComponents}
+        props={drawerProps}
+        titles={drawerTitles} />
+    </div>
+
+    <div>
+      <Accordion
+        components={drawerComponents}
+        horizontal
         props={drawerProps}
         titles={drawerTitles} />
     </div>
