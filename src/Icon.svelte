@@ -44,8 +44,8 @@
 <Icon {icon} class={classes} />
 
 <style>
-  .osc-icon svg {
+  :global(.osc-icon) {
     background-color: transparent;
-    color: var(--osc-primary-color, black);
+    color: var(--osc-primary-color, cornflowerblue);
   }
 </style>

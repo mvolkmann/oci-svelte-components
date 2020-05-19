@@ -99,16 +99,6 @@
     width: var(--size);
   }
 
-  .heading-phrase {
-    font-family: inherit;
-    text-align: left;
-  }
-
-  .heading-phrase span {
-    font-size: 1rem;
-    line-height: 1.2rem;
-  }
-
   .osc-toast {
     background-color: var(--background-color);
     font-family: var(--global-font-family, sans-serif);

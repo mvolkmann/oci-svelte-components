@@ -61,7 +61,7 @@
 
   export let className = '';
   export let data;
-  export let drawerWidth = 'auto';
+  export let drawerWidth = '200px';
   export let horizontal = false;
   export let id = getId('accordion-');
 
@@ -93,7 +93,7 @@
   {/each}
   {#if errorMessage}
     <Toast
-      backgroundColor="var(--osc-error-color)"
+      backgroundColor="var(--osc-error-color, red)"
       on:close={() => (errorMessage = '')}
       message={errorMessage} />
   {/if}
@@ -105,7 +105,7 @@
     justify-content: space-between;
     align-items: center;
 
-    background-color: var(--osc-primary-color);
+    background-color: var(--osc-primary-color, cornflowerblue);
     border: none;
     border-radius: 0;
     color: white;
@@ -124,7 +124,7 @@
   }
 
   .drawer > .content {
-    border-color: var(--osc-primary-color);
+    border-color: var(--osc-primary-color, cornflowerblue);
     border-style: solid;
     border-bottom-width: 0;
     border-left-width: 2px;
@@ -146,6 +146,8 @@
   }
 
   :global(.osc-icon) {
+    color: white;
+    font-size: 1.2rem;
     transition-duration: var(--osc-transition-duration, 0.5s);
     transition-property: transform;
   }
@@ -170,12 +172,12 @@
   }
 
   .horizontal :global(.open .content) {
-    border: solid var(--osc-primary-color) 2px;
+    border: solid var(--osc-primary-color, cornflowerblue) 2px;
     padding: 2rem;
   }
 
   .horizontal :global(.open .osc-icon) {
-    color: var(--osc-secondary-color);
+    color: var(--osc-secondary-color, orange);
     transform: none !important;
   }
 
