@@ -17,6 +17,7 @@
   import LabeledSlider from './LabeledSlider.svelte';
   import LabeledState from './LabeledState.svelte';
   import LabeledToggle from './LabeledToggle.svelte';
+  import List from './List.svelte';
   import State from './State.svelte';
   import Toast from './Toast.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
@@ -95,6 +96,8 @@
   <h1>Hello {firstName} {lastName}!</h1>
 
   <form on:submit|preventDefault={handleSubmit}>
+    <List items={['apple', 'banana', 'cherry']} />
+
     <Icon className="icon" icon={solid.faHeart} />
     <Icon className="icon" icon={brands.faJs} />
     <Icon className="icon" icon={brands.faNode} />
