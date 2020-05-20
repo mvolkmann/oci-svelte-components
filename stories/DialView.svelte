@@ -2,7 +2,6 @@
   import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
   import Dial from '../src/Dial.svelte';
-  import LabeledInput from '../src/LabeledInput.svelte';
   import LabeledSlider from '../src/LabeledSlider.svelte';
 
   const label = 'Score';
@@ -17,32 +16,21 @@
   $: strokeWidth = get($globalStore, strokeWidthPath);
 </script>
 
-<LabeledInput
+<LabeledSlider
   info="in pixels"
   label="Size"
   max={400}
-  min={0}
-  path={sizePath}
-  type="number"
-  width="50px" />
+  min={200}
+  path={sizePath} />
 
-<LabeledInput
+<LabeledSlider
   info="in pixels"
   label="Stroke Width"
   max={50}
   min={1}
-  path={strokeWidthPath}
-  type="number"
-  width="50px" />
+  path={strokeWidthPath} />
 
-<LabeledInput
-  info="in pixels"
-  label="Gap"
-  max={30}
-  min={1}
-  path={gapPath}
-  type="number"
-  width="50px" />
+<LabeledSlider info="in pixels" label="Gap" max={30} min={1} path={gapPath} />
 
 <LabeledSlider {label} path="game.score" />
 

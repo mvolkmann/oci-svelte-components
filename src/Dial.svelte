@@ -21,6 +21,8 @@
 
   let filledPath = '';
   let fullPath = '';
+
+  // Compute new arc paths if the gap or size changes.
   $: if (gap || size) {
     fullPath = getPath(100);
     filledPath = getPath((value / max) * 100);
