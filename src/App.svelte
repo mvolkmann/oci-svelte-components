@@ -21,7 +21,7 @@
   import State from './State.svelte';
   import Toast from './Toast.svelte';
   import ToggleButtons from './ToggleButtons.svelte';
-  import {globalStore, update} from './stores';
+  import {globalStore} from './stores';
 
   const addressPath = 'user.profile.address';
   const colorPath = 'user.favoriteColor';
@@ -67,9 +67,6 @@
 
   let isHappy = false;
   let showToast = false;
-
-  update(globalStore, firstNamePath, 'John');
-  update(globalStore, lastNamePath, 'Doe');
 
   $: firstName = get($globalStore, firstNamePath);
   $: lastName = get($globalStore, lastNamePath);
