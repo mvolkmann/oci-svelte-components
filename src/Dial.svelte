@@ -63,12 +63,12 @@
     height={size}>
     <path
       fill="none"
-      stroke="var(--osc-secondary-color)"
+      stroke="var(--osc-secondary-color, orange)"
       stroke-width={STROKE_WIDTH}
       d={getPath(100)} />
     <path
       fill="none"
-      stroke="var(--osc-primary-color)"
+      stroke="var(--osc-primary-color, cornflowerblue)"
       stroke-width={STROKE_WIDTH}
       d={getPath(percent)} />
   </svg>
@@ -91,7 +91,7 @@
 
   svg {
     position: absolute;
-    color: var(--osc-dial-svg-color, var(--white));
+    color: var(--osc-dial-svg-color, white);
   }
 
   .label {

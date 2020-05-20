@@ -114,7 +114,7 @@
     position: absolute;
     top: calc(var(--thumb-size) / -2 + var(--track-height) / 2);
 
-    background-color: var(--osc-primary-color);
+    background-color: var(--osc-primary-color, cornflowerblue);
     /* background-color: #ff000060; */
     border-radius: calc(var(--thumb-size) / 2);
     display: inline-block;
@@ -123,7 +123,7 @@
   }
 
   .thumb:focus {
-    outline: solid var(--osc-secondary-color) 3px;
+    outline: solid var(--osc-secondary-color, orange) 3px;
   }
 
   .track {
