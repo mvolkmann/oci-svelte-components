@@ -4,6 +4,7 @@
   import {globalStore} from './stores';
 
   export let className = '';
+  export let defaultValue = '';
   export let formatter = undefined;
   export let label;
   export let path = undefined;
@@ -11,7 +12,7 @@
   export let vertical = false;
 
   let value = '';
-  $: if (path) value = get($store, path) || 0;
+  $: if (path) value = get($store, path) || defaultValue;
   $: if (formatter) value = formatter(value);
 </script>
 
