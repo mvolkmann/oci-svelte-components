@@ -100,6 +100,10 @@
 </div>
 
 <style>
+  .drawer {
+    width: var(--drawer-width);
+  }
+
   .drawer > button {
     display: flex;
     justify-content: space-between;
@@ -127,6 +131,7 @@
     border-color: var(--osc-primary-color, cornflowerblue);
     border-style: solid;
     border-bottom-width: 0;
+    border-top-width: 0;
     border-left-width: 2px;
     border-right-width: 2px;
     max-height: 0;
@@ -158,7 +163,6 @@
 
   .horizontal .drawer {
     display: flex;
-    width: var(--drawer-width);
   }
 
   .horizontal .drawer > .content {
