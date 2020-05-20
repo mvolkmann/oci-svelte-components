@@ -7,7 +7,11 @@
   export let className = '';
   export let info = '';
   export let label;
+
+  // This is an array where each element is either a string
+  // or an object with label and value properties.
   export let options;
+
   export let path = undefined;
   export let placeholder = '';
   export let required = false;
@@ -54,7 +58,7 @@
       <option value="">{placeholder}</option>
       {#each options as option}
         <option value={typeof option === 'string' ? option : option.value}>
-          {typeof option === 'string' ? option : option.text || option.value}
+          {typeof option === 'string' ? option : option.label || option.value}
         </option>
       {/each}
     </select>
@@ -109,5 +113,6 @@
 
     margin-left: 0;
     margin-top: 0.3rem;
+    padding-top: 6px; /* not sure why this is needed */
   }
 </style>

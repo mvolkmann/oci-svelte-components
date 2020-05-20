@@ -1,74 +1,74 @@
 export default [
   {
-    text: 'Australia',
+    label: 'Australia',
     value: 'AUS'
   },
   {
-    text: 'Brazil',
+    label: 'Brazil',
     value: 'BRA'
   },
   {
-    text: 'Canada',
+    label: 'Canada',
     value: 'CAN'
   },
   {
-    text: 'China',
+    label: 'China',
     value: 'CHN'
   },
   {
-    text: 'France',
+    label: 'France',
     value: 'FRA'
   },
   {
-    text: 'Germany',
+    label: 'Germany',
     value: 'DEU'
   },
   {
-    text: 'India',
+    label: 'India',
     value: 'IND'
   },
   {
-    text: 'Italy',
+    label: 'Italy',
     value: 'ITA'
   },
   {
-    text: 'Japan',
+    label: 'Japan',
     value: 'JPN'
   },
   {
-    text: 'Mexico',
+    label: 'Mexico',
     value: 'MEX'
   },
   {
-    text: 'Norway',
+    label: 'Norway',
     value: 'NOR'
   },
   {
-    text: 'Poland',
+    label: 'Poland',
     value: 'POL'
   },
   {
-    text: 'Russia',
+    label: 'Russia',
     value: 'RUS'
   },
   {
-    text: 'Spain',
+    label: 'Spain',
     value: 'ESP'
   },
   {
-    text: 'Sweden',
+    label: 'Sweden',
     value: 'SWE'
   },
   {
-    text: 'Switzerland',
+    label: 'Switzerland',
     value: 'CHE'
   },
   {
-    text: 'United Kingdom',
+    label: 'United Kingdom',
     value: 'GBR'
   },
   {
-    text: 'United States of America',
+    label: 'United States of America',
     value: 'USA'
   }
 ];

@@ -1,54 +1,54 @@
 export default [
   {
-    text: 'Alberta',
+    label: 'Alberta',
     value: 'AB'
   },
   {
-    text: 'British Columbia',
+    label: 'British Columbia',
     value: 'BC'
   },
   {
-    text: 'Manitoba',
+    label: 'Manitoba',
     value: 'MB'
   },
   {
-    text: 'New Brunswick',
+    label: 'New Brunswick',
     value: 'NB'
   },
   {
-    text: 'Newfoundland and Labrador',
+    label: 'Newfoundland and Labrador',
     value: 'NL'
   },
   {
-    text: 'Northwest Territories',
+    label: 'Northwest Territories',
     value: 'NT'
   },
   {
-    text: 'Nova Scotia',
+    label: 'Nova Scotia',
     value: 'NS'
   },
   {
-    text: 'Nunavut',
+    label: 'Nunavut',
     value: 'NU'
   },
   {
-    text: 'Ontario',
+    label: 'Ontario',
     value: 'ON'
   },
   {
-    text: 'Prince Edward Island',
+    label: 'Prince Edward Island',
     value: 'PE'
   },
   {
-    text: 'Quebec',
+    label: 'Quebec',
     value: 'QC'
   },
   {
-    text: 'Saskatchewan',
+    label: 'Saskatchewan',
     value: 'SK'
   },
   {
-    text: 'Yukon',
+    label: 'Yukon',
     value: 'YT'
   }
 ];
