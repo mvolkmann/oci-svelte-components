@@ -3,31 +3,30 @@
   import {globalStore} from './stores';
 
   export let className = '';
+  export let gap = 20;
   export let label = '';
   export let max = 100;
   export let path = undefined;
   export let size = 300;
   export let store = globalStore;
+  export let strokeWidth = 40;
   export let value = undefined;
 
-  const STROKE_WIDTH = 40;
-  const HALF_STROKE = STROKE_WIDTH / 2;
-
-  const GAP = 20;
   const SWEEP = 1;
   const X_AXIS_ROTATION = 0;
-
   const classes = 'osc-dial' + (className ? ' ' + className : '');
-  const halfSize = size / 2;
-  const radius = halfSize - HALF_STROKE;
-  const startDegrees = 270 - GAP / 2;
-  const styles = `height: ${size}; width: ${size}`;
 
-  let ref;
-
+  $: styles = `height: ${size}px; width: ${size}px`;
   $: if (path) value = get($store, path) || 0;
 
-  $: percent = (value / max) * 100;
+  let filledPath = '';
+  let fullPath = '';
+  $: if (gap || size) {
+    fullPath = getPath(100);
+    filledPath = getPath((value / max) * 100);
+  }
+
+  let ref;
   $: if (ref) {
     ref.style.height = size + 'px';
     ref.style.width = size + 'px';
@@ -38,10 +37,14 @@
   }
 
   function getPath(percent) {
-    const endDegrees = startDegrees - ((360 - GAP) * percent) / 100;
+    const startDegrees = 270 - gap / 2;
+    const endDegrees = startDegrees - ((360 - gap) * percent) / 100;
     const startAngle = degreesToRadians(startDegrees);
     const endAngle = degreesToRadians(endDegrees);
 
+    const halfSize = size / 2;
+    const halfStroke = strokeWidth / 2;
+    const radius = halfSize - halfStroke;
     const startX = halfSize + radius * Math.cos(startAngle);
     const startY = halfSize - radius * Math.sin(startAngle);
     const endX = halfSize + radius * Math.cos(endAngle);
@@ -59,18 +62,18 @@
   <svg
     className="arc"
     viewBox={`0 0 ${size} ${size}`}
-    width={size}
-    height={size}>
+    width={size + 'px'}
+    height={size + 'px'}>
     <path
       fill="none"
       stroke="var(--osc-secondary-color, orange)"
-      stroke-width={STROKE_WIDTH}
-      d={getPath(100)} />
+      stroke-width={strokeWidth}
+      d={fullPath} />
     <path
       fill="none"
       stroke="var(--osc-primary-color, cornflowerblue)"
-      stroke-width={STROKE_WIDTH}
-      d={getPath(percent)} />
+      stroke-width={strokeWidth}
+      d={filledPath} />
   </svg>
   <div class="label">{label}</div>
   <div class="value">{value}</div>

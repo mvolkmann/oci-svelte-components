@@ -22,7 +22,7 @@
   $: width = get($globalStore, widthPath);
 </script>
 
-<LabeledInput label="Width (in pixels)" path={widthPath} type="number" />
+<LabeledInput info="in pixels" label="Width" path={widthPath} type="number" />
 <LabeledToggle label="Vertical?" path={verticalPath} />
 <LabeledSlider
   label="Score"
