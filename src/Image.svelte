@@ -12,7 +12,7 @@
   const classes = 'image' + (className ? ' ' + className : '');
 </script>
 
-<img alt={description} class={classes} src={url} {style} />
+<img alt={description} class={classes} src={url} {style} title={description} />
 
 <style>
   img {

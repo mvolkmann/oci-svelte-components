@@ -98,10 +98,7 @@
   <form on:submit|preventDefault={handleSubmit}>
     <List items={['apple', 'banana', 'cherry']} />
 
-    <Icon className="icon" icon={solid.faHeart} />
-    <Icon className="icon" icon={brands.faJs} />
-    <Icon className="icon" icon={brands.faNode} />
-    <Icon className="icon" icon={brands.faNpm} />
+    <Icon color="red" icon={solid.faHeart} size="3rem" />
 
     <LabeledInput
       info={'basic tooltip'}

@@ -31,21 +31,26 @@
   // faUbuntu, faVuejs, faYoutube
 
   import Icon from 'fa-svelte';
+  import {onMount} from 'svelte';
+  import {getId} from './util';
+
+  export let color = 'var(--osc-primary-color, cornflowerblue)';
 
   // The specified CSS class can specify color and font-size.
   export let className = undefined;
 
   // This is an icon imported from a @fortawesome package.
   export let icon;
+  export let size = '1rem';
 
-  const classes = 'osc-icon' + (className ? ' ' + className : '');
+  const id = getId('osc-icon-');
+  const classes = id + (className ? ' ' + className : '');
+
+  onMount(() => {
+    const element = document.querySelector('.' + id);
+    element.style.color = color;
+    element.style.fontSize = size;
+  });
 </script>
 
-<Icon {icon} class={classes} />
-
-<style>
-  :global(.osc-icon) {
-    background-color: transparent;
-    color: var(--osc-primary-color, cornflowerblue);
-  }
-</style>
+<Icon class={classes} {icon} />
