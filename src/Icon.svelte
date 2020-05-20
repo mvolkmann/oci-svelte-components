@@ -44,7 +44,7 @@
   export let size = '1rem';
 
   const id = getId('osc-icon-');
-  const classes = id + (className ? ' ' + className : '');
+  const classes = 'osc-icon ' + id + (className ? ' ' + className : '');
 
   onMount(() => {
     const element = document.querySelector('.' + id);

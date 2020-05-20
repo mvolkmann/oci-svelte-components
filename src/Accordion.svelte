@@ -84,7 +84,7 @@
     <div class="drawer" key={title}>
       <button on:click={() => toggleDrawer(id, index)} type="button">
         <div class="title">{title}</div>
-        <Icon icon={faChevronCircleRight} />
+        <Icon color="white" icon={faChevronCircleRight} />
       </button>
       <div class="content">
         <svelte:component this={component} {...props} />
@@ -181,7 +181,7 @@
   }
 
   .horizontal :global(.open .osc-icon) {
-    color: var(--osc-secondary-color, orange);
+    color: var(--osc-secondary-color, orange) !important;
     transform: none !important;
   }
 
