@@ -35,9 +35,9 @@
       props = {checked: typeof value === 'boolean' ? value : value === 'on'};
     } else {
       props = {value};
-      if (max) props.max = max;
-      if (min) props.min = min;
-      if (minLength) props.minLength = minLength;
+      if (max !== undefined) props.max = max;
+      if (min !== undefined) props.min = min;
+      if (minLength !== undefined) props.minLength = minLength;
       if (placeholder) props.placeholder = placeholder;
     }
   }

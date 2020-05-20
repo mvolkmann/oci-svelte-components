@@ -34,13 +34,18 @@
 
 <LabeledInput
   label="Elements per Page"
+  min={1}
   type="number"
-  path="carousel.elementsPerPage" />
+  path="carousel.elementsPerPage"
+  width="26px" />
 
 <LabeledInput
+  info="in pixels"
   label="Element Margin"
+  min={0}
   type="number"
-  path="carousel.elementMargin" />
+  path="carousel.elementMargin"
+  width="40px" />
 
 <LabeledToggle label="Show Dots" path="carousel.showDots" />
 

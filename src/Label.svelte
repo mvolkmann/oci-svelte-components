@@ -13,7 +13,7 @@
     <span class="required">*</span>
   {/if}
   {#if info}
-    <Info text={info} />
+    <Info text={info} hPosition="center" vPosition="bottom" />
   {/if}
 </label>
 
