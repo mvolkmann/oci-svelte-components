@@ -8,7 +8,11 @@
   export let info = '';
   export let label;
   export let name;
+
+  // This is an array where each element is either a string
+  // or an object with label and value properties.
   export let options;
+
   export let path = undefined;
   export let required = false;
   export let store = globalStore;
@@ -32,24 +36,21 @@
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '');
 
-  const containerClasses = 'container' + (vertical ? ' vertical' : '');
+  $: containerClasses = 'container' + (vertical ? ' vertical' : '');
 </script>
 
 <Labeled className={classes} {info} {label} {required} {vertical}>
   <div class={containerClasses}>
-    {#each options as option, index}
-      <div class="option">
+    {#each options as option}
+      <label class="option">
         <input
           checked={value === getOptionValue(option)}
-          id={name + index}
           {name}
           on:input={handleInput}
           type="radio"
           value={getOptionValue(option)} />
-        <label for={name + index}>
-          {typeof option === 'string' ? option : option.label}
-        </label>
-      </div>
+        {typeof option === 'string' ? option : option.label}
+      </label>
     {/each}
   </div>
 </Labeled>
@@ -73,7 +74,8 @@
 
     font-size: 1rem;
     margin-bottom: 0;
-    margin-left: 0.5rem;
+    margin-left: 1rem;
+    margin-top: 0;
   }
 
   input:checked {
@@ -85,13 +87,11 @@
     outline: solid var(--osc-secondary-color, orange) 2px;
   }
 
-  label {
-    margin-left: 0.5rem;
-  }
-
   .option {
     display: flex;
     align-items: center;
+
+    margin-left: 0.2rem;
   }
 
   .vertical {
@@ -102,15 +102,11 @@
     margin-top: 0.3rem;
   }
 
-  .vertical > .option > input:first-of-type {
-    margin-left: 0;
-  }
-
   .vertical > .option {
     margin-bottom: 0.5rem;
   }
 
-  .vertical > .option > label {
-    margin-bottom: 0;
+  .vertical > .option > input:first-of-type {
+    margin-left: 0;
   }
 </style>
