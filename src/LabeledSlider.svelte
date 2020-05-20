@@ -81,7 +81,7 @@
   }
 </script>
 
-<Labeled className={classes} {label}>
+<Labeled className={classes} {label} {vertical}>
   <div
     bind:this={containerRef}
     class="container"
@@ -131,13 +131,7 @@
     border: none;
     display: inline-block;
     height: var(--track-height);
-    margin-left: calc(var(--thumb-size) / 2);
+    margin-left: 0.5rem;
     position: relative;
-  }
-
-  .vertical {
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: calc(var(--thumb-size) / 2 - var(--track-height) / 2);
   }
 </style>

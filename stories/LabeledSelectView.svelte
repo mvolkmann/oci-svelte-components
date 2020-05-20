@@ -10,8 +10,8 @@
     {label: 'Banana', value: 'yellow'},
     {label: 'Cherry', value: 'red'}
   ];
-  const valuePath = 'labeledRadioButtons.value';
-  const verticalPath = 'labeledRadioButtons.vertical';
+  const valuePath = 'labeledSelect.value';
+  const verticalPath = 'labeledSelect.vertical';
 
   $: vertical = get($globalStore, verticalPath);
 </script>
