@@ -3,7 +3,7 @@
   import {createEventDispatcher} from 'svelte';
   import Labeled from './Labeled.svelte';
   import {globalStore, update} from './stores';
-  import {getId} from './util';
+  import {getId, styleObjectToString} from './util';
 
   export let className = '';
   export let info = '';
@@ -79,7 +79,7 @@
     {id}
     on:input={handleInput}
     {required}
-    {style}
+    style={styleObjectToString(style)}
     {type}
     {...props} />
 </Labeled>
@@ -101,7 +101,7 @@
   }
 
   input[type='checkbox']:checked:after {
-    color: var(--osc-primary-color);
+    color: var(--osc-primary-color, cornflowerblue);
     content: '\2714';
     position: absolute;
     left: 1px;
@@ -109,7 +109,7 @@
   }
 
   input:focus {
-    outline-color: var(--osc-secondary-color);
+    outline-color: var(--osc-secondary-color, orange);
   }
 
   input:invalid {
@@ -118,6 +118,6 @@
 
   input[type='checkbox']:focus,
   input[type='radio']:focus {
-    outline: solid var(--osc-secondary-color) 2px;
+    outline: solid var(--osc-secondary-color, orange) 2px;
   }
 </style>

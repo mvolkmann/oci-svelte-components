@@ -3,8 +3,8 @@
   import Line from './Line.svelte';
 
   export let className = '';
-  export let hPosition = 'right';
-  export let vPosition = 'center';
+  export let hPosition = 'right'; // other values are 'left' and 'center'
+  export let vPosition = 'center'; // other values are 'top' and 'bottom'
 
   // The text can contain newline characters to control line breaks.
   // It can also use Markdown syntax to bold some of the text,
@@ -18,20 +18,12 @@
   const DISTANCE = 'calc(var(--size) + 0.5rem)';
   const CIRCLE_SIZE = '20px';
 
-  let showTip = false;
-  let tipRef;
-
-  function toggleTip() {
-    showTip = !showTip;
-    if (tipHeight === '0') {
-      // offsetHeight is not known until it is rendered.
-      // The timeout allows that to happen.
-      setTimeout(() => (tipHeight = tipRef.offsetHeight + 'px'));
-    }
-  }
-
   const classes = 'osc-info' + (className ? ' ' + className : '');
   const outerStyle = {'--size': CIRCLE_SIZE};
+
+  let showTip = false;
+  let tipRef;
+  $: lines = text.split(/\n|\\n/);
 
   let textStyle = {};
 
@@ -57,7 +49,17 @@
     textStyle = {display: 'none'};
   }
 
-  const lines = text.split('\n');
+  function toggleTip() {
+    showTip = !showTip;
+    if (tipHeight === '0') {
+      // tipRef offset sizes are not known until it is rendered.
+      // The timeout allows this to happen.
+      setTimeout(() => {
+        tipHeight = tipRef.offsetHeight + 'px';
+        tipWidth = tipRef.offsetWidth + 1 + 'px';
+      });
+    }
+  }
 </script>
 
 <div class={classes} style={styleObjectToString(outerStyle)}>
@@ -67,14 +69,13 @@
     on:click={toggleTip}
     bind:this={tipRef}
     style={styleObjectToString(textStyle)}>
-    {#each lines as line}
+    {#each lines as line, index (line)}
       <Line {line} />
     {/each}
   </div>
 </div>
 
 <style>
-  /* The --size variable is set in info.tsx. */
   .osc-info {
     display: inline-block;
     position: relative;
@@ -85,7 +86,7 @@
     justify-content: center;
     align-items: center;
 
-    background-color: var(--osc-secondary-color);
+    background-color: var(--osc-secondary-color, orange);
     border: none;
     border-radius: calc(var(--size) / 2);
     color: white;
@@ -97,8 +98,9 @@
   }
 
   .text {
-    background-color: var(--osc-secondary-color);
+    background-color: var(--osc-secondary-color, orange);
     border: none;
+    box-sizing: border-box;
     color: white;
     font-weight: normal;
     padding: 0.5rem;

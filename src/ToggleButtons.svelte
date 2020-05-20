@@ -63,7 +63,7 @@
   }
 
   button:focus {
-    outline: solid var(--osc-secondary-color) 2px;
+    outline: solid var(--osc-secondary-color, orange) 2px;
   }
 
   button:last-of-type {
@@ -72,7 +72,7 @@
   }
 
   button.selected {
-    background-color: var(--osc-primary-color);
+    background-color: var(--osc-primary-color, cornflowerblue);
     color: white;
   }
 

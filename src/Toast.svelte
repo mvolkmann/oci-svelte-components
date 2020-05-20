@@ -1,7 +1,7 @@
 <script>
   import {styleObjectToString} from './util';
 
-  export let backgroundColor = 'var(--osc-primary-color)';
+  export let backgroundColor = 'var(--osc-primary-color, cornflowerblue)';
   export let color = 'white';
   export let className = '';
   export let onClose = undefined;

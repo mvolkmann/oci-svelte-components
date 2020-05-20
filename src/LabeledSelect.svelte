@@ -28,7 +28,7 @@
     // Adjust the select width to accommodate
     // the downward triangle added in the CSS below.
     const width = getComputedStyle(ref).width;
-    ref.style.width = parseInt(width) + 20 + 'px';
+    ref.style.width = parseInt(width) + 24 + 'px';
   }
 
   const handleChange = event =>
@@ -89,13 +89,14 @@
     margin-bottom: 0;
     margin-left: 0.5rem;
     margin-top: 0.2rem;
+    padding-left: 0.5rem;
     position: relative;
     /*width: fit-content;*/
     width: max-content;
   }
 
   select:focus {
-    outline-color: var(--osc-secondary-color);
+    outline-color: var(--osc-secondary-color, orange);
   }
 
   select:invalid {

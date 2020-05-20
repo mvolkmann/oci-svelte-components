@@ -54,7 +54,7 @@
   }
 
   .focus :global(label) {
-    color: var(--osc-secondary-color);
+    color: var(--osc-secondary-color, orange);
   }
 
   .vertical {

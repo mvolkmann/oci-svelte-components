@@ -77,12 +77,12 @@
   }
 
   input:checked {
-    background-color: var(--osc-primary-color);
-    border-color: var(--osc-primary-color);
+    background-color: var(--osc-primary-color, cornflowerblue);
+    border-color: var(--osc-primary-color, cornflowerblue);
   }
 
   input:focus {
-    outline: solid var(--osc-secondary-color) 2px;
+    outline: solid var(--osc-secondary-color, orange) 2px;
   }
 
   label {

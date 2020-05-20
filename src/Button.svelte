@@ -34,7 +34,7 @@
   button.as-link {
     background-color: transparent;
     border: none !important;
-    color: var(--osc-primary-color);
+    color: var(--osc-primary-color, cornflowerblue);
     font-weight: 300;
     padding-left: 0;
     padding-right: 0;
@@ -43,6 +43,6 @@
   }
 
   button:focus {
-    outline-color: var(--osc-secondary-color);
+    outline-color: var(--osc-secondary-color, orange);
   }
 </style>
