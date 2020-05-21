@@ -39,7 +39,7 @@
     width: left + 'px'
   };
 
-  const classes = 'thermometer' + (className ? ' ' + className : '');
+  const classes = 'osc-thermometer' + (className ? ' ' + className : '');
 </script>
 
 <div class={classes} style={styleObjectToString(topStyle)}>
@@ -95,7 +95,7 @@
     padding: var(--padding);
   }
 
-  .thermometer {
+  .osc-thermometer {
     /* --height, --border-width and --padding are set in JavaScript above */
     --border-radius: calc(
       var(--height) / 2 + var(--padding) + var(--border-width)

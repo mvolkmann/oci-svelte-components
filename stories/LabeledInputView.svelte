@@ -61,7 +61,7 @@
 <LabeledToggle label="Vertical" path="labeledInput.vertical" />
 <LabeledSlider
   info="in pixels"
-  label="width"
+  label="Width"
   min={20}
   max="400"
   path="labeledInput.width"
