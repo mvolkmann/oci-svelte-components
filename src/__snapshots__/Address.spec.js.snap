@@ -7,7 +7,7 @@ exports[`Address should match snapshot 1`] = `
       class="address"
     >
       <div
-        class="osc-labeled svelte-1tulwxk"
+        class="osc-labeled svelte-sjs93e"
       >
         <label
           class="svelte-74lyeh"
@@ -19,16 +19,17 @@ exports[`Address should match snapshot 1`] = `
         </label>
          
         <div
-          class="container svelte-seedhc"
+          class="container svelte-sfmuks"
         >
           <select
-            class="osc-labeled-select svelte-seedhc"
+            class="osc-labeled-select svelte-sfmuks"
           >
             <option
               value=""
             >
               
             </option>
+            
             <option
               value="AUS"
             >

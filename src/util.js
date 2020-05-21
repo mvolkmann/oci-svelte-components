@@ -115,6 +115,10 @@ export function isMobileView(width) {
   return width <= mobileSize;
 }
 
+export function kebabCase(text) {
+  return text.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
+}
+
 export function logCssVar(label, element, name) {
   const value = getComputedStyle(element).getPropertyValue(name);
   console.log(label, 'CSS variable', name, '=', value);
@@ -135,6 +139,6 @@ export function stringsToSentence(strings) {
 
 export function styleObjectToString(styleObj) {
   return Object.entries(styleObj)
-    .map(([key, value]) => key + ': ' + value)
+    .map(([key, value]) => kebabCase(key) + ': ' + value)
     .join('; ');
 }

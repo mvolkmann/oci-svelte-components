@@ -4,7 +4,7 @@ exports[`Button should match snapshot 1`] = `
 <body>
   <div>
     <button
-      class="osc-button svelte-194m06c"
+      class="osc-button svelte-15tn0jp"
       type="button"
     >
       Press Me

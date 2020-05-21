@@ -1,4 +1,4 @@
-import {indexOfNth, stringsToSentence} from './util';
+import {indexOfNth, kebabCase, stringsToSentence} from './util';
 
 test('indexOfNth normal', () => {
   const text = '/foo/bar/baz/';
@@ -22,6 +22,13 @@ test('indexOfNth on empty', () => {
 test('indexOfNth on URL', () => {
   const url = 'http://localhost:4000/garden-view/profile';
   expect(indexOfNth(url, '/', 4)).toBe(33);
+});
+
+test('kebabCase', () => {
+  expect(kebabCase('')).toBe('');
+  expect(kebabCase('foo')).toBe('foo');
+  expect(kebabCase('fooBar')).toBe('foo-bar');
+  expect(kebabCase('fooBarBaz')).toBe('foo-bar-baz');
 });
 
 test('stringsToSentence', () => {
