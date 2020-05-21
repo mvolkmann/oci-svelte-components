@@ -12,14 +12,16 @@
   export let position = 'right';
   export let width = 'fit-content';
 
-  function closeToast() {
-    show = false;
-    if (onClose) onClose();
-  }
+  const oppositeSide = {
+    bottom: 'top',
+    left: 'right',
+    right: 'left',
+    top: 'bottom'
+  };
 
-  const lines = message.split('\\n');
+  $: lines = message.split('\\n');
 
-  const toastStyle = {
+  $: toastStyle = {
     '--background-color': backgroundColor,
     color,
     width
@@ -27,52 +29,72 @@
 
   $: toastStyle[side] = show ? 0 : '-100%';
 
-  switch (side) {
-    case 'bottom':
-    case 'top':
-      switch (position) {
-        case 'left':
-          toastStyle.left = 0;
-          break;
-        case 'right':
-          toastStyle.right = 0;
-          break;
-        case 'center':
-          toastStyle.left = 0;
-          toastStyle.right = 0;
-          toastStyle['margin-left'] = 'auto';
-          toastStyle['margin-right'] = 'auto';
-          break;
-        default:
-          throw new Error(
-            `Toast invalid horizontal position prop "${position}"`
-          );
-      }
-      break;
-    case 'left':
-    case 'right':
-      switch (position) {
-        case 'top':
-          toastStyle.top = 0;
-          break;
-        case 'bottom':
-          toastStyle.bottom = 0;
-          break;
-        case 'center':
-          toastStyle.top = '50%';
-          toastStyle.transform = 'translateY(-50%)';
-          break;
-        default:
-          throw new Error(`Toast invalid vertical position prop "${position}"`);
-      }
-      break;
-    default:
-      throw new Error(`Toast invalid side prop "${side}"`);
-  }
+  $: updateToastStyle(side, position);
 
   $: classes = 'osc-toast' + (className ? ' ' + className : '');
 
   $: if (show && timeoutMs) setTimeout(closeToast, timeoutMs);
+
+  function closeToast() {
+    show = false;
+    if (onClose) onClose();
+  }
+
+  function updateToastStyle(side, position) {
+    toastStyle[oppositeSide[side]] = 'unset';
+
+    switch (side) {
+      case 'bottom':
+      case 'top':
+        switch (position) {
+          case 'left':
+            toastStyle.left = 0;
+            toastStyle.right = 'unset';
+            break;
+          case 'right':
+            toastStyle.left = 'unset';
+            toastStyle.right = 0;
+            break;
+          case 'center':
+            toastStyle.left = 0;
+            toastStyle.right = 0;
+            toastStyle['margin-left'] = 'auto';
+            toastStyle['margin-right'] = 'auto';
+            break;
+          default:
+            throw new Error(
+              `Toast invalid horizontal position prop "${position}"`
+            );
+        }
+        break;
+      case 'left':
+      case 'right':
+        switch (position) {
+          case 'top':
+            toastStyle.top = 0;
+            toastStyle.bottom = 'unset';
+            toastStyle.transform = 'unset';
+            break;
+          case 'bottom':
+            toastStyle.bottom = 0;
+            toastStyle.top = 'unset';
+            toastStyle.transform = 'unset';
+            break;
+          case 'center':
+            toastStyle.top = '50%';
+            toastStyle.bottom = 'unset';
+            toastStyle.transform = 'translateY(-50%)';
+            break;
+          default:
+            throw new Error(
+              `Toast invalid vertical position prop "${position}"`
+            );
+        }
+        break;
+      default:
+        throw new Error(`Toast invalid side prop "${side}"`);
+    }
+  }
 </script>
 
 <div class={classes} style={styleObjectToString(toastStyle)}>
@@ -107,11 +129,5 @@
     position: fixed;
     transition-duration: 0.5s;
     z-index: 2;
-  }
-
-  @media (max-width: 760px) {
-    .osc-toast {
-      padding: 0.5rem 0;
-    }
   }
 </style>

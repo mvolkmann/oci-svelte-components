@@ -12,6 +12,7 @@
   // or an object with label and value properties.
   export let options;
 
+  export let omitEmpty = false;
   export let path = undefined;
   export let placeholder = '';
   export let required = false;
@@ -55,7 +56,9 @@
       on:change={handleChange}
       {required}
       {value}>
-      <option value="">{placeholder}</option>
+      {#if !omitEmpty}
+        <option value="">{placeholder}</option>
+      {/if}
       {#each options as option}
         <option value={typeof option === 'string' ? option : option.value}>
           {typeof option === 'string' ? option : option.label || option.value}
