@@ -9,6 +9,8 @@
   export let max = 100;
   export let min = 0;
   export let path = undefined;
+  export let showLimits = false;
+  export let showValue = false;
   export let store = globalStore;
   export let vertical = false;
   export let width = '10rem';
@@ -21,6 +23,7 @@
   let containerRef;
   let dx = 0;
   let thumbRef;
+  let rect;
   let value = 0;
 
   $: if (path) value = get($store, path);
@@ -30,23 +33,21 @@
   $: left =
     'calc(' + width + ' * ' + percentToUse + ' - ' + HALF_THUMB_SIZE + 'px)';
 
-  $: trackLeft = thumbRef
-    ? thumbRef.parentElement.getBoundingClientRect().left
-    : 0;
+  $: if (thumbRef) rect = thumbRef.parentElement.getBoundingClientRect();
+  $: trackLeft = rect ? rect.left : 0;
+  $: maxLeft = rect ? Math.ceil(rect.width) - HALF_THUMB_SIZE : 0;
+
   $: if (containerRef) {
     containerRef.style.setProperty('--thumb-size', THUMB_SIZE + 'px');
   }
-
-  $: maxLeft = thumbRef
-    ? thumbRef.parentElement.getBoundingClientRect().width - HALF_THUMB_SIZE
-    : 0;
 
   const classes =
     'osc-labeled-slider' +
     (className ? ' ' + className : '') +
     (vertical ? ' vertical' : '');
 
-  const trackClasses = 'track' + (vertical ? ' vertical' : '');
+  $: trackClasses =
+    'track' + (showLimits ? ' limits' : '') + (vertical ? ' vertical' : '');
 
   function handleKeyDown(event) {
     const {key} = event;
@@ -73,41 +74,63 @@
     const newLeft = Math.ceil(event.clientX - dx - trackLeft);
     if (MIN_LEFT <= newLeft && newLeft <= maxLeft) {
       thumbRef.style.left = newLeft + 'px';
-
       const percent = (newLeft - MIN_LEFT) / (maxLeft - MIN_LEFT);
-      const value = Math.round(min + (max - min) * percent);
-      update(store, path, value, dispatch);
+      const value = min + (max - min) * percent;
+      update(store, path, Math.round(value), dispatch);
     }
   }
 </script>
 
 <Labeled className={classes} {label} {vertical}>
-  <div
-    bind:this={containerRef}
-    class="container"
-    on:keydown={handleKeyDown}
-    on:mousedown={handleMouseDown}
-    on:mousemove={handleMouseMove}>
-    <div class={trackClasses} style={'width: ' + width}>
+  <div class="outer">
+    <div class="inner">
       <div
-        bind:this={thumbRef}
-        class="thumb"
-        style={'left: ' + left}
-        tabindex="0" />
+        bind:this={containerRef}
+        class="top"
+        on:keydown={handleKeyDown}
+        on:mousedown={handleMouseDown}
+        on:mousemove={handleMouseMove}>
+        <div class={trackClasses} style={'width: ' + width}>
+          <div
+            bind:this={thumbRef}
+            class="thumb"
+            style={'left: ' + left}
+            tabindex="0" />
+        </div>
+      </div>
+      {#if showLimits}
+        <div class="bottom">
+          <div class="limit">{min}</div>
+          <div class="limit">{max}</div>
+        </div>
+      {/if}
     </div>
+    {#if showValue}
+      <div class="value">{value}</div>
+    {/if}
   </div>
 </Labeled>
 
 <style>
-  .container {
-    --track-height: 6px;
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -2px;
+    width: 100%;
+  }
 
-    height: calc(var(--thumb-size) + var(--track-height) - 2px);
+  .limit {
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
   }
 
   .osc-labeled-slider {
     display: inline-flex;
     align-items: center;
+  }
+
+  .outer {
+    display: flex;
   }
 
   .thumb {
@@ -126,6 +149,15 @@
     outline: solid var(--osc-secondary-color, orange) 3px;
   }
 
+  .top {
+    --track-height: 6px;
+
+    display: flex;
+    align-items: center;
+
+    height: calc(var(--thumb-size) + var(--track-height) - 2px);
+  }
+
   .track {
     background-color: lightgray;
     border: none;
@@ -133,5 +165,17 @@
     height: var(--track-height);
     margin-left: 0.5rem;
     position: relative;
+  }
+
+  .track.limits {
+    --limit-style: solid black 3px;
+    border-left: var(--limit-style);
+    border-right: var(--limit-style);
+  }
+
+  .value {
+    font-weight: bold;
+    margin-left: 1rem;
+    margin-top: 2px;
   }
 </style>

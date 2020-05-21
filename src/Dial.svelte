@@ -24,8 +24,9 @@
 
   // Compute new arc paths if the gap or size changes.
   $: if (gap || size) {
+    console.log('Dial.svelte x: gap =', gap);
     fullPath = getPath(100);
-    filledPath = getPath((value / max) * 100);
+    filledPath = getPath((value / max) * 100, true);
   }
 
   let ref;
@@ -38,7 +39,8 @@
     return (degrees * Math.PI) / 180;
   }
 
-  function getPath(percent) {
+  function getPath(percent, log) {
+    if (log) console.log('Dial.svelte getPath: percent =', percent);
     const startDegrees = 270 - gap / 2;
     const endDegrees = startDegrees - ((360 - gap) * percent) / 100;
     const startAngle = degreesToRadians(startDegrees);
@@ -55,8 +57,7 @@
 
     const move = `M ${startX} ${startY}`;
     const arc = `A ${radius} ${radius} ${X_AXIS_ROTATION} ${largeArc} ${SWEEP} ${endX} ${endY}`;
-    const path = move + ' ' + arc;
-    return path;
+    return move + ' ' + arc;
   }
 </script>
 

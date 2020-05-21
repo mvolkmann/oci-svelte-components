@@ -4,12 +4,25 @@
   import Dial from '../src/Dial.svelte';
   import LabeledSlider from '../src/LabeledSlider.svelte';
 
-  const label = 'Score';
+  const commonSliderProps = {
+    showLimits: true,
+    showValue: true,
+    vertical: true
+  };
+  const label = 'Value';
   const gapPath = 'dial.gap';
   const sizePath = 'dial.size';
   const strokeWidthPath = 'dial.strokeWidth';
+  const valuePath = 'dial.value';
 
-  globalStore.set({dial: {gap: 20, size: 300, strokeWidth: 40}});
+  globalStore.set({
+    dial: {
+      gap: 20,
+      size: 300,
+      strokeWidth: 40,
+      value: 0
+    }
+  });
 
   $: gap = get($globalStore, gapPath);
   $: size = get($globalStore, sizePath);
@@ -21,17 +34,25 @@
   label="Size"
   max={400}
   min={200}
-  path={sizePath} />
+  path={sizePath}
+  {...commonSliderProps} />
 
 <LabeledSlider
   info="in pixels"
   label="Stroke Width"
   max={50}
   min={1}
-  path={strokeWidthPath} />
+  path={strokeWidthPath}
+  {...commonSliderProps} />
 
-<LabeledSlider info="in pixels" label="Gap" max={30} min={1} path={gapPath} />
+<LabeledSlider
+  info="in pixels"
+  label="Gap"
+  max={60}
+  min={1}
+  path={gapPath}
+  {...commonSliderProps} />
 
-<LabeledSlider {label} path="game.score" />
+<LabeledSlider {label} path={valuePath} {...commonSliderProps} />
 
-<Dial {gap} {label} min={0} max={100} path="game.score" {size} {strokeWidth} />
+<Dial {gap} {label} min={0} max={100} path={valuePath} {size} {strokeWidth} />
