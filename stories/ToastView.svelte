@@ -10,7 +10,7 @@
     toast: {
       backgroundColor: '#ffa500',
       color: '#ffffff',
-      message: 'This is a\\ntoast message.',
+      message: 'This is a\\n**toast** message.',
       side: 'top'
     }
   });

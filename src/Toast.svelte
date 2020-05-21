@@ -1,5 +1,6 @@
 <script>
   import {beforeUpdate} from 'svelte';
+  import Line from './Line.svelte';
   import {styleObjectToString} from './util';
 
   export let backgroundColor = 'var(--osc-primary-color, cornflowerblue)';
@@ -98,8 +99,8 @@
   <button className="close" on:click={closeToast} type="button">
     &#10006;
   </button>
-  {#each lines as line}
-    <div>{line}</div>
+  {#each lines as line (line)}
+    <Line {line} />
   {/each}
 </div>
 
