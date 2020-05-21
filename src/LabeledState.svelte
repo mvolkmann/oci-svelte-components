@@ -12,7 +12,12 @@
   export let vertical = false;
 
   let value = '';
-  $: if (path) value = get($store, path) || defaultValue;
+
+  $: if (path) {
+    value = get($store, path);
+    if (value === undefined) value = defaultValue;
+  }
+
   $: if (formatter) value = formatter(value);
 </script>
 
