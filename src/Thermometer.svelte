@@ -10,6 +10,7 @@
   export let backgroundColor = '#DADADA';
   export let className = '';
   export let color = 'var(--osc-primary-color, cornflowerblue)';
+  export let height = 50;
   export let labelColor = 'var(--osc-secondary-color, orange)';
   export let path;
   export let store = globalStore;
@@ -22,6 +23,7 @@
 
   $: topStyle = {
     '--border-width': BORDER_WIDTH + 'px',
+    '--height': height + 'px',
     '--padding': PADDING + 'px',
     width: width + 'px'
   };
@@ -94,9 +96,10 @@
   }
 
   .thermometer {
-    --height: 50px;
-    --border-radius: calc(var(--height) / 2);
-    /* --border-width and --padding are set above */
+    /* --height, --border-width and --padding are set in JavaScript above */
+    --border-radius: calc(
+      var(--height) / 2 + var(--padding) + var(--border-width)
+    );
 
     margin-left: 0.5rem;
     position: relative;

@@ -8,13 +8,20 @@
     thermometer: {
       backgroundColor: '#ffa500', // orange
       color: '#6495ed', // cornflowerblue
+      height: 50,
       labelColor: '#ffa500', // orange
-      value: 100,
+      value: 20,
       width: 300
     }
   });
 
-  $: ({backgroundColor, color, labelColor, width} = $globalStore.thermometer);
+  $: ({
+    backgroundColor,
+    color,
+    height,
+    labelColor,
+    width
+  } = $globalStore.thermometer);
 </script>
 
 <LabeledInput
@@ -31,6 +38,13 @@
   showLimits
   showValue />
 <LabeledSlider
+  label="Height"
+  max={50}
+  min={20}
+  path="thermometer.height"
+  showLimits
+  showValue />
+<LabeledSlider
   label="Value"
   max={100}
   min={0}
@@ -40,6 +54,7 @@
 <Thermometer
   {backgroundColor}
   {color}
+  {height}
   {labelColor}
   path="thermometer.value"
   {width} />

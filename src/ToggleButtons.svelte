@@ -77,17 +77,17 @@
     color: white;
   }
 
-  button.selected svg {
+  /* button.selected svg {
     color: white;
-  }
+  } */
 
   .icon {
     margin-right: 0.5rem;
   }
 
-  .icon svg {
+  /* .icon svg {
     color: black;
-  }
+  } */
 
   .osc-toggle-buttons {
     display: flex;
