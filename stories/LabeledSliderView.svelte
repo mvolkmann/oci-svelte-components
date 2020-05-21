@@ -1,7 +1,6 @@
 <script>
   import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
-  import LabeledInput from '../src/LabeledInput.svelte';
   import LabeledState from '../src/LabeledState.svelte';
   import LabeledSlider from '../src/LabeledSlider.svelte';
   import LabeledToggle from '../src/LabeledToggle.svelte';
@@ -28,7 +27,14 @@
   $: width = get($globalStore, widthPath);
 </script>
 
-<LabeledInput info="in pixels" label="Width" path={widthPath} type="number" />
+<LabeledSlider
+  info="in pixels"
+  label="Width"
+  max={400}
+  min={100}
+  path={widthPath}
+  showLimits
+  showValue />
 <LabeledToggle label="Show Value" path={showValuePath} />
 <LabeledToggle label="Show Limits" path={showLimitsPath} />
 <LabeledToggle label="Vertical" path={verticalPath} />

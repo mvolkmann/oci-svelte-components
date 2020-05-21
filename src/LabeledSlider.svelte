@@ -5,6 +5,7 @@
   import {globalStore, update} from './stores';
 
   export let className = '';
+  export let info = undefined;
   export let label;
   export let max = 100;
   export let min = 0;
@@ -71,9 +72,9 @@
     // Bail if the first mouse button isn't down.
     if (event.buttons !== 1) return;
 
-    const newLeft = Math.ceil(event.clientX - dx - trackLeft);
+    let newLeft = Math.ceil(event.clientX - dx - trackLeft);
     if (MIN_LEFT <= newLeft && newLeft <= maxLeft) {
-      thumbRef.style.left = newLeft + 'px';
+      thumbRef.style.left = newLeft - (showLimits ? 1 : 0) + 'px';
       const percent = (newLeft - MIN_LEFT) / (maxLeft - MIN_LEFT);
       const value = min + (max - min) * percent;
       update(store, path, Math.round(value), dispatch);
@@ -81,7 +82,7 @@
   }
 </script>
 
-<Labeled className={classes} {label} {vertical}>
+<Labeled className={classes} {info} {label} {vertical}>
   <div class="outer">
     <div class="inner">
       <div
@@ -142,6 +143,7 @@
     border-radius: calc(var(--thumb-size) / 2);
     display: inline-block;
     height: var(--thumb-size);
+    opacity: 0.5;
     width: var(--thumb-size);
   }
 
@@ -168,7 +170,7 @@
   }
 
   .track.limits {
-    --limit-style: solid black 3px;
+    --limit-style: solid black 1px;
     border-left: var(--limit-style);
     border-right: var(--limit-style);
   }
