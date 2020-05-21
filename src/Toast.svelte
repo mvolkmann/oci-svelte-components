@@ -1,4 +1,5 @@
 <script>
+  import {beforeUpdate} from 'svelte';
   import {styleObjectToString} from './util';
 
   export let backgroundColor = 'var(--osc-primary-color, cornflowerblue)';
@@ -19,20 +20,12 @@
     top: 'bottom'
   };
 
-  $: lines = message.split('\\n');
+  let toastStyle = {};
 
-  $: toastStyle = {
-    '--background-color': backgroundColor,
-    color,
-    width
-  };
-
-  $: toastStyle[side] = show ? 0 : '-100%';
-
-  $: updateToastStyle(side, position);
+  beforeUpdate(() => updateToastStyle(side, position));
 
   $: classes = 'osc-toast' + (className ? ' ' + className : '');
-
+  $: lines = message.split('\\n');
   $: if (show && timeoutMs) setTimeout(closeToast, timeoutMs);
 
   function closeToast() {
@@ -41,6 +34,10 @@
   }
 
   function updateToastStyle(side, position) {
+    toastStyle['--background-color'] = backgroundColor;
+    toastStyle.color = color;
+    toastStyle.width = width;
+    toastStyle[side] = show ? 0 : '-100%';
     toastStyle[oppositeSide[side]] = 'unset';
 
     switch (side) {

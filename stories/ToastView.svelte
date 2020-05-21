@@ -1,5 +1,4 @@
 <script>
-  import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
   import LabeledInput from '../src/LabeledInput.svelte';
   import LabeledSelect from '../src/LabeledSelect.svelte';
@@ -8,8 +7,8 @@
 
   globalStore.set({
     toast: {
-      backgroundColor: 'orange',
-      color: 'white',
+      backgroundColor: '#ffa500',
+      color: '#ffffff',
       message: 'This is a\\ntoast message.',
       side: 'top'
     }
