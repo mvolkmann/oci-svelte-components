@@ -1,4 +1,5 @@
 <script>
+  import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
   import LabeledInput from '../src/LabeledInput.svelte';
   import LabeledSelect from '../src/LabeledSelect.svelte';
@@ -19,6 +20,7 @@
   const messagePath = 'toast.message';
   const showPath = 'toast.show';
   const sidePath = 'toast.side';
+  const useTimeoutPath = 'toast.useTimeout';
 
   const sideOptions = ['top', 'bottom', 'left', 'right'];
   const horizontalPositionOptions = ['left', 'center', 'right'];
@@ -29,6 +31,8 @@
 
   let position;
   let positionOptions = [];
+
+  $: useTimeout = get($globalStore, useTimeoutPath);
 
   $: if (side) {
     positionOptions =
@@ -52,6 +56,7 @@
   on:value={event => (position = event.detail)}
   options={positionOptions}
   value={position} />
+<LabeledToggle info="2 seconds" label="Use Timeout" path={useTimeoutPath} />
 <LabeledToggle label="Show" path={showPath} />
 
 <Toast
@@ -60,4 +65,5 @@
   {message}
   {side}
   bind:show={$globalStore.toast.show}
-  {position} />
+  {position}
+  timeoutMs={useTimeout ? 2000 : 0} />

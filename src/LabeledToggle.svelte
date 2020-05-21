@@ -6,6 +6,7 @@
   import {getId} from './util';
 
   export let className = '';
+  export let info = undefined;
   export let label;
   export let on = undefined;
   export let path = undefined;
@@ -28,7 +29,7 @@
   const handleClick = () => update(store, path, !on, dispatch);
 </script>
 
-<Labeled className={classes} {id} {label} on:click={handleClick}>
+<Labeled className={classes} {id} {info} {label} on:click={handleClick}>
   <button class={toggleClasses} on:click={handleClick} type="button">
     <div class="thumb" />
   </button>
