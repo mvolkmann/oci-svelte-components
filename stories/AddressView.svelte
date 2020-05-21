@@ -10,5 +10,5 @@
   $: vertical = get($globalStore, verticalPath);
 </script>
 
-<LabeledToggle label="Vertical?" path={verticalPath} />
+<LabeledToggle label="Vertical" path={verticalPath} />
 <Address path={addressPath} {vertical} />

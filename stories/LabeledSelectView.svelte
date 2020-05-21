@@ -16,6 +16,6 @@
   $: vertical = get($globalStore, verticalPath);
 </script>
 
-<LabeledToggle label="Vertical?" path={verticalPath} />
+<LabeledToggle label="Vertical" path={verticalPath} />
 <LabeledSelect label="Fruit" {options} path={valuePath} {vertical} />
 <LabeledState defaultValue="nothing" label="You selected" path={valuePath} />

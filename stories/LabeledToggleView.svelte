@@ -10,6 +10,6 @@
   $: vertical = get($globalStore, verticalPath);
 </script>
 
-<LabeledToggle label="Vertical?" path={verticalPath} />
+<LabeledToggle label="Vertical" path={verticalPath} />
 <LabeledToggle label="Ready" path={readyPath} {vertical} />
 <LabeledState defaultValue="unset" label="Ready is" path={readyPath} />

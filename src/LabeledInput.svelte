@@ -15,7 +15,6 @@
   export let placeholder = '';
   export let required = false;
   export let store = globalStore;
-  export let style = {};
   export let type = 'text';
   export let value = undefined;
   export let vertical = false;
@@ -58,19 +57,21 @@
     update(store, path, value, dispatch);
   }
 
-  const onRight = type === 'checkbox' || type === 'radio';
-
   $: classes =
     'osc-labeled-input' +
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');
 
-  if (width) style.width = width;
-
-  if (type === 'date') {
-    style.paddingBottom = style.paddingTop = '5px';
+  let style = {};
+  $: canUseWidth = type !== 'checkbox' && type !== 'color';
+  $: {
+    style = {};
+    if (canUseWidth && width) style.width = width;
+    if (type === 'date') style.paddingBottom = style.paddingTop = '5px';
   }
+
+  $: onRight = !vertical && (type === 'checkbox' || type === 'radio');
 </script>
 
 <Labeled {id} {info} {label} {onRight} {required} {vertical}>
@@ -98,6 +99,10 @@
     -moz-appearance: none;
     -webkit-appearance: none;
     position: relative;
+  }
+
+  input[type='checkbox'].vertical {
+    margin: 0;
   }
 
   input[type='checkbox']:checked:after {

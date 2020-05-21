@@ -16,7 +16,7 @@
   const clearState = () => update(globalStore, statePath, '');
 </script>
 
-<LabeledToggle label="Vertical?" path={verticalPath} />
+<LabeledToggle label="Vertical" path={verticalPath} />
 <LabeledCountrySelect
   label="State"
   on:value={clearState}
