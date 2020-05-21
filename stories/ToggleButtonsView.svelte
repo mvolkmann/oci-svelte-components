@@ -2,9 +2,9 @@
   import LabeledState from '../src/LabeledState.svelte';
   import ToggleButtons from '../src/ToggleButtons.svelte';
 
-  const options = ['red', 'green', 'blue'];
+  const options = ['Red', 'Green', 'Blue'];
   const path = 'toggleButtons.value';
 </script>
 
 <ToggleButtons {options} {path} />
-<LabeledState label="You selected" {path} />
+<LabeledState defaultValue="nothing" label="You selected" {path} />

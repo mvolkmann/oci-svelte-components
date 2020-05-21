@@ -51,6 +51,7 @@
     border-left: solid black 1px;
     border-radius: 0;
     color: black;
+    font-size: 1rem;
     outline: none;
     height: var(--height);
     padding: 0 1rem;
