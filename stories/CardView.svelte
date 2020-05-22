@@ -15,8 +15,7 @@
   $: ({imageUrl, text, title} = $globalStore.card);
 </script>
 
-<Input label="Image URL" path="card.imageUrl" type="url" />
-<Input label="Title" path="card.title" />
-<!-- Add support for Input using textarea if lines > 1. -->
-<Input label="Text" path="card.text" lines={5} />
+<Input label="Image URL" path="card.imageUrl" type="url" vertical />
+<Input label="Title" path="card.title" vertical />
+<Input label="Text" path="card.text" rows={5} vertical width="500px" />
 <Card {imageUrl} {text} {title} />

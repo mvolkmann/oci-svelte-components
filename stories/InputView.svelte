@@ -1,5 +1,4 @@
 <script>
-  import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
   import Input from '../src/Input.svelte';
   import LabeledState from '../src/LabeledState.svelte';
@@ -13,6 +12,7 @@
       label: 'My Label',
       placeholder: '',
       required: false,
+      rows: 1,
       type: 'text',
       vertical: false,
       width: 200
@@ -37,8 +37,16 @@
     'week'
   ];
 
-  $: input = get($globalStore, 'input');
-  $: ({info, label, placeholder, required, type, vertical, width} = input);
+  $: ({
+    info,
+    label,
+    placeholder,
+    required,
+    rows,
+    type,
+    vertical,
+    width
+  } = $globalStore.input);
 </script>
 
 <Input label="Info" path="input.info" />
@@ -46,6 +54,7 @@
 <Input label="Placeholder" path="input.placeholder" />
 <Toggle label="Required" path="input.required" />
 <Select label="Type" omitEmpty options={typeOptions} path="input.type" />
+<Input label="Rows" max={10} min={1} path="input.rows" type="number" />
 <Toggle label="Vertical" path="input.vertical" />
 <Slider
   info="in pixels"
@@ -62,6 +71,7 @@
   path="input.value"
   {placeholder}
   {required}
+  {rows}
   {type}
   {vertical}
   width={width + 'px'} />

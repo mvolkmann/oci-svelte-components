@@ -14,6 +14,7 @@
   export let path = undefined;
   export let placeholder = '';
   export let required = false;
+  export let rows = 1;
   export let store = globalStore;
   export let type = 'text';
   export let value = undefined;
@@ -80,18 +81,30 @@
   {onRight}
   {required}
   {vertical}>
-  <input
-    class={inputClasses}
-    {id}
-    on:input={handleInput}
-    {required}
-    style={styleObjectToString(style)}
-    {type}
-    {...props} />
+  {#if rows === 1}
+    <input
+      class={inputClasses}
+      {id}
+      on:input={handleInput}
+      {required}
+      style={styleObjectToString(style)}
+      {type}
+      {...props} />
+  {:else if rows > 1}
+    <textarea
+      class={inputClasses}
+      {id}
+      on:input={handleInput}
+      {required}
+      {rows}
+      style={styleObjectToString(style)}
+      {...props} />
+  {/if}
 </Labeled>
 
 <style>
-  input {
+  input,
+  textarea {
     border: solid lightgray 1px;
     border-radius: var(--osc-border-radius, 0);
     font-size: 1rem;
@@ -118,11 +131,13 @@
     bottom: 0;
   }
 
-  input:focus {
+  input:focus,
+  textarea:focus {
     outline-color: var(--osc-secondary-color, orange);
   }
 
-  input:invalid {
+  input:invalid,
+  textarea:invalid {
     border: solid var(--osc-error-color, red) 1px;
   }
 
