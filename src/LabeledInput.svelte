@@ -57,11 +57,9 @@
     update(store, path, value, dispatch);
   }
 
-  $: classes =
-    'osc-labeled-input' +
-    (className ? ' ' + className : '') +
-    (value && invalid ? ' invalid' : '') +
-    (vertical ? ' vertical' : '');
+  $: classes = 'osc-labeled-input' + (className ? ' ' + className : '');
+  $: inputClasses =
+    (value && invalid ? ' invalid' : '') + (vertical ? ' vertical' : '');
 
   let style = {};
   $: canUseWidth = type !== 'checkbox' && type !== 'color';
@@ -74,9 +72,16 @@
   $: onRight = !vertical && (type === 'checkbox' || type === 'radio');
 </script>
 
-<Labeled {id} {info} {label} {onRight} {required} {vertical}>
+<Labeled
+  className={classes}
+  {id}
+  {info}
+  {label}
+  {onRight}
+  {required}
+  {vertical}>
   <input
-    class={classes}
+    class={inputClasses}
     {id}
     on:input={handleInput}
     {required}

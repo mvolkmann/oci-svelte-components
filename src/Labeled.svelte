@@ -26,13 +26,13 @@
 </script>
 
 <div bind:this={ref} class={classes}>
-  {#if !onRight}
+  {#if label && !onRight}
     <Label {id} {info} on:click {required} text={label} />
   {/if}
 
   <slot />
 
-  {#if onRight}
+  {#if label && onRight}
     <Label {id} {info} on:click {required} text={label} />
   {/if}
 </div>
