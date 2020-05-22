@@ -1,5 +1,4 @@
 <script>
-  import get from 'lodash-es/get';
   import Input from '../src/Input.svelte';
   import Select from '../src/Select.svelte';
   import {globalStore} from '../src/stores';
@@ -11,28 +10,21 @@
       backgroundColor: '#ffa500',
       color: '#ffffff',
       message: 'This is a\\n**toast** message.',
-      side: 'top'
+      show: false,
+      side: 'top',
+      useTimeout: false
     }
   });
-
-  const backgroundColorPath = 'toast.backgroundColor';
-  const colorPath = 'toast.color';
-  const messagePath = 'toast.message';
-  const showPath = 'toast.show';
-  const sidePath = 'toast.side';
-  const useTimeoutPath = 'toast.useTimeout';
 
   const sideOptions = ['top', 'bottom', 'left', 'right'];
   const horizontalPositionOptions = ['left', 'center', 'right'];
   const verticalPositionOptions = ['top', 'center', 'bottom'];
 
   $: toast = $globalStore.toast;
-  $: ({backgroundColor, color, message, side} = toast);
+  $: ({backgroundColor, color, message, side, useTimeout} = toast);
 
   let position;
   let positionOptions = [];
-
-  $: useTimeout = get($globalStore, useTimeoutPath);
 
   $: if (side) {
     positionOptions =
@@ -43,18 +35,18 @@
   }
 </script>
 
-<Input label="Background Color" path={backgroundColorPath} type="color" />
-<Input label="Color" path={colorPath} type="color" />
-<Input label="Message" path={messagePath} width="300px" />
-<Select label="Side" omitEmpty options={sideOptions} path={sidePath} />
+<Input label="Background Color" path="toast.backgroundColor" type="color" />
+<Input label="Color" path="toast.color" type="color" />
+<Input label="Message" path="toast.message" width="300px" />
+<Select label="Side" omitEmpty options={sideOptions} path="toast.side" />
 <Select
   label="Position"
   omitEmpty
   on:value={event => (position = event.detail)}
   options={positionOptions}
   value={position} />
-<Toggle info="2 seconds" label="Use Timeout" path={useTimeoutPath} />
-<Toggle label="Show" path={showPath} />
+<Toggle info="2 seconds" label="Use Timeout" path="toast.useTimeout" />
+<Toggle label="Show" path="toast.show" />
 
 <Toast
   {backgroundColor}
