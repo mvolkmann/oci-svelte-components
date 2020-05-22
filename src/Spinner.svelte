@@ -1,31 +1,37 @@
 <script context="module">
   import {globalStore, update} from './stores';
 
+  const IS_BUSY_PATH = 'ui.isBusy';
+  const BUSY_COUNTER_PATH = 'ui.busyCounter';
   const MIN_TIME_TO_DISPLAY = 1000;
   let busyCounter = 0;
   let startTime;
 
   export function taskEnd() {
-    if (busyCounter > 0) busyCounter--;
-    console.log('Spinner.svelte taskEnd: busyCounter =', busyCounter);
+    if (busyCounter > 0) {
+      busyCounter--;
+      update(globalStore, BUSY_COUNTER_PATH, busyCounter);
+    }
     if (busyCounter === 0) {
       const timeDisplayed = Date.now() - startTime;
       // Wait to hide spinner until it has been
       // displayed for a minimum amount of time.
       const waitTime = Math.max(0, MIN_TIME_TO_DISPLAY - timeDisplayed);
-      setTimeout(() => update(globalStore, 'ui.busy', false), waitTime);
+      setTimeout(() => update(globalStore, IS_BUSY_PATH, false), waitTime);
     }
   }
 
   export function taskStart() {
     const alreadyBusy = busyCounter > 0;
     busyCounter++;
+    update(globalStore, BUSY_COUNTER_PATH, busyCounter);
+
     if (!alreadyBusy) {
       // Wait a bit before showing spinner so
       // it never appears for short duration tasks.
       setTimeout(() => {
         startTime = Date.now();
-        if (busyCounter > 0) update(globalStore, 'ui.busy', true);
+        if (busyCounter > 0) update(globalStore, IS_BUSY_PATH, true);
       }, 500);
     }
   }
@@ -53,17 +59,14 @@
   $: halfSize = size / 2;
   $: halfStroke = strokeWidth / 2;
   $: radius = halfSize - halfStroke;
-  $: busy = get($globalStore, 'ui.busy');
+  $: busy = get($globalStore, IS_BUSY_PATH);
 
   onMount(() => {
     token = requestAnimationFrame(animate);
-    return () => {
-      console.log('Spinner.svelte onMount: canceling animation');
-      cancelAnimationFrame(token);
-    };
+    return () => cancelAnimationFrame(token);
   });
 
-  const secondaryColor =
+  const warningColor =
     getComputedStyle(document.documentElement).getPropertyValue(
       '--osc-warning-color'
     ) || 'red';
@@ -96,7 +99,7 @@
     <svg class="progress" width={size} height={size}>
       <path
         fill="none"
-        stroke={secondaryColor}
+        stroke={warningColor}
         stroke-width={strokeWidth}
         d={pathD} />
     </svg>
