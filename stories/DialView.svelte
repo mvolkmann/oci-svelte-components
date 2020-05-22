@@ -10,10 +10,6 @@
     vertical: true
   };
   const label = 'Value';
-  const gapPath = 'dial.gap';
-  const sizePath = 'dial.size';
-  const strokeWidthPath = 'dial.strokeWidth';
-  const valuePath = 'dial.value';
 
   globalStore.set({
     dial: {
@@ -24,9 +20,8 @@
     }
   });
 
-  $: gap = get($globalStore, gapPath);
-  $: size = get($globalStore, sizePath);
-  $: strokeWidth = get($globalStore, strokeWidthPath);
+  $: dial = get($globalStore, 'dial');
+  $: ({gap, size, strokeWidth} = dial);
 </script>
 
 <Slider
@@ -34,7 +29,7 @@
   label="Size"
   max={400}
   min={200}
-  path={sizePath}
+  path="dial.size"
   {...commonSliderProps} />
 
 <Slider
@@ -42,7 +37,7 @@
   label="Stroke Width"
   max={50}
   min={1}
-  path={strokeWidthPath}
+  path="dial.strokeWidth"
   {...commonSliderProps} />
 
 <Slider
@@ -50,9 +45,9 @@
   label="Gap"
   max={60}
   min={1}
-  path={gapPath}
+  path="dial.gap"
   {...commonSliderProps} />
 
-<Slider {label} path={valuePath} {...commonSliderProps} />
+<Slider {label} path="dial.value" {...commonSliderProps} />
 
-<Dial {gap} {label} min={0} max={100} path={valuePath} {size} {strokeWidth} />
+<Dial {gap} {label} min={0} max={100} path="dial.value" {size} {strokeWidth} />

@@ -18,7 +18,6 @@
   });
 
   $: ({endLabel, label, startLabel, vertical} = $globalStore.dateRange);
-  $: console.log('DateRangeView.svelte x: startLabel =', startLabel);
 </script>
 
 <Input label="Label" path="dateRange.label" />
