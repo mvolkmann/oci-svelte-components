@@ -17,6 +17,12 @@ export function writableSession(key, initialValue) {
 export const globalStore = writableSession('global', {});
 
 export function update(store, path, value, dispatch) {
-  if (path) store.update(obj => set(obj, path, value));
+  //console.log('stores.js update: setting', path, 'to', value);
+  if (path)
+    store.update(obj => {
+      set(obj, path, value);
+      //console.log('stores.js update: obj =', obj);
+      return obj;
+    });
   if (dispatch) dispatch('value', value);
 }

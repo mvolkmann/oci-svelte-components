@@ -1,9 +1,9 @@
 <script>
   import get from 'lodash-es/get';
-  import set from 'lodash-es/set';
+  import Dialog from './Dialog.svelte';
   import Input from './Input.svelte';
   import Labeled from './Labeled.svelte';
-  import {globalStore} from './stores';
+  import {globalStore, update} from './stores';
   import {formatDate2} from './util';
 
   export let className = undefined;
@@ -15,47 +15,44 @@
   export let store = globalStore;
   export let vertical = false;
 
+  let dialogRef;
+  let errorMessage;
+
   $: classes =
     'osc-date-range' +
     (className ? ' ' + className : '') +
     (vertical ? ' vertical' : '');
 
-  $: endDate = get($store, endDatePath);
   $: startDate = get($store, startDatePath);
+  $: formattedStartDate = formatDate2(startDate);
+  $: endDate = get($store, endDatePath);
+  $: formattedEndDate = formatDate2(endDate);
 
   function dateStringToDate(dateString) {
-    console.log('DateRange.svelte dateStringToDate: dateString =', dateString);
     if (!dateString) return new Date();
     const [year, month, day] = dateString.split('-');
-    const result = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      0,
-      0,
-      0
-    );
-    console.log('DateRange.svelte dateStringToDate: result =', result);
-    return result;
+    return new Date(Number(year), Number(month) - 1, Number(day), 0, 0, 0);
   }
 
   function onStartChange(event) {
     const date = dateStringToDate(event.detail);
-    if (date <= endDate) {
-      store.update(obj => set(obj, startDatePath, date));
+    if (!endDate || date <= endDate) {
+      update(store, startDatePath, date);
     } else {
-      //TODO: Do something better.
-      alert('The start date must preceded the end date.');
+      errorMessage = 'The start date must preceded the end date.';
+      dialogRef.showModal();
+      update(store, startDatePath, new Date(endDate));
     }
   }
 
   function onEndChange(event) {
     const date = dateStringToDate(event.detail);
-    if (date >= startDate) {
-      store.update(obj => set(obj, endDatePath, date));
+    if (!startDate || date >= startDate) {
+      update(store, endDatePath, date);
     } else {
-      //TODO: Do something better.
-      alert('The end date must follow the end date.');
+      errorMessage = 'The end date must follow the end date.';
+      dialogRef.showModal();
+      update(store, endDatePath, new Date(startDate));
     }
   }
 </script>
@@ -68,15 +65,16 @@
         className="start-input"
         on:value={onStartChange}
         type="date"
-        value={formatDate2(new Date(startDate))} />
+        value={formattedStartDate} />
       <label class="end-label">{endLabel}</label>
       <Input
         className="end-input"
         on:value={onEndChange}
         type="date"
-        value={formatDate2(new Date(endDate))} />
+        value={formattedEndDate} />
     </div>
   </Labeled>
+  <Dialog bind:ref={dialogRef} title="Invalid Date">{errorMessage}</Dialog>
 </div>
 
 <style>

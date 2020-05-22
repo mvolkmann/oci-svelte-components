@@ -5,8 +5,8 @@
   import {globalStore} from '../src/stores';
   import Toggle from '../src/Toggle.svelte';
 
-  const startDatePath = 'dateRange.startPath';
-  const endDatePath = 'dateRange.endPath';
+  const startDatePath = 'dateRange.start';
+  const endDatePath = 'dateRange.end';
 
   globalStore.set({
     dateRange: {
@@ -17,6 +17,7 @@
     }
   });
 
+  $: console.log('DateRangeView.svelte x: $globalStore =', $globalStore);
   $: ({endLabel, label, startLabel, vertical} = $globalStore.dateRange);
 </script>
 
