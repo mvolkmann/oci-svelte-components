@@ -4,7 +4,6 @@
   import Input from './Input.svelte';
   import StateSelect from './StateSelect.svelte';
   import {globalStore, update} from './stores';
-  console.log('Address.svelte x: globalStore =', globalStore);
 
   export let path; // required for now
   export let store = globalStore;

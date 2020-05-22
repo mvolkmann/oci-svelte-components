@@ -22,12 +22,9 @@
   import ToggleButtons from './ToggleButtons.svelte';
   import {globalStore} from './stores';
 
-  const addressPath = 'user.profile.address';
   const colorPath = 'user.favoriteColor';
-  const firstNamePath = 'user.profile.firstName';
   const flavorPath = 'user.favoriteFlavor';
   const happyPath = 'user.happy';
-  const lastNamePath = 'user.profile.lastName';
   const middleNamePath = 'user.profile.middleName';
 
   const accordionData = [
@@ -67,18 +64,18 @@
   let isHappy = false;
   let showToast = false;
 
-  $: firstName = get($globalStore, firstNamePath);
-  $: lastName = get($globalStore, lastNamePath);
-  $: console.log('App.svelte: $globalStore =', $globalStore);
+  $: user = get($globalStore, 'user');
+  $: ({happy, profile} = user);
+  $: ({firstName, lastName} = profile);
 
   // Detect change from unhappy to happy.
-  $: if (!isHappy && $globalStore.user.happy) {
+  $: if (!isHappy && happy) {
     isHappy = true;
     showToast = true; // only on change to happy
   }
 
   // Detect change to unhappy.
-  $: if (!$globalStore.user.happy) isHappy = false;
+  $: if (!happy) isHappy = false;
 
   const colorOptions = ['red', 'green', 'blue'];
   const flavorOptions = ['vanilla', 'strawberry', 'chocolate'];
@@ -99,7 +96,7 @@
     <Input
       info={'basic tooltip'}
       label="First Name"
-      path={firstNamePath}
+      path="user.profile.firstName"
       placeholder="First Name"
       required />
 
@@ -109,7 +106,7 @@
     <Input
       info={'This is\na **fancy** pants\n tooltip.'}
       label="Last Name"
-      path={lastNamePath}
+      path="user.profile.lastName"
       placeholder="Last Name"
       vertical />
 
@@ -161,7 +158,7 @@
       path="user.age"
       vertical />
 
-    <Address path={addressPath} vertical />
+    <Address path="user.profile.address" vertical />
 
     <div>
       <Accordion data={accordionData} />
