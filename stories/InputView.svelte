@@ -1,11 +1,11 @@
 <script>
   import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledSelect from '../src/LabeledSelect.svelte';
-  import LabeledSlider from '../src/LabeledSlider.svelte';
+  import Input from '../src/Input.svelte';
   import LabeledState from '../src/LabeledState.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
+  import Select from '../src/Select.svelte';
+  import Slider from '../src/Slider.svelte';
+  import Toggle from '../src/Toggle.svelte';
 
   globalStore.set({
     labeledInput: {
@@ -49,17 +49,13 @@
   } = labeledInput);
 </script>
 
-<LabeledInput label="Info" path="labeledInput.info" />
-<LabeledInput label="Label" path="labeledInput.label" />
-<LabeledInput label="Placeholder" path="labeledInput.placeholder" />
-<LabeledToggle label="Required" path="labeledInput.required" />
-<LabeledSelect
-  label="Type"
-  omitEmpty
-  options={typeOptions}
-  path="labeledInput.type" />
-<LabeledToggle label="Vertical" path="labeledInput.vertical" />
-<LabeledSlider
+<Input label="Info" path="labeledInput.info" />
+<Input label="Label" path="labeledInput.label" />
+<Input label="Placeholder" path="labeledInput.placeholder" />
+<Toggle label="Required" path="labeledInput.required" />
+<Select label="Type" omitEmpty options={typeOptions} path="labeledInput.type" />
+<Toggle label="Vertical" path="labeledInput.vertical" />
+<Slider
   info="in pixels"
   label="Width"
   min={20}
@@ -68,7 +64,7 @@
   showLimits
   showValue />
 
-<LabeledInput
+<Input
   {info}
   {label}
   path="labeledInput.value"

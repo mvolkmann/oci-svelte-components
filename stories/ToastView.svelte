@@ -1,10 +1,10 @@
 <script>
   import get from 'lodash-es/get';
+  import Input from '../src/Input.svelte';
+  import Select from '../src/Select.svelte';
   import {globalStore} from '../src/stores';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledSelect from '../src/LabeledSelect.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
   import Toast from '../src/Toast.svelte';
+  import Toggle from '../src/Toggle.svelte';
 
   globalStore.set({
     toast: {
@@ -43,21 +43,18 @@
   }
 </script>
 
-<LabeledInput
-  label="Background Color"
-  path={backgroundColorPath}
-  type="color" />
-<LabeledInput label="Color" path={colorPath} type="color" />
-<LabeledInput label="Message" path={messagePath} width="300px" />
-<LabeledSelect label="Side" omitEmpty options={sideOptions} path={sidePath} />
-<LabeledSelect
+<Input label="Background Color" path={backgroundColorPath} type="color" />
+<Input label="Color" path={colorPath} type="color" />
+<Input label="Message" path={messagePath} width="300px" />
+<Select label="Side" omitEmpty options={sideOptions} path={sidePath} />
+<Select
   label="Position"
   omitEmpty
   on:value={event => (position = event.detail)}
   options={positionOptions}
   value={position} />
-<LabeledToggle info="2 seconds" label="Use Timeout" path={useTimeoutPath} />
-<LabeledToggle label="Show" path={showPath} />
+<Toggle info="2 seconds" label="Use Timeout" path={useTimeoutPath} />
+<Toggle label="Show" path={showPath} />
 
 <Toast
   {backgroundColor}

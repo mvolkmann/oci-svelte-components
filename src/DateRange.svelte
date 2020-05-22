@@ -1,8 +1,8 @@
 <script>
   import get from 'lodash-es/get';
   import set from 'lodash-es/set';
+  import Input from './Input.svelte';
   import Labeled from './Labeled.svelte';
-  import LabeledInput from './LabeledInput.svelte';
   import {globalStore} from './stores';
   import {formatDate2} from './util';
 
@@ -64,13 +64,13 @@
   <Labeled {label} {vertical}>
     <div class="content">
       <label class="start-label">{startLabel}</label>
-      <LabeledInput
+      <Input
         className="start-input"
         on:value={onStartChange}
         type="date"
         value={formatDate2(new Date(startDate))} />
       <label class="end-label">{endLabel}</label>
-      <LabeledInput
+      <Input
         className="end-input"
         on:value={onEndChange}
         type="date"

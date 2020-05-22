@@ -9,7 +9,7 @@
 
   let html;
   $: {
-    html = `<${elementName} class="${classes}">`;
+    html = `<${elementName}>`;
     for (const item of items) {
       html += `<li>${item.toString()}</li>`;
     }
@@ -17,4 +17,12 @@
   }
 </script>
 
-{@html html}
+<div class={classes}>
+  {@html html}
+</div>
+
+<style>
+  .list :global(li) {
+    margin: 0.25rem 0;
+  }
+</style>

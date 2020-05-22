@@ -1,8 +1,8 @@
 <script>
-  import Thermometer from '../src/Thermometer.svelte';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledSlider from '../src/LabeledSlider.svelte';
+  import Input from '../src/Input.svelte';
+  import Slider from '../src/Slider.svelte';
   import {globalStore} from '../src/stores';
+  import Thermometer from '../src/Thermometer.svelte';
 
   globalStore.set({
     thermometer: {
@@ -24,27 +24,27 @@
   } = $globalStore.thermometer);
 </script>
 
-<LabeledInput
+<Input
   label="Background Color"
   path="thermometer.backgroundColor"
   type="color" />
-<LabeledInput label="Color" path="thermometer.color" type="color" />
-<LabeledInput label="Label Color" path="thermometer.labelColor" type="color" />
-<LabeledSlider
+<Input label="Color" path="thermometer.color" type="color" />
+<Input label="Label Color" path="thermometer.labelColor" type="color" />
+<Slider
   label="Width"
   max={500}
   min={100}
   path="thermometer.width"
   showLimits
   showValue />
-<LabeledSlider
+<Slider
   label="Height"
   max={50}
   min={20}
   path="thermometer.height"
   showLimits
   showValue />
-<LabeledSlider
+<Slider
   label="Value"
   max={100}
   min={0}

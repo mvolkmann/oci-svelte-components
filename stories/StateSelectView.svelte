@@ -1,10 +1,10 @@
 <script>
   import get from 'lodash-es/get';
   import {globalStore, update} from '../src/stores';
-  import LabeledCountrySelect from '../src/LabeledCountrySelect.svelte';
-  import LabeledStateSelect from '../src/LabeledStateSelect.svelte';
+  import CountrySelect from '../src/CountrySelect.svelte';
+  import StateSelect from '../src/StateSelect.svelte';
   import LabeledState from '../src/LabeledState.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
+  import Toggle from '../src/Toggle.svelte';
 
   const countryPath = 'user.profile.address.country';
   const statePath = 'user.profile.address.state';
@@ -16,11 +16,11 @@
   const clearState = () => update(globalStore, statePath, '');
 </script>
 
-<LabeledToggle label="Vertical" path={verticalPath} />
-<LabeledCountrySelect
+<Toggle label="Vertical" path={verticalPath} />
+<CountrySelect
   label="State"
   on:value={clearState}
   path={countryPath}
   {vertical} />
-<LabeledStateSelect {countryCode} path={statePath} {vertical} />
+<StateSelect {countryCode} path={statePath} {vertical} />
 <LabeledState defaultValue="nothing" label="You selected" path={statePath} />

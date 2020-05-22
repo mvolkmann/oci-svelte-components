@@ -143,7 +143,7 @@
     border-radius: calc(var(--thumb-size) / 2);
     display: inline-block;
     height: var(--thumb-size);
-    opacity: 0.5;
+    opacity: 0.6;
     width: var(--thumb-size);
   }
 

@@ -1,6 +1,5 @@
 <script>
   import * as solid from '@fortawesome/free-solid-svg-icons';
-  import * as brands from '@fortawesome/free-brands-svg-icons';
 
   import get from 'lodash-es/get';
   import Accordion from './Accordion.svelte';
@@ -11,12 +10,12 @@
   import Hello from './Hello.svelte';
   import Icon from './Icon.svelte';
   import Image from './Image.svelte';
-  import LabeledInput from './LabeledInput.svelte';
-  import LabeledRadioButtons from './LabeledRadioButtons.svelte';
-  import LabeledSelect from './LabeledSelect.svelte';
-  import LabeledSlider from './LabeledSlider.svelte';
+  import Input from './Input.svelte';
+  import RadioButtons from './RadioButtons.svelte';
+  import Select from './Select.svelte';
+  import Slider from './Slider.svelte';
   import LabeledState from './LabeledState.svelte';
-  import LabeledToggle from './LabeledToggle.svelte';
+  import Toggle from './Toggle.svelte';
   import List from './List.svelte';
   import State from './State.svelte';
   import Toast from './Toast.svelte';
@@ -97,26 +96,26 @@
 
     <Icon color="red" icon={solid.faHeart} size="3rem" />
 
-    <LabeledInput
+    <Input
       info={'basic tooltip'}
       label="First Name"
       path={firstNamePath}
       placeholder="First Name"
       required />
 
-    <LabeledInput label="Middle Name" path={middleNamePath} />
-    <State component={LabeledInput} label="Middle Name" path={middleNamePath} />
+    <Input label="Middle Name" path={middleNamePath} />
+    <State component={Input} label="Middle Name" path={middleNamePath} />
 
-    <LabeledInput
+    <Input
       info={'This is\na **fancy** pants\n tooltip.'}
       label="Last Name"
       path={lastNamePath}
       placeholder="Last Name"
       vertical />
 
-    <LabeledInput label="Happy" path={happyPath} type="checkbox" />
-    <LabeledToggle label="Happy" path={happyPath} />
-    <LabeledToggle label="Happy" path={happyPath} vertical />
+    <Input label="Happy" path={happyPath} type="checkbox" />
+    <Toggle label="Happy" path={happyPath} />
+    <Toggle label="Happy" path={happyPath} vertical />
     <Toast
       message="I am so glad\nyou are happy!"
       bind:show={showToast}
@@ -124,33 +123,36 @@
 
     <ToggleButtons options={flavorOptions} path={flavorPath} />
 
-    <LabeledRadioButtons
+    <RadioButtons
       label="Favorite Flavor"
       name="flavor"
       options={flavorOptions}
       path={flavorPath} />
 
-    <LabeledRadioButtons
+    <RadioButtons
       label="Favorite Flavor"
       name="flavor2"
       options={flavorOptions}
       path={flavorPath}
       vertical />
 
-    <LabeledSelect
-      label="Favorite Color"
-      options={colorOptions}
-      path={colorPath} />
+    <Select label="Favorite Color" options={colorOptions} path={colorPath} />
 
-    <LabeledSelect
+    <Select
       label="Favorite Color"
       options={colorOptions}
       path={colorPath}
       vertical />
 
-    <LabeledInput label="Age" min="0" max="100" path="user.age" type="number" />
-    <LabeledSlider label="Age" path="user.age" />
-    <LabeledSlider label="Age" path="user.age" vertical width="20rem" />
+    <Input label="Age" min="0" max="100" path="user.age" type="number" />
+    <Slider label="Age" path="user.age" />
+    <Slider
+      label="Age"
+      path="user.age"
+      showLimits
+      showValue
+      vertical
+      width="20rem" />
     <Dial label="Age" path="user.age" />
     <LabeledState label="Age" path="user.age" />
     <LabeledState

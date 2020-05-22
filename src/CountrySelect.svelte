@@ -1,5 +1,5 @@
 <script>
-  import LabeledSelect from './LabeledSelect.svelte';
+  import Select from './Select.svelte';
   import options from './countries';
 
   export let className = '';
@@ -10,7 +10,7 @@
   export let vertical = false;
 </script>
 
-<LabeledSelect
+<Select
   {className}
   label="Country"
   on:value

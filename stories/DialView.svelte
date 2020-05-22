@@ -2,7 +2,7 @@
   import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
   import Dial from '../src/Dial.svelte';
-  import LabeledSlider from '../src/LabeledSlider.svelte';
+  import Slider from '../src/Slider.svelte';
 
   const commonSliderProps = {
     showLimits: true,
@@ -29,7 +29,7 @@
   $: strokeWidth = get($globalStore, strokeWidthPath);
 </script>
 
-<LabeledSlider
+<Slider
   info="in pixels"
   label="Size"
   max={400}
@@ -37,7 +37,7 @@
   path={sizePath}
   {...commonSliderProps} />
 
-<LabeledSlider
+<Slider
   info="in pixels"
   label="Stroke Width"
   max={50}
@@ -45,7 +45,7 @@
   path={strokeWidthPath}
   {...commonSliderProps} />
 
-<LabeledSlider
+<Slider
   info="in pixels"
   label="Gap"
   max={60}
@@ -53,6 +53,6 @@
   path={gapPath}
   {...commonSliderProps} />
 
-<LabeledSlider {label} path={valuePath} {...commonSliderProps} />
+<Slider {label} path={valuePath} {...commonSliderProps} />
 
 <Dial {gap} {label} min={0} max={100} path={valuePath} {size} {strokeWidth} />

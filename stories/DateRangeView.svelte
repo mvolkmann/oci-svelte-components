@@ -1,9 +1,9 @@
 <script>
   import DateRange from '../src/DateRange.svelte';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledState from '../src/LabeledState.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
+  import Input from '../src/Input.svelte';
+  import State from '../src/State.svelte';
   import {globalStore} from '../src/stores';
+  import Toggle from '../src/Toggle.svelte';
 
   const startDatePath = 'dateRange.startPath';
   const endDatePath = 'dateRange.endPath';
@@ -21,10 +21,10 @@
   $: console.log('DateRangeView.svelte x: startLabel =', startLabel);
 </script>
 
-<LabeledInput label="Label" path="dateRange.label" />
-<LabeledInput label="Start Label" path="dateRange.startLabel" />
-<LabeledInput label="End Label" path="dateRange.endLabel" />
-<LabeledToggle label="Vertical" path="dateRange.vertical" />
+<Input label="Label" path="dateRange.label" />
+<Input label="Start Label" path="dateRange.startLabel" />
+<Input label="End Label" path="dateRange.endLabel" />
+<Toggle label="Vertical" path="dateRange.vertical" />
 <DateRange
   {endDatePath}
   {endLabel}
@@ -32,5 +32,5 @@
   {startDatePath}
   {startLabel}
   {vertical} />
-<LabeledState label="The start date is" path={startDatePath} />
-<LabeledState label="The end date is" path={endDatePath} />
+<State label="The start date is" path={startDatePath} />
+<State label="The end date is" path={endDatePath} />

@@ -2,8 +2,8 @@
   import {globalStore} from '../src/stores';
   import Carousel from '../src/Carousel.svelte';
   import Image from '../src/Image.svelte';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
+  import Input from '../src/Input.svelte';
+  import Toggle from '../src/Toggle.svelte';
 
   globalStore.set({
     carousel: {elementMargin: 0, elementsPerPage: 1, showDots: false}
@@ -32,14 +32,14 @@
   const height = 396;
 </script>
 
-<LabeledInput
+<Input
   label="Elements per Page"
   min={1}
   type="number"
   path="carousel.elementsPerPage"
   width="26px" />
 
-<LabeledInput
+<Input
   info="in pixels"
   label="Element Margin"
   min={0}
@@ -47,7 +47,7 @@
   path="carousel.elementMargin"
   width="40px" />
 
-<LabeledToggle label="Show Dots" path="carousel.showDots" />
+<Toggle label="Show Dots" path="carousel.showDots" />
 
 <Carousel
   elements={carouselData}

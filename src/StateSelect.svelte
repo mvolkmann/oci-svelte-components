@@ -1,5 +1,5 @@
 <script>
-  import LabeledSelect from './LabeledSelect.svelte';
+  import Select from './Select.svelte';
   import canadaOptions from './canadian-provinces';
   import usOptions from './us-states';
 
@@ -23,7 +23,7 @@
 </script>
 
 {#if label}
-  <LabeledSelect
+  <Select
     {className}
     {label}
     {options}

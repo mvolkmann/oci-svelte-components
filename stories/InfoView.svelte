@@ -1,7 +1,7 @@
 <script>
   import Info from '../src/Info.svelte';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledSelect from '../src/LabeledSelect.svelte';
+  import Input from '../src/Input.svelte';
+  import Select from '../src/Select.svelte';
   import {globalStore} from '../src/stores';
 
   globalStore.set({
@@ -13,12 +13,12 @@
   });
 </script>
 
-<LabeledInput label="text" path="info.text" width="300px" />
-<LabeledSelect
+<Input label="text" path="info.text" width="300px" />
+<Select
   label="hPosition"
   options={['left', 'center', 'right']}
   path="info.hPosition" />
-<LabeledSelect
+<Select
   label="vPosition"
   options={['top', 'center', 'bottom']}
   path="info.vPosition" />

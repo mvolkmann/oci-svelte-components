@@ -42,7 +42,7 @@
 <Labeled className={classes} {info} {label} {required} {vertical}>
   <div class={containerClasses}>
     {#each options as option}
-      <label class="option">
+      <label>
         <input
           checked={value === getOptionValue(option)}
           {name}
@@ -73,9 +73,7 @@
     border: solid lightgray 1px;
 
     font-size: 1rem;
-    margin-bottom: 0;
-    margin-left: 1rem;
-    margin-top: 0;
+    margin: 0 0.5rem 0 1rem;
   }
 
   input:checked {
@@ -87,11 +85,9 @@
     outline: solid var(--osc-secondary-color, orange) 2px;
   }
 
-  .option {
+  label {
     display: flex;
     align-items: center;
-
-    margin-left: 0.2rem;
   }
 
   .vertical {
@@ -102,11 +98,11 @@
     margin-top: 0.3rem;
   }
 
-  .vertical > .option {
-    margin-bottom: 0.5rem;
+  .vertical input {
+    margin-left: 0;
   }
 
-  .vertical > .option > input:first-of-type {
-    margin-left: 0;
+  .vertical > label {
+    margin-bottom: 0.5rem;
   }
 </style>

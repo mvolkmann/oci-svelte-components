@@ -1,9 +1,9 @@
 <script>
   import get from 'lodash-es/get';
   import {globalStore} from '../src/stores';
-  import LabeledCountrySelect from '../src/LabeledCountrySelect.svelte';
+  import CountrySelect from '../src/CountrySelect.svelte';
   import LabeledState from '../src/LabeledState.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
+  import Toggle from '../src/Toggle.svelte';
 
   const path = 'user.profile.address.country';
   const verticalPath = 'labeledCountrySelect.vertical';
@@ -11,6 +11,6 @@
   $: vertical = get($globalStore, verticalPath);
 </script>
 
-<LabeledToggle label="Vertical" path={verticalPath} />
-<LabeledCountrySelect label="Country" {path} {vertical} />
+<Toggle label="Vertical" path={verticalPath} />
+<CountrySelect label="Country" {path} {vertical} />
 <LabeledState defaultValue="nothing" label="You selected" {path} />

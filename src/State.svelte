@@ -2,10 +2,10 @@
   // This is an interesting approach to handling the
   // association between a component and global state.
   // For example, the following renders an
-  // instance of the LabeledInput component.
+  // instance of the Input component.
   //
   // <State
-  //   component={LabeledInput}
+  //   component={Input}
   //   label="Middle Name"
   //   path="user.profile.middleName" />
   //

@@ -1,8 +1,8 @@
 <script>
   import get from 'lodash-es/get';
-  import LabeledCountrySelect from './LabeledCountrySelect.svelte';
-  import LabeledInput from './LabeledInput.svelte';
-  import LabeledStateSelect from './LabeledStateSelect.svelte';
+  import CountrySelect from './CountrySelect.svelte';
+  import Input from './Input.svelte';
+  import StateSelect from './StateSelect.svelte';
   import {globalStore, update} from './stores';
   console.log('Address.svelte x: globalStore =', globalStore);
 
@@ -21,16 +21,13 @@
 </script>
 
 <div class="address">
-  <LabeledCountrySelect
-    on:value={clearState}
-    path={path + '.country'}
-    {vertical} />
+  <CountrySelect on:value={clearState} path={path + '.country'} {vertical} />
   {#if countryCode}
-    <LabeledInput label="Street" path={path + '.street'} {vertical} />
-    <LabeledInput label="City" path={path + '.city'} {vertical} />
-    <LabeledStateSelect {countryCode} path={path + '.state'} {vertical} />
+    <Input label="Street" path={path + '.street'} {vertical} />
+    <Input label="City" path={path + '.city'} {vertical} />
+    <StateSelect {countryCode} path={path + '.state'} {vertical} />
     {#if zipLabel}
-      <LabeledInput label={zipLabel} path={path + '.zip'} {vertical} />
+      <Input label={zipLabel} path={path + '.zip'} {vertical} />
     {/if}
   {/if}
 </div>

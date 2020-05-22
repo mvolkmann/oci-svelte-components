@@ -1,9 +1,9 @@
 <script>
   import get from 'lodash-es/get';
+  import Input from '../src/Input.svelte';
   import Label from '../src/Label.svelte';
-  import LabeledInput from '../src/LabeledInput.svelte';
-  import LabeledToggle from '../src/LabeledToggle.svelte';
   import {globalStore} from '../src/stores';
+  import Toggle from '../src/Toggle.svelte';
 
   const infoPath = 'label.info';
   const requiredPath = 'label.required';
@@ -21,7 +21,7 @@
   $: ({info, required, text} = label);
 </script>
 
-<LabeledInput label="Info" path={infoPath} />
-<LabeledInput label="Text" path={textPath} />
-<LabeledToggle label="required" path={requiredPath} />
+<Input label="Info" path={infoPath} />
+<Input label="Text" path={textPath} />
+<Toggle label="required" path={requiredPath} />
 <Label {info} {required} {text} />
