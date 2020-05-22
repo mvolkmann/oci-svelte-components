@@ -37,13 +37,13 @@
   import {onMount} from 'svelte';
   import Icon from './Icon.svelte';
 
+  export let arcDegrees = 60;
   export let size = 100;
   export let strokeWidth = 10;
 
-  const DELTA_DEGREES = 5;
+  const DELTA_DEGREES = -5;
   const LARGE_ARC = 0;
   const SWEEP = 0;
-  const SWEEP_DEGREES = 60;
   const X_AXIS_ROTATION = 0;
 
   let pathD = '';
@@ -71,7 +71,6 @@
   function animate() {
     startDegrees = (startDegrees + DELTA_DEGREES) % 360;
     pathD = getPathD();
-    console.log('Spinner.svelte animate: pathD =', pathD);
     token = requestAnimationFrame(animate);
   }
 
@@ -79,7 +78,7 @@
 
   function getPathD() {
     const startAngle = degreesToRadians(startDegrees);
-    const endAngle = degreesToRadians(startDegrees + SWEEP_DEGREES);
+    const endAngle = degreesToRadians(startDegrees + arcDegrees);
 
     const startX = halfSize + radius * Math.cos(startAngle);
     const startY = halfSize - radius * Math.sin(startAngle);
