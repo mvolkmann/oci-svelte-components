@@ -10,7 +10,6 @@
   export let endDatePath;
   export let endLabel = 'End';
   export let label = undefined;
-  export let labelWidth = '40px';
   export let startDatePath;
   export let startLabel = 'Start';
   export let store = globalStore;
@@ -61,7 +60,7 @@
   }
 </script>
 
-<div class={classes} style="--label-width: {labelWidth}">
+<div class={classes}>
   <Labeled {label} {vertical}>
     <div class="content">
       <label class="start-label">{startLabel}</label>
@@ -82,8 +81,11 @@
 
 <style>
   .content {
-    display: flex;
+    display: grid;
     align-items: center;
+    grid-gap: 0.5rem;
+    grid-template-areas: 'start-label start-input end-label end-input';
+    grid-template-columns: auto auto auto auto;
   }
 
   .end-input {
@@ -92,11 +94,10 @@
 
   .end-label {
     grid-area: end-label;
-    margin-left: 1rem;
   }
 
   label {
-    margin-right: 0.5rem;
+    margin: 0 0 0 1rem;
   }
 
   .osc-date-range {
@@ -113,19 +114,15 @@
 
   .start-label {
     grid-area: start-label;
-    margin-left: 1rem;
   }
 
   .vertical .content {
-    display: grid;
-    align-items: center;
-    grid-gap: 0.5rem;
     grid-template-areas: 'start-label start-input' 'end-label end-input';
-    grid-template-columns: var(--label-width) 1fr;
+    grid-template-columns: auto auto;
   }
 
   .vertical label {
-    margin: 0;
+    margin-left: 0;
     text-align: right;
   }
 </style>
