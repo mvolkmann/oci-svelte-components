@@ -47,7 +47,7 @@
 <dialog bind:this={ref} class={classes}>
   {#if title}
     <header>
-      <Icon {icon} />
+      <Icon color="white" {icon} />
       <div class="title">{title}</div>
       {#if canClose}
         <button class="close-btn" on:click={close}>&#x2716;</button>
@@ -114,6 +114,10 @@
     box-sizing: border-box;
     padding: var(--space);
     width: 100%;
+  }
+
+  .dialog > header > :global(.osc-icon) {
+    margin-right: var(--space);
   }
 
   .dialog > header > .title {
