@@ -31,7 +31,7 @@
   // faUbuntu, faVuejs, faYoutube
 
   import Icon from 'fa-svelte';
-  import {onMount} from 'svelte';
+  import {afterUpdate} from 'svelte';
   import {getId} from './util';
 
   export let color = 'var(--osc-primary-color, cornflowerblue)';
@@ -40,17 +40,21 @@
   export let className = undefined;
 
   // This is an icon imported from a @fortawesome package.
-  export let icon;
+  export let icon = undefined;
   export let size = '1rem';
 
   const id = getId('osc-icon-');
   const classes = 'osc-icon ' + id + (className ? ' ' + className : '');
 
-  onMount(() => {
+  afterUpdate(() => {
     const element = document.querySelector('.' + id);
-    element.style.color = color;
-    element.style.fontSize = size;
+    if (element) {
+      element.style.color = color;
+      element.style.fontSize = size;
+    }
   });
 </script>
 
-<Icon class={classes} {icon} />
+{#if icon}
+  <Icon class={classes} {icon} />
+{/if}
