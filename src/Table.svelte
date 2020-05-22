@@ -4,6 +4,8 @@
   import {postJson} from './fetch-util';
   import Icon from './Icon.svelte';
   import Info from './Info.svelte';
+  import TableHeading from './TableHeading.svelte';
+  import TableRow from './TableRow.svelte';
 
   const defaultDatePeriodFilters = [
     {title: '3 mo', months: 3},
@@ -12,46 +14,29 @@
     {title: 'YTD', months: 12}
   ];
 
-  export let applyLabel = 'Apply';
   export let className = '';
-  export let clearAllLabel = 'clear all';
-  export let clearThisLabel = 'clear';
-  export let containsLabel = 'contains';
-  export let customDateRangeLabel = 'Custom Date Range';
   export let datePeriodFilters = defaultDatePeriodFilters;
   export let defaultFilters = {};
-  export let descriptionText = 'Description';
   export let detailComponent;
-  export let endDateText = 'End Date';
-  export let endsWithLabel = 'ends with';
-  export let equalsLabel = 'equals';
   export let evenBgColor = 'white';
   export let filterAll = false;
-  export let filtersLabel = 'Filters Applied';
   export let getUrl;
   export let headings;
   export let headingBgColor = '#f2F2F2';
   export let headingTooltip;
-  export let moreBtnText = 'More Results';
-  export let noneText = 'none';
-  export let notEqualsLabel = 'not equals';
   export let oddBgColor = '#f9f8f9';
   export let pageSize = 15;
-  export let pointTypeText = 'Point Type';
-  export let redemptionIdText = 'Redemption ID';
   export let sortAll = false;
-  export let startDateText = 'Start Date';
-  export let startsWithLabel = 'starts with';
 
   const LEFT_RELATIONAL_OPERATORS = ['', '>', '>=', '=', '!='];
   const RIGHT_RELATIONAL_OPERATORS = ['', '<=', '<'];
   const STRING_OPERATORS = [
     '',
-    equalsLabel,
-    notEqualsLabel,
-    containsLabel,
-    startsWithLabel,
-    endsWithLabel
+    'equals',
+    'not equals',
+    'contains',
+    'starts with',
+    'ends with'
   ];
 
   const sortIconMap = {
@@ -126,11 +111,6 @@
     loadData(startIndex, filters);
   }
 
-  function reset() {
-    setStartIndex(0);
-    setRowCount(pageSize);
-  }
-
   function applyFilters() {
     Object.values(filters).forEach(filter => (filter.applied = true));
     setStartIndex(0);
@@ -138,23 +118,7 @@
     loadData(0, filters);
   }
 
-  function clearAllFilters() {
-    reset();
-    setFilterHeading(null);
-    setFilters({});
-    loadData(0, {});
-  }
-
-  function clearThisFilter(property) {
-    reset();
-    setFilterHeading(null);
-    const newFilters = {...filters};
-    delete newFilters[property];
-    setFilters(newFilters);
-    loadData(0, newFilters);
-  }
-
-  function formatValue(heading, obj): unknown {
+  function formatValue(heading, obj) {
     const value = obj[heading.property];
 
     if (heading.type === 'currency') {
@@ -169,161 +133,6 @@
 
     return value;
   }
-
-  function getDataRow(data, rowIndex) {
-    return (
-      <React.Fragment key={'row-' + rowIndex}>
-        <tr
-          class={getRowClass(rowIndex)}
-          style={{backgroundColor: getRowBgColor(rowIndex)}}
-        >
-          {headings.map((heading, columnIndex) =>
-            getTd(heading, columnIndex, data)
-          )}
-          {DetailComponent && (
-            <td class="info">
-              <button on:click={e => showDetail(e)}>
-                <Icon
-                  class="detail-icon"
-                  icon="chevron-circle-right"
-                  size="1x"
-                />
-              </button>
-            </td>
-          )}
-        </tr>
-        {DetailComponent && (
-          <tr class="detail-tr">
-            <td class="detail-td">
-              <DetailComponent
-                data={data}
-                descriptionText={descriptionText}
-                pointTypeText={pointTypeText}
-                redemptionIdText={redemptionIdText}
-              />
-            </td>
-          </tr>
-        )}
-      </React.Fragment>
-    );
-  }
-
-  function getFilterArea(): ReactElement | null {
-    const anyFilters = headings.some(canFilterHeading);
-    if (!anyFilters) return null;
-
-    return (
-      <div class="filter-area">
-        <div class="filter-description">
-          <Icon color="var(--secondary-color)" icon="filter" />
-          <div class="heading">
-            <div class="label">{filtersLabel}</div>
-            {getFilterDescription()}
-          </div>
-        </div>
-        <div class="buttons">{headings.map(getFilterButton)}</div>
-        {filterHeading && (
-          <div class="filter-inputs">
-            {getFilterInputs(filterHeading)}
-            <button class="apply primary" on:click={applyFilters}>
-              {applyLabel}
-            </button>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  function getFilterButton(heading, index) {
-    if (!canFilterHeading(heading)) return null;
-
-    const isSelected = heading === filterHeading;
-    const filter = filters[heading.property];
-    if (filter) filter.title = heading.title;
-    const isSet = filter && filter.applied;
-    const classes =
-      'filter-btn' + (isSelected ? ' selected' : '') + (isSet ? ' set' : '');
-    return (
-      <button
-        class={classes}
-        key={'heading-' + index}
-        on:click={() => setFilterHeading(heading)}
-      >
-        {heading.title}
-      </button>
-    );
-  }
-
-  function getFilterDescription() {
-    function getCondition(operator, value) {
-      return operator && value !== undefined ? ` ${operator} ${value}` : '';
-    }
-
-    const appliedFilters = Object.values(filters).filter(f => f.applied);
-    if (appliedFilters.length === 0) return <div>{noneText}</div>;
-
-    return (
-      <React.Fragment key="description">
-        <span key="left-all">(</span>
-        <Button
-          asLink
-          key="btn-all"
-          on:click={clearAllFilters}
-          text={clearAllLabel}
-        />
-        <span key="right-all">):</span>
-
-        {appliedFilters.map((filter, index) => {
-          let description = getCondition(filter.operator1, filter.value1);
-          description += getCondition(filter.operator2, filter.value2);
-          return (
-            <>
-              {index > 0 && <span>&nbsp;/</span>}
-              <span class="title" key={'title' + index}>
-                &nbsp;{filter.title}&nbsp;
-              </span>
-              <span key={'left' + index}>{description}&nbsp;(</span>
-              <Button
-                asLink
-                key={'btn' + index}
-                on:click={() => clearThisFilter(filter.property)}
-                text={clearThisLabel}
-              />
-              <span key={'right' + index}>)</span>
-            </>
-          );
-        })}
-      </React.Fragment>
-    );
-  }
-
-  function getFilterInputs(heading) {
-    if (!canFilterHeading(heading)) return null;
-
-    const {property, type} = heading;
-    let filter = filters[property];
-    if (!filter) filter = {property, title: heading.title};
-
-    function filterToMonths(months) {
-      const date = new Date();
-      date.setMonth(date.getMonth() - months);
-      const value1 =
-        date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-
-      reset();
-
-      const newFilter = {
-        applied: true,
-        title: heading.title,
-        type: 'date',
-        operator1: '>=',
-        property,
-        value1
-      };
-      const newFilters = {...filters, [property]: newFilter};
-      setFilters(newFilters);
-      loadData(0, newFilters);
-    }
 
     function onChange(event, key, type) {
       filter[key] = event.currentTarget.value;
@@ -340,10 +149,10 @@
 
     function getCustomRangeButton() {
       function onClick() {
-        setSelectedButton(showCustomDateRange ? '' : customDateRangeLabel);
+        setSelectedButton(showCustomDateRange ? '' : 'Custom Date Range');
         setShowCustomDateRange(!showCustomDateRange);
       }
-      return getToggleButton(customDateRangeLabel, onClick);
+      return getToggleButton('Custom Date Range', onClick);
     }
 
     function getInput(key, type = 'text') {
@@ -411,7 +220,7 @@
       return (
         <div>
           <div>
-            {selectedButton !== customDateRangeLabel &&
+            {selectedButton !== 'Custom Date Range' &&
               datePeriodFilters.map(filter =>
                 getMonthButton(filter.title, filter.months)
               )}
@@ -421,12 +230,12 @@
             <>
               <div>
                 <label class="date">
-                  {startDateText} {getInput('value1', 'date')}
+                  Start Date {getInput('value1', 'date')}
                 </label>
               </div>
               <div>
                 <label class="date">
-                  {endDateText} {getInput('value2', 'date')}
+                  End Date {getInput('value2', 'date')}
                 </label>
               </div>
             </>
@@ -446,62 +255,21 @@
     }
   }
 
-  function getFilterValue(filter, key) {
-    return filter[key];
-  }
+  const getFilterValue = (filter, key) => filter[key];
 
-  function getRowBgColor(index) {
-    return index % 2 === 0 ? evenBgColor : oddBgColor;
-  }
+  const getRowBgColor = index => index % 2 === 0 ? evenBgColor : oddBgColor;
 
-  function getRowClass(index) {
-    return index % 2 === 0 ? 'even' : 'odd';
-  }
-
-  function getTd(heading, columnIndex, obj) {
-    return (
-      <td class={heading.type} key={'column-' + columnIndex}>
-        {/* {obj[heading.property]} */}
-        {formatValue(heading, obj)}
-      </td>
-    );
-  }
-
-  function getTh(heading, index) {
-    const sortedOn = heading === sortHeading;
-
-    const key =
-      (heading.type || 'string') +
-      '-' +
-      (!sortedOn || ascending ? 'ascending' : 'descending');
-    const iconName = sortIconMap[key];
-
-    const canSort =
-      heading.canSort || (sortAll && heading.canSort === undefined);
-
-    return (
-      <th key={'heading-' + index} style={thStyle}>
-        <div class="heading">
-          <div class="title">{heading.title}</div>
-          {canSort && (
-            <button on:click={() => sortData(heading)}>
-              <Icon
-                color={
-                  sortedOn ? 'var(--primary-color)' : 'var(--secondary-color)'
-                }
-                icon={iconName}
-              />
-            </button>
-          )}
-        </div>
-      </th>
-    );
-  }
+  const getRowClass = index => index % 2 === 0 ? 'even' : 'odd';
 
   function loadMoreResults() {
     setStartIndex(rowCount);
     setRowCount(rowCount => rowCount + pageSize);
     // Keep current sortHeading and ascending values.
+  }
+
+  function reset() {
+    setStartIndex(0);
+    setRowCount(pageSize);
   }
 
   function showDetail(event) {
@@ -550,11 +318,13 @@
 </script>
 
 <div class={classes}>
-  {getFilterArea()}
+  <TableFilterArea {headings} />
   <table>
     <thead>
       <tr style={{backgroundColor: headingBgColor}}>
-        {headings.map(getTh)}
+        {#each headings as heading}
+          <TableHeading {heading} />
+        {/each}
         {DetailComponent && (
           <th style={thStyle}>
             {headingTooltip && (
@@ -569,14 +339,17 @@
         )}
       </tr>
     </thead>
-    <tbody>{data.map(getDataRow)}</tbody>
+    <tbody>
+      {#each data as rowData}
+      <TableRow data={rowData} {detailComponent} {headings} />
+    </tbody>
   </table>
   <button
     class="more-btn primary"
     disabled={atEnd}
     on:click={loadMoreResults}
   >
-    {moreBtnText}
+    More Results
   </button>
 </div>
 
