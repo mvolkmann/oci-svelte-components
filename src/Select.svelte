@@ -94,8 +94,6 @@
     font-size: 1rem;
     height: 36px;
     margin-bottom: 0;
-    margin-left: 0.5rem;
-    margin-top: 0.2rem;
     padding-left: 0.5rem;
     position: relative;
     width: max-content;
@@ -113,8 +111,6 @@
     flex-direction: column;
     align-items: flex-start;
 
-    margin-left: 0;
-    margin-top: 0.3rem;
     padding-top: 8px; /* not sure why this is needed */
   }
 </style>
