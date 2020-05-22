@@ -6,21 +6,21 @@
   import LabeledState from '../src/LabeledState.svelte';
   import Toggle from '../src/Toggle.svelte';
 
-  const countryPath = 'stateSelect.address.country';
-  const statePath = 'stateSelect.address.state';
-  const verticalPath = 'stateSelect.vertical';
+  const statePath = 'stateSelect.state';
 
-  $: countryCode = get($globalStore, countryPath);
-  $: vertical = get($globalStore, verticalPath);
+  globalStore.set({stateSelect: {countryCode: '', vertical: false}});
+
+  $: stateSelect = get($globalStore, 'stateSelect');
+  $: ({countryCode, vertical} = stateSelect);
 
   const clearState = () => update(globalStore, statePath, '');
 </script>
 
-<Toggle label="Vertical" path={verticalPath} />
+<Toggle label="Vertical" path="stateSelect.vertical" />
 <CountrySelect
   label="State"
   on:value={clearState}
-  path={countryPath}
+  path="stateSelect.countryCode"
   {vertical} />
 <StateSelect {countryCode} path={statePath} {vertical} />
 <LabeledState defaultValue="nothing" label="You selected" path={statePath} />

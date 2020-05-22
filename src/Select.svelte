@@ -78,7 +78,7 @@
     content: '\25bc';
     pointer-events: none;
     position: absolute;
-    top: 14px;
+    top: 9px;
     right: 5px;
   }
 

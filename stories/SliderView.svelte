@@ -5,11 +5,7 @@
   import Slider from '../src/Slider.svelte';
   import Toggle from '../src/Toggle.svelte';
 
-  const showLimitsPath = 'slider.showLimits';
-  const showValuePath = 'slider.showValue';
   const valuePath = 'slider.value';
-  const verticalPath = 'slider.vertical';
-  const widthPath = 'slider.width';
 
   globalStore.set({
     slider: {
@@ -21,10 +17,8 @@
     }
   });
 
-  $: showLimits = get($globalStore, showLimitsPath);
-  $: showValue = get($globalStore, showValuePath);
-  $: vertical = get($globalStore, verticalPath);
-  $: width = get($globalStore, widthPath);
+  $: slider = get($globalStore, 'slider');
+  $: ({showLimits, showValue, vertical, width} = slider);
 </script>
 
 <Slider
@@ -32,12 +26,12 @@
   label="Width"
   max={400}
   min={100}
-  path={widthPath}
+  path="slider.width"
   showLimits
   showValue />
-<Toggle label="Show Value" path={showValuePath} />
-<Toggle label="Show Limits" path={showLimitsPath} />
-<Toggle label="Vertical" path={verticalPath} />
+<Toggle label="Show Value" path="slider.showValue" />
+<Toggle label="Show Limits" path="slider.showLimits" />
+<Toggle label="Vertical" path="slider.vertical" />
 <Slider
   label="Score"
   min={0}
