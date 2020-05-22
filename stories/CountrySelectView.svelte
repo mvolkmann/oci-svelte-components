@@ -5,8 +5,8 @@
   import LabeledState from '../src/LabeledState.svelte';
   import Toggle from '../src/Toggle.svelte';
 
-  const path = 'user.profile.address.country';
-  const verticalPath = 'labeledCountrySelect.vertical';
+  const path = 'countrySelect.country';
+  const verticalPath = 'countrySelect.vertical';
 
   $: vertical = get($globalStore, verticalPath);
 </script>

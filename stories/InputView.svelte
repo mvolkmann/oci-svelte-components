@@ -8,7 +8,7 @@
   import Toggle from '../src/Toggle.svelte';
 
   globalStore.set({
-    labeledInput: {
+    input: {
       info: '',
       label: 'My Label',
       placeholder: '',
@@ -37,40 +37,32 @@
     'week'
   ];
 
-  $: labeledInput = get($globalStore, 'labeledInput');
-  $: ({
-    info,
-    label,
-    placeholder,
-    required,
-    type,
-    vertical,
-    width
-  } = labeledInput);
+  $: input = get($globalStore, 'input');
+  $: ({info, label, placeholder, required, type, vertical, width} = input);
 </script>
 
-<Input label="Info" path="labeledInput.info" />
-<Input label="Label" path="labeledInput.label" />
-<Input label="Placeholder" path="labeledInput.placeholder" />
-<Toggle label="Required" path="labeledInput.required" />
-<Select label="Type" omitEmpty options={typeOptions} path="labeledInput.type" />
-<Toggle label="Vertical" path="labeledInput.vertical" />
+<Input label="Info" path="input.info" />
+<Input label="Label" path="input.label" />
+<Input label="Placeholder" path="input.placeholder" />
+<Toggle label="Required" path="input.required" />
+<Select label="Type" omitEmpty options={typeOptions} path="input.type" />
+<Toggle label="Vertical" path="input.vertical" />
 <Slider
   info="in pixels"
   label="Width"
   min={20}
   max="400"
-  path="labeledInput.width"
+  path="input.width"
   showLimits
   showValue />
 
 <Input
   {info}
   {label}
-  path="labeledInput.value"
+  path="input.value"
   {placeholder}
   {required}
   {type}
   {vertical}
   width={width + 'px'} />
-<LabeledState label="You entered" path="labeledInput.value" />
+<LabeledState label="You entered" path="input.value" />

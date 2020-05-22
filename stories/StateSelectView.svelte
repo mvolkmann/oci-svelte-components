@@ -6,9 +6,9 @@
   import LabeledState from '../src/LabeledState.svelte';
   import Toggle from '../src/Toggle.svelte';
 
-  const countryPath = 'user.profile.address.country';
-  const statePath = 'user.profile.address.state';
-  const verticalPath = 'labeledStateSelect.vertical';
+  const countryPath = 'stateSelect.address.country';
+  const statePath = 'stateSelect.address.state';
+  const verticalPath = 'stateSelect.vertical';
 
   $: countryCode = get($globalStore, countryPath);
   $: vertical = get($globalStore, verticalPath);

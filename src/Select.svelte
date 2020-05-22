@@ -40,7 +40,7 @@
     update(store, path, event.target.value, dispatch);
 
   $: classes =
-    'osc-labeled-select' +
+    'osc-select' +
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');

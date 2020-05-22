@@ -10,8 +10,8 @@
     {label: 'Banana', value: 'yellow'},
     {label: 'Cherry', value: 'red'}
   ];
-  const valuePath = 'labeledSelect.value';
-  const verticalPath = 'labeledSelect.vertical';
+  const valuePath = 'select.value';
+  const verticalPath = 'select.vertical';
 
   $: vertical = get($globalStore, verticalPath);
 </script>

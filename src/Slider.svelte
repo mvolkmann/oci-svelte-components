@@ -43,7 +43,7 @@
   }
 
   const classes =
-    'osc-labeled-slider' +
+    'osc-slider' +
     (className ? ' ' + className : '') +
     (vertical ? ' vertical' : '');
 
@@ -125,7 +125,7 @@
     margin-left: 0.5rem;
   }
 
-  .osc-labeled-slider {
+  .osc-slider {
     display: inline-flex;
     align-items: center;
   }

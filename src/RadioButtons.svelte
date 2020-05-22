@@ -32,7 +32,7 @@
     update(store, path, event.target.value, dispatch);
 
   $: classes =
-    'osc-labeled-radio-buttons' +
+    'osc-radio-buttons' +
     (className ? ' ' + className : '') +
     (value && invalid ? ' invalid' : '');
 

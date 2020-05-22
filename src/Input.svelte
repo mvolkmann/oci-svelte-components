@@ -22,7 +22,7 @@
 
   const dispatch = createEventDispatcher();
 
-  const id = getId('labeled-input-');
+  const id = getId('input-');
   let invalid = false;
   let props;
   let ref;
@@ -57,7 +57,7 @@
     update(store, path, value, dispatch);
   }
 
-  $: classes = 'osc-labeled-input' + (className ? ' ' + className : '');
+  $: classes = 'osc-input' + (className ? ' ' + className : '');
   $: inputClasses =
     (value && invalid ? ' invalid' : '') + (vertical ? ' vertical' : '');
 

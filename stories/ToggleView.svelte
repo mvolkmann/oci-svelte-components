@@ -4,8 +4,8 @@
   import LabeledState from '../src/LabeledState.svelte';
   import Toggle from '../src/Toggle.svelte';
 
-  const readyPath = 'labeledToggle.ready';
-  const verticalPath = 'labeledStateSelect.vertical';
+  const readyPath = 'toggle.ready';
+  const verticalPath = 'toggle.vertical';
 
   $: vertical = get($globalStore, verticalPath);
 </script>

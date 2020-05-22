@@ -14,17 +14,17 @@
   export let vertical = false;
 
   const dispatch = createEventDispatcher();
-  const id = getId('labeled-input-');
+  const id = getId('input-');
 
   $: if (path) on = get($store, path);
 
   $: classes =
-    'osc-labeled-toggle' +
+    'osc-toggle' +
     (className ? ' ' + className : '') +
     (vertical ? ' vertical' : '');
 
   $: toggleClasses =
-    'osc-labeled-toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
+    'osc-toggle' + (on ? ' on' : '') + (vertical ? ' vertical' : '');
 
   const handleClick = () => update(store, path, !on, dispatch);
 </script>
@@ -36,7 +36,7 @@
 </Labeled>
 
 <style>
-  .osc-labeled-toggle {
+  .osc-toggle {
     --padding: 2px;
     --size: 25px;
     --thumb-color: white;
@@ -56,15 +56,15 @@
     position: relative;
   }
 
-  .osc-labeled-toggle:focus {
+  .osc-toggle:focus {
     outline: solid var(--osc-secondary-color, orange) 2px;
   }
 
-  .osc-labeled-toggle.on {
+  .osc-toggle.on {
     background-color: var(--osc-primary-color, cornflowerblue);
   }
 
-  .osc-labeled-toggle.on .thumb {
+  .osc-toggle.on .thumb {
     left: calc(var(--size) * 0.88);
   }
 

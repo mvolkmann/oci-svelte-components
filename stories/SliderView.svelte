@@ -5,14 +5,14 @@
   import Slider from '../src/Slider.svelte';
   import Toggle from '../src/Toggle.svelte';
 
-  const showLimitsPath = 'labeledSlider.showLimits';
-  const showValuePath = 'labeledSlider.showValue';
-  const valuePath = 'labeledSlider.value';
-  const verticalPath = 'labeledSlider.vertical';
-  const widthPath = 'labeledSlider.width';
+  const showLimitsPath = 'slider.showLimits';
+  const showValuePath = 'slider.showValue';
+  const valuePath = 'slider.value';
+  const verticalPath = 'slider.vertical';
+  const widthPath = 'slider.width';
 
   globalStore.set({
-    labeledSlider: {
+    slider: {
       showLimits: false,
       showValue: false,
       value: 0,
