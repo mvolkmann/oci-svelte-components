@@ -22,9 +22,9 @@
    */
 
   //TODO: Importing this causes Jest tests to fail,
-  //TODO: but it may be needed in some browsers!
+  //TODO: but it may be needed in older browsers!
   //import dialogPolyfill from 'dialog-polyfill';
-  //import {onMount} from 'svelte';
+  import {onMount} from 'svelte';
   import Icon from './Icon.svelte';
 
   export let canClose = true;
@@ -36,7 +36,10 @@
 
   const classes = 'dialog' + (className ? ' ' + className : '');
 
-  //onMount(() => dialogPolyfill.registerDialog(dialogRef));
+  onMount(() => {
+    //dialogPolyfill.registerDialog(dialogRef);
+    if (onClose) ref.addEventListener('close', () => onClose());
+  });
 
   function close() {
     ref.close();
@@ -62,18 +65,6 @@
 <style>
   .body {
     padding: 0.625rem;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 0.625rem;
-  }
-
-  .buttons button {
-    margin-left: var(--space);
   }
 
   .close-btn {
@@ -105,6 +96,20 @@
     padding: 0;
   }
 
+  dialog :global(.buttons) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 0.625rem;
+  }
+
+  dialog :global(.buttons button) {
+    border-radius: var(--osc-border-radius, 0);
+    font-size: 1rem;
+    margin-left: var(--space);
+  }
+
   .dialog > header {
     display: flex;
     justify-content: space-between;
@@ -130,8 +135,15 @@
     padding: 0;
   }
 
+  .error-dialog header {
+    background-color: var(
+      --osc-dialog-error-color,
+      var(--osc-error-color, red)
+    );
+  }
+
   .error-dialog .title {
-    color: var(--dialog-error-color, var(--error-color, red));
+    color: white;
   }
 
   .dialog > section {
