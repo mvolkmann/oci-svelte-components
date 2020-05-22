@@ -1,6 +1,6 @@
 <script>
   // This is an interesting approach to handling the
-  // association between a component and global state.
+  // association between a component and a store.
   // For example, the following renders an
   // instance of the Input component.
   //
@@ -17,21 +17,23 @@
   // The specified component is expected to dispatch a "value" event
   // when the user changes the value.
   // This component handles the "value" event by updating
-  // the value in $globalStore at the specified path.
+  // the value in a specified store (defaults to globalStore)
+  // at the specified path.
 
   import get from 'lodash-es/get';
   import {globalStore, update} from './stores';
 
   export let component;
   export let path;
+  export let store = globalStore;
 
-  $: value = get($globalStore, path);
+  $: value = get($store, path);
 
   const props = {...$$props};
   delete props.component;
   delete props.path;
 
-  const handleValue = event => update(globalStore, path, event.detail);
+  const handleValue = event => update(store, path, event.detail);
 </script>
 
 <svelte:component this={component} {value} on:value={handleValue} {...props} />

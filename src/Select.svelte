@@ -78,7 +78,7 @@
     content: '\25bc';
     pointer-events: none;
     position: absolute;
-    top: 12px;
+    top: 14px;
     right: 5px;
   }
 
@@ -98,7 +98,6 @@
     margin-top: 0.2rem;
     padding-left: 0.5rem;
     position: relative;
-    /*width: fit-content;*/
     width: max-content;
   }
 
@@ -116,6 +115,6 @@
 
     margin-left: 0;
     margin-top: 0.3rem;
-    padding-top: 6px; /* not sure why this is needed */
+    padding-top: 8px; /* not sure why this is needed */
   }
 </style>
