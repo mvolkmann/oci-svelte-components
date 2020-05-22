@@ -58,47 +58,6 @@
 </div>
 
 <style>
-  .wizard {
-    --inactive-bg: #c8c8c8;
-    --inactive-fg: #363636;
-  }
-
-  .form {
-    display: flex;
-  }
-
-  .form label {
-    margin-right: 0;
-  }
-
-  .form .left,
-  .form .right {
-    flex-grow: 1;
-  }
-
-  .form .left {
-    padding-right: 3rem;
-  }
-
-  .form .right {
-    padding-left: 3rem;
-  }
-
-  .form .right:not(:empty) {
-    border-left: solid var(--inactive-bg) 1px;
-  }
-
-  h1 {
-    font-size: 2rem;
-    font-weight: normal;
-    margin-bottom: 0.5rem;
-  }
-
-  input {
-    border-radius: 0;
-    box-sizing: border-box;
-  }
-
   .step-description {
     font-size: 1rem;
     font-weight: 300;
@@ -125,7 +84,7 @@
     background-color: var(--inactive-bg);
     border-radius: calc(var(--size) / 2);
     color: var(--inactive-fg);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     height: var(--size);
     width: var(--size);
@@ -133,8 +92,9 @@
 
   .step-title {
     color: #363636;
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: 300;
+    margin-top: 0.5rem;
   }
 
   .step.current .step-number {
@@ -178,50 +138,19 @@
     padding: 0.5rem 0;
   }
 
-  /*
+  .wizard {
+    --inactive-bg: #c8c8c8;
+    --inactive-fg: #363636;
+  }
+
   @media (max-width: 760px) {
-    .form {
-      flex-direction: column;
-
-      .left {
-        padding-right: 0;
-      }
-
-      .right {
-        padding-left: 0;
-        padding-top: 1.5rem;
-
-        &:not(:empty) {
-          border-left: none;
-          border-top: solid var(--inactive-bg) 1px;
-          margin-top: 2rem;
-        }
-      }
+    .step-number {
+      --size: 2.5rem;
+      font-size: 1rem;
     }
 
-    .next-prev-btn {
-      width: 100%;
+    .step-title {
+      font-size: 1rem;
     }
-
-    .nav {
-      .step {
-        .step-number {
-          --size: 2.5rem;
-          font-size: 1.2rem;
-        }
-
-        .step-title {
-          font-size: 1.4rem;
-        }
-      }
-    }
-
-    .step-content {
-      margin: 3rem;
-
-      button {
-        margin-right: 0;
-      }
-    }
-  */
+  }
 </style>
