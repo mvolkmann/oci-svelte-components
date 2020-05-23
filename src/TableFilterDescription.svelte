@@ -7,17 +7,17 @@
 
   function clearAllFilters() {
     reset();
-    setFilterHeading(null);
-    setFilters({});
+    filterHeading = null;
+    filters = {};
     loadData(0, {});
   }
 
   function clearThisFilter(property) {
     reset();
-    setFilterHeading(null);
+    filterHeading = null;
     const newFilters = {...filters};
     delete newFilters[property];
-    setFilters(newFilters);
+    filters = newFilters;
     loadData(0, newFilters);
   }
 
@@ -29,6 +29,11 @@
     let description = getCondition(filter.operator1, filter.value1);
     description += getCondition(filter.operator2, filter.value2);
     return description;
+  }
+
+  function reset() {
+    startIndex = 0;
+    rowCount = pageSize;
   }
 </script>
 

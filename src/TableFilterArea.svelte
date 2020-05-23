@@ -1,29 +1,15 @@
 <script>
+  import Icon from './Icon.svelte';
+  import TableFilterDescription from './TableFilterDescription.svelte';
+  import TableFilterInputs from './TableFilterInputs.svelte';
+
   export let filters;
   export let headings;
 
   const anyFilters = headings.some(canFilterHeading);
 
-  function filterToMonths(months) {
-    const date = new Date();
-    date.setMonth(date.getMonth() - months);
-    const value1 =
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-
-    reset();
-
-    const newFilter = {
-      applied: true,
-      title: heading.title,
-      type: 'date',
-      operator1: '>=',
-      property,
-      value1
-    };
-    const newFilters = {...filters, [property]: newFilter};
-    setFilters(newFilters);
-    loadData(0, newFilters);
-  }
+  const canFilterHeading = heading =>
+    heading.canFilter || (filterAll && heading.canFilter === undefined);
 
   function getFilterButtonClasses(heading) {
     const isSelected = heading === filterHeading;
@@ -34,14 +20,6 @@
       'filter-btn' + (isSelected ? ' selected' : '') + (isSet ? ' set' : '');
     return classes;
   }
-
-  function getFilterInputs(heading) {
-    if (!canFilterHeading(heading)) return null;
-
-    const {property, type} = heading;
-    let filter = filters[property];
-    if (!filter) filter = {property, title: heading.title};
-
 </script>
 
 {#if anyFilters}
@@ -50,7 +28,7 @@
       <Icon color="var(--secondary-color)" icon="filter" />
       <div class="heading">
         <div class="label">Filters Applied</div>
-        {getFilterDescription()}
+        <TableFilterDescription {filters} />
       </div>
     </div>
     <div class="buttons">
@@ -59,7 +37,7 @@
           <button
             class={getFilterButtonClasses(heading)}
             key={'heading-' + index}
-            on:click={() => setFilterHeading(heading)}>
+            on:click={() => (filterHeading = heading)}>
             {heading.title}
           </button>
         {/if}
@@ -67,10 +45,8 @@
     </div>
     {#if filterHeading}
       <div class="filter-inputs">
-        {getFilterInputs(filterHeading)}
-        <button class="apply primary" on:click={applyFilters}>
-          Apply
-        </button>
+        <TableFilterInputs {filterHeading} />
+        <button class="apply primary" on:click={applyFilters}>Apply</button>
       </div>
     {/if}
   </div>

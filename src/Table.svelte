@@ -28,17 +28,6 @@
   export let pageSize = 15;
   export let sortAll = false;
 
-  const LEFT_RELATIONAL_OPERATORS = ['', '>', '>=', '=', '!='];
-  const RIGHT_RELATIONAL_OPERATORS = ['', '<=', '<'];
-  const STRING_OPERATORS = [
-    '',
-    'equals',
-    'not equals',
-    'contains',
-    'starts with',
-    'ends with'
-  ];
-
   const sortIconMap = {
     'currency-ascending': 'sort-numeric-down',
     'currency-descending': 'sort-numeric-down-alt',
@@ -62,6 +51,11 @@
   let sortHeading = null;
   let startIndex = 0;
 
+  function customRangeButtonClicked() {
+    setSelectedButton(showCustomDateRange ? '' : 'Custom Date Range');
+    setShowCustomDateRange(!showCustomDateRange);
+  }
+
   function markAsApplied(filterMap) {
     Object.values(filterMap).forEach(filter => (filter.applied = true));
     return filterMap;
@@ -75,10 +69,7 @@
     ? getComponent(detailComponent)
     : detailComponent;
 
-  const thStyle = {backgroundColor: headingBgColor};
-
-  const canFilterHeading = heading =>
-    heading.canFilter || (filterAll && heading.canFilter === undefined);
+  const thStyle = 'backgroundColor: ' + headingBgColor;
 
   // It is important that startIndex and filters are passed in
   // rather than just using the state variables defined above!
@@ -114,195 +105,16 @@
   function applyFilters() {
     Object.values(filters).forEach(filter => (filter.applied = true));
     setStartIndex(0);
-    setFilterHeading(null);
+    filterHeading = null;
     loadData(0, filters);
   }
 
-  function formatValue(heading, obj) {
-    const value = obj[heading.property];
-
-    if (heading.type === 'currency') {
-      const number = Number(value);
-      return '$' + number.toFixed(2);
-    }
-
-    if (heading.type === 'date') {
-      const date = new Date(value);
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-    }
-
-    return value;
-  }
-
-    function onChange(event, key, type) {
-      filter[key] = event.currentTarget.value;
-      filter.type = type;
-      if (type === 'date') {
-        if (key.endsWith('1')) {
-          filter.operator1 = '>=';
-        } else {
-          filter.operator2 = '<=';
-        }
-      }
-      setFilters({...filters, [property]: filter});
-    }
-
-    function getCustomRangeButton() {
-      function onClick() {
-        setSelectedButton(showCustomDateRange ? '' : 'Custom Date Range');
-        setShowCustomDateRange(!showCustomDateRange);
-      }
-      return getToggleButton('Custom Date Range', onClick);
-    }
-
-    function getInput(key, type = 'text') {
-      let value = getFilterValue(filter, key);
-      if (!value) {
-        value = type === 'date' ? new Date() : type === 'number' ? 0 : '';
-      }
-      return (
-        <input
-          type={type}
-          onChange={e => onChange(e, key, type)}
-          value={value}
-        />
-      );
-    }
-
-    function getMonthButton(label, months) {
-      function onClick() {
-        setSelectedButton(label);
-        filterToMonths(months);
-      }
-      return getToggleButton(label, onClick);
-    }
-
-    function getToggleButton(label, onClick, className = '') {
-      const classes =
-        (label === selectedButton ? 'selected' : '') +
-        (className ? ' ' + className : '');
-      return (
-        <button class={classes} key={label} on:click={onClick}>
-          {label}
-        </button>
-      );
-    }
-
-    function getSelect(key, options) {
-      const handler = e => onChange(e, key, 'string');
-      return (
-        <select
-          onBlur={handler}
-          onChange={handler}
-          value={getFilterValue(filter, key) || ''}
-        >
-          {options.map((option, index) => (
-            <option key={'option' + index}>{option}</option>
-          ))}
-        </select>
-      );
-    }
-
-    if (type === 'currency' || type === 'number') {
-      return (
-        <div>
-          <div>
-            {getSelect('operator1', LEFT_RELATIONAL_OPERATORS)}
-            {getInput('value1', 'number')}
-          </div>
-          <div>
-            {getSelect('operator2', RIGHT_RELATIONAL_OPERATORS)}
-            {getInput('value2', 'number')}
-          </div>
-        </div>
-      );
-    } else if (type === 'date') {
-      return (
-        <div>
-          <div>
-            {selectedButton !== 'Custom Date Range' &&
-              datePeriodFilters.map(filter =>
-                getMonthButton(filter.title, filter.months)
-              )}
-            {getCustomRangeButton()}
-          </div>
-          {showCustomDateRange && (
-            <>
-              <div>
-                <label class="date">
-                  Start Date {getInput('value1', 'date')}
-                </label>
-              </div>
-              <div>
-                <label class="date">
-                  End Date {getInput('value2', 'date')}
-                </label>
-              </div>
-            </>
-          )}
-        </div>
-      );
-    } else {
-      // assumes type is "string"
-      return (
-        <div>
-          <div>
-            {getSelect('operator1', STRING_OPERATORS)}
-            {getInput('value1', 'string')}
-          </div>
-        </div>
-      );
-    }
-  }
-
-  const getFilterValue = (filter, key) => filter[key];
-
   const getRowBgColor = index => index % 2 === 0 ? evenBgColor : oddBgColor;
-
-  const getRowClass = index => index % 2 === 0 ? 'even' : 'odd';
 
   function loadMoreResults() {
     setStartIndex(rowCount);
     setRowCount(rowCount => rowCount + pageSize);
     // Keep current sortHeading and ascending values.
-  }
-
-  function reset() {
-    setStartIndex(0);
-    setRowCount(pageSize);
-  }
-
-  function showDetail(event) {
-    // If a detail row is currently displayed, hide it.
-    if (detailTr) {
-      const tr = detailTr.previousSibling;
-      if (tr) tr.classList.remove('show-detail');
-    }
-
-    // Find the row whose detail button was clicked.
-    const button = event.currentTarget;
-    const td = button.parentElement;
-    if (!td) return;
-    const tr = td.parentElement;
-    if (!tr) return;
-
-    // Find the detail row that immediately follows this row.
-    const newDetailTr = tr.nextSibling;
-    if (!newDetailTr) return;
-
-    // If we clicked the detail icon of a row
-    // whose detail is already displayed ...
-    if (newDetailTr === detailTr) {
-      detailTr = null;
-      // We have already hidden it above.
-      return;
-    }
-
-    // Open a new detail row.
-    detailTr = newDetailTr;
-    const detailTd = detailTr.firstChild;
-    detailTd.setAttribute('colspan', '100%');
-    tr.classList.add('show-detail');
   }
 
   function sortData(heading) {
@@ -321,22 +133,22 @@
   <TableFilterArea {headings} />
   <table>
     <thead>
-      <tr style={{backgroundColor: headingBgColor}}>
+      <tr style={`backgroundColor: ${headingBgColor}`}>
         {#each headings as heading}
-          <TableHeading {heading} />
+          <TableHeading {heading} {thStyle} />
         {/each}
-        {DetailComponent && (
+        {#if DetailComponent}
           <th style={thStyle}>
-            {headingTooltip && (
+            {#if headingTooltip}
               <Info
                 text={headingTooltip}
                 hPosition="left"
                 tipWidth="245px"
                 vPosition="center"
               />
-            )}
+            {/if}
           </th>
-        )}
+        {/if}
       </tr>
     </thead>
     <tbody>
@@ -354,18 +166,18 @@
 </div>
 
 <style>
+  .table {
+    --set-background-color: linen;
+    --transition-duration: 0.5s;
+  }
 
-.table {
-  --set-background-color: linen;
-  --transition-duration: 0.5s;
-
-  & > button {
+  .table > button {
     border: none;
     margin-top: 1rem;
     padding: 0.5rem 2rem;
   }
 
-  button.primary {
+  .table > button.primary {
     background-color: var(--primary-color) !important;
     border: none !important;
     color: white !important;
@@ -381,160 +193,148 @@
 
   .detail-tr {
     display: none;
+  }
 
-    > td > * {
+  .detail-tr > td > * {
       max-height: 0;
       transition-duration: var(--transition-duration);
       transition-property: max-height;
-    }
   }
 
-  tbody > tr {
-    .detail-icon > svg {
-      transition-duration: var(--transition-duration);
-      transition-property: transform;
-      transform: rotate(0deg);
-    }
-
-    &.show-detail {
-      .detail-icon > svg {
-        color: var(--primary-color);
-        transform: rotate(90deg);
-      }
-
-      + .detail-tr {
-        display: table-row;
-
-        > td > * {
-          max-height: 100vh;
-        }
-      }
-    }
-
-    .detail-icon > svg {
-      color: lightgray;
-    }
+  tbody > tr .detail-icon > svg {
+    transition-duration: var(--transition-duration);
+    transition-property: transform;
+    transform: rotate(0deg);
   }
 
-  thead {
-    .detail-icon > svg {
-      color: var(--secondary-color);
-    }
-
-    .info {
-      span {
-        font-weight: 300;
-      }
-    }
+  tbody > tr.show-detail .detail-icon > svg {
+    color: var(--primary-color);
+    transform: rotate(90deg);
   }
 
-  .filter-area {
-    button {
-      background-color: white;
-      border: solid var(--primary-color) 1px;
-      color: var(--primary-color);
+  tbody > tr + .detail-tr {
+    display: table-row;
+  }
 
-      &.selected {
-        background-color: var(--primary-color);
-        color: white;
-      }
+  tbody > tr + .detail-tr > td > * {
+    max-height: 100vh;
+  }
 
-      &.set {
-        background-color: var(--set-background-color);
-        border-color: var(--primary-color);
-        color: var(--primary-color);
-      }
-    }
+  .detail-icon > svg {
+    color: lightgray;
+  }
 
-    .buttons {
-      margin-bottom: 0.5rem;
-      text-align: left;
+  thead .detail-icon > svg {
+    color: var(--secondary-color);
+  }
 
-      button {
-        margin-top: 0.5rem;
-      }
-    }
+  thead .info span {
+    font-weight: 300;
+  }
 
-    .filter-description {
-      display: flex;
+  .filter-area button {
+    background-color: white;
+    border: solid var(--primary-color) 1px;
+    color: var(--primary-color);
+  }
 
-      .heading {
-        font-weight: 300;
-      }
+  .filter-area button.selected {
+    background-color: var(--primary-color);
+    color: white;
+  }
 
-      .icon {
-        font-size: 0.5rem;
-        margin-right: 0.5rem;
-      }
-    }
+  .filter-area button.set {
+    background-color: var(--set-background-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
 
-    .filter-inputs {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      flex-wrap: wrap;
+  .buttons {
+    margin-bottom: 0.5rem;
+    text-align: left;
+  }
 
-      & > div {
-        text-align: left;
+  .buttons button {
+      margin-top: 0.5rem;
+  }
 
-        & > div {
-          margin-bottom: 0.5rem;
+  .filter-description {
+    display: flex;
+  }
 
-          button {
-            margin-bottom: 0;
-          }
-        }
-      }
+  .filter-description .heading {
+    font-weight: 300;
+  }
 
-      .apply {
-        margin-bottom: 0.5rem;
-      }
-    }
+  .filter-description .icon {
+    font-size: 0.5rem;
+    margin-right: 0.5rem;
+  }
 
-    .heading {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
+  .filter-inputs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
 
-      button {
-        font-size: 0.8rem;
-        margin-right: 0;
-      }
+  .filter-inputs > div {
+    text-align: left;
+  }
 
-      .label {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-      }
+  .filter-inputs > div > div {
+    margin-bottom: 0.5rem;
+  }
 
-      .title {
-        font-weight: bold;
-      }
-    }
+  .filter-inputs > div button {
+    margin-bottom: 0;
+  }
 
-    button,
-    input,
-    select {
-      margin-right: 0.5rem;
-    }
-
-    input {
-      font-size: 1rem;
-    }
-
-    select {
-      box-sizing: border-box;
-      height: 38px;
-    }
+  .filter-inputs .apply {
+    margin-bottom: 0.5rem;
   }
 
   .heading {
-    & > button {
-      padding: 0;
-    }
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-    & > .title {
-      text-align: left;
-    }
+  .heading button {
+    font-size: 0.8rem;
+    margin-right: 0;
+  }
+
+  .heading .label {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+  }
+
+  .heading .title {
+    font-weight: bold;
+  }
+
+  button,
+  input,
+  select {
+    margin-right: 0.5rem;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+
+  select {
+    box-sizing: border-box;
+    height: 38px;
+  }
+
+  .heading > button {
+    padding: 0;
+  }
+
+  .heading > .title {
+    text-align: left;
   }
 
   .more-btn:disabled {
@@ -546,10 +346,10 @@
     border-left: solid lightgray 1px;
     font-weight: 300;
     text-align: left;
+  }
 
-    &:first-of-type {
-      border-left: none;
-    }
+  td:first-of-type {
+    border-left: none;
   }
 
   td.currency,
@@ -575,23 +375,23 @@
     padding: 1rem;
     position: sticky;
     top: 0;
-    z-index: 1; // so Icon components in data rows scroll below these
+    z-index: 1; /* so Icon components in data rows scroll below these */
+  }
 
-    & > .heading {
-      display: flex;
-      align-items: center;
+  th > .heading {
+    display: flex;
+    align-items: center;
+  }
 
-      button {
-        background-color: transparent;
-        border: none;
-        padding-left: 0;
-      }
+  th > .heading button {
+    background-color: transparent;
+    border: none;
+    padding-left: 0;
+  }
 
-      .icon {
-        font-size: 0.7rem;
-        margin-left: 0.5rem;
-      }
-    }
+  th > .heading .icon {
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
   }
 
   @media (max-width: 760px) {
@@ -615,5 +415,4 @@
       padding: 0.5rem 0.25rem;
     }
   }
-}
 </style>

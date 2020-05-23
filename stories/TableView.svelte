@@ -1,9 +1,6 @@
 <script>
-  //import {globalStore} from '../src/stores';
   import Table from '../src/Table.svelte';
-  //import TransactionDetail from '../transaction-detail';
-
-  //globalStore.set({addressSelect: {vertical: false}});
+  import TransactionDetail from '../src/TransactionDetail.svelte';
 
   const defaultFilters = {
     activityType: {
@@ -62,6 +59,7 @@
 </script>
 
 <Table
+  {defaultFilters}
   detailComponent={TransactionDetail}
   getUrl={URL}
   {headings}
