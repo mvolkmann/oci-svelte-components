@@ -86,11 +86,11 @@
           {#each dataPeriodFilters as filter}
             <TableToggleButton
               {label}
-              onClick={() => monthButtonClicked(label, months)} />
+              on:click={() => monthButtonClicked(label, months)} />
           {/each}
           <TableToggleButton
             label="Custom Date Range"
-            onClick={customRangeButtonClicked} />
+            on:click={customRangeButtonClicked} />
         {/if}
       </div>
       {#if showCustomDateRange}

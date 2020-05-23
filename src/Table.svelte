@@ -4,6 +4,7 @@
   import {postJson} from './fetch-util';
   import Icon from './Icon.svelte';
   import Info from './Info.svelte';
+  import TableFilterArea from './TableFilterArea.svelte';
   import TableHeading from './TableHeading.svelte';
   import TableRow from './TableRow.svelte';
 
