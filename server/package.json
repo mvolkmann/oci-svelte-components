@@ -1,0 +1,23 @@
+{
+  "name": "osc-server",
+  "version": "1.0.0",
+  "description": "simple REST server",
+  "scripts": {
+    "format": "prettier --write 'src/**/*.js'",
+    "genTxnData": "node src/gen-txn-data",
+    "lint": "eslint --cache --ext=.js --fix src",
+    "reinstall": "rm -rf package-lock.json node_modules && npm install",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-pino-logger": "^5.0.0",
+    "pino": "^6.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "faker": "^4.1.0",
+    "prettier": "^2.0.5"
+  }
+}
