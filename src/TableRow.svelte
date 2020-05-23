@@ -4,6 +4,7 @@
   export let data;
   export let detailComponent = false;
   export let headings;
+  export let rowIndex;
 
   const getRowClass = index => (index % 2 === 0 ? 'even' : 'odd');
 
@@ -22,6 +23,8 @@
 
     return value;
   }
+
+  const getRowBgColor = index => (index % 2 === 0 ? evenBgColor : oddBgColor);
 
   function showDetail(event) {
     // If a detail row is currently displayed, hide it.

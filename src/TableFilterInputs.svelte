@@ -25,6 +25,11 @@
   const canFilterHeading = heading =>
     heading.canFilter || (filterAll && heading.canFilter === undefined);
 
+  function customRangeButtonClicked() {
+    selectedButton = showCustomDateRange ? '' : 'Custom Date Range';
+    showCustomDateRange = !showCustomDateRange;
+  }
+
   function filterToMonths(months) {
     const date = new Date();
     date.setMonth(date.getMonth() - months);

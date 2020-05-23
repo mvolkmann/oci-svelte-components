@@ -19,6 +19,17 @@
   const iconName = sortIconMap[key];
 
   const canSort = heading.canSort || (sortAll && heading.canSort === undefined);
+
+  function sortData(heading) {
+    startIndex = 0;
+    rowCount = pageSize; // reset to initial size
+    sortHeading = heading;
+    ascending = !sortHeading
+      ? true
+      : heading === sortHeading
+      ? !ascending
+      : true;
+  }
 </script>
 
 <th key={'heading-' + index} style={thStyle}>

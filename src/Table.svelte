@@ -51,11 +51,6 @@
   let sortHeading = null;
   let startIndex = 0;
 
-  function customRangeButtonClicked() {
-    setSelectedButton(showCustomDateRange ? '' : 'Custom Date Range');
-    setShowCustomDateRange(!showCustomDateRange);
-  }
-
   function markAsApplied(filterMap) {
     Object.values(filterMap).forEach(filter => (filter.applied = true));
     return filterMap;
@@ -109,21 +104,10 @@
     loadData(0, filters);
   }
 
-  const getRowBgColor = index => index % 2 === 0 ? evenBgColor : oddBgColor;
-
   function loadMoreResults() {
     setStartIndex(rowCount);
     setRowCount(rowCount => rowCount + pageSize);
     // Keep current sortHeading and ascending values.
-  }
-
-  function sortData(heading) {
-    setStartIndex(0);
-    setRowCount(pageSize); // reset to initial size
-    setSortHeading(heading);
-    setAscending(
-      !sortHeading ? true : heading === sortHeading ? !ascending : true
-    );
   }
 
   const classes = 'table' + (className ? ' ' + className : '');
@@ -152,8 +136,8 @@
       </tr>
     </thead>
     <tbody>
-      {#each data as rowData}
-      <TableRow data={rowData} {detailComponent} {headings} />
+      {#each data as rowData, rowIndex}
+      <TableRow data={rowData} {detailComponent} {headings} {rowIndex} />
     </tbody>
   </table>
   <button
