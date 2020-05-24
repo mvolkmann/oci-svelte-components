@@ -37,12 +37,12 @@
   let sortHeading = null;
   let startIndex = 0;
 
-  function markAsApplied(filterMap) {
-    Object.values(filterMap).forEach(filter => (filter.applied = true));
-    return filterMap;
-  }
-
+  const classes = 'table' + (className ? ' ' + className : '');
   const thStyle = 'backgroundColor: ' + headingBgColor;
+
+  if (ascending || sortHeading || startIndex || rowCount) {
+    loadData(startIndex, filters);
+  }
 
   // It is important that startIndex and filters are passed in
   // rather than just using the state variables defined above!
@@ -72,17 +72,21 @@
     }
   }
 
-  if (ascending || sortHeading || startIndex || rowCount) {
-    loadData(startIndex, filters);
-  }
-
   function loadMoreResults() {
     startIndex = rowCount;
     rowCount += pageSize;
     // Keep current sortHeading and ascending values.
   }
 
-  const classes = 'table' + (className ? ' ' + className : '');
+  function markAsApplied(filterMap) {
+    Object.values(filterMap).forEach(filter => (filter.applied = true));
+    return filterMap;
+  }
+
+  function reset() {
+    startIndex = 0;
+    rowCount = pageSize;
+  }
 </script>
 
 <div class={classes}>
@@ -96,7 +100,12 @@
     <thead>
       <tr style={`backgroundColor: ${headingBgColor}`}>
         {#each headings as heading}
-          <TableHeading {heading} {pageSize} {sortAll} {thStyle} />
+          <TableHeading
+            {heading}
+            on:reset={reset}
+            {pageSize}
+            {sortAll}
+            {thStyle} />
         {/each}
         {#if detailComponent}
           <th style={thStyle}>

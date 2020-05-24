@@ -14,7 +14,6 @@
 
   function applyFilters() {
     Object.values(filters).forEach(filter => (filter.applied = true));
-    startIndex = 0;
     filterHeading = null;
     loadData(0, filters);
   }
@@ -39,7 +38,7 @@
       <Icon color="var(--secondary-color)" icon="filter" />
       <div class="heading">
         <div class="label">Filters Applied</div>
-        <TableFilterDescription {filters} {loadData} {pageSize} />
+        <TableFilterDescription {filters} {loadData} on:reset {pageSize} />
       </div>
     </div>
     <div class="buttons">
@@ -61,6 +60,7 @@
           {filterAll}
           {filterHeading}
           {loadData}
+          on:reset
           {pageSize} />
         <button class="apply primary" on:click={applyFilters}>Apply</button>
       </div>

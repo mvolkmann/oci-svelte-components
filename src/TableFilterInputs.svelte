@@ -1,4 +1,5 @@
 <script>
+  import {createEventDispatcher} from 'svelte';
   import TableFilterInput from './TableFilterInput.svelte';
   import TableFilterSelect from './TableFilterSelect.svelte';
   import TableToggleButton from './TableToggleButton.svelte';
@@ -8,7 +9,6 @@
   export let filters;
   export let heading;
   export let loadData;
-  export let pageSize;
 
   const LEFT_RELATIONAL_OPERATORS = ['', '>', '>=', '=', '!='];
   const RIGHT_RELATIONAL_OPERATORS = ['', '<=', '<'];
@@ -21,6 +21,7 @@
     'ends with'
   ];
 
+  let dispatch = createEventDispatcher();
   let selectedButton = '';
   let showCustomDateRange = false;
 
@@ -42,7 +43,7 @@
     const value1 =
       date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-    reset();
+    dispatch('reset');
 
     const newFilter = {
       applied: true,
@@ -59,11 +60,6 @@
   function monthButtonClicked(label, months) {
     selectedButton = label;
     filterToMonths(months);
-  }
-
-  function reset() {
-    startIndex = 0;
-    rowCount = pageSize;
   }
 </script>
 

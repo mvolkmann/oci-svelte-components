@@ -1,14 +1,16 @@
 <script>
+  import {createEventDispatcher} from 'svelte';
   import * as solid from '@fortawesome/free-solid-svg-icons';
   import Icon from './Icon.svelte';
 
   export let ascending;
   export let heading;
   export let index;
-  export let pageSize;
   export let sortAll;
   export let sortHeading;
   export let thStyle;
+
+  const dispatch = createEventDispatcher();
 
   const sortedOn = heading === sortHeading;
 
@@ -33,8 +35,7 @@
   const canSort = heading.canSort || (sortAll && heading.canSort === undefined);
 
   function sortData(heading) {
-    startIndex = 0;
-    rowCount = pageSize; // reset to initial size
+    dispatch('reset');
     sortHeading = heading;
     ascending = !sortHeading
       ? true

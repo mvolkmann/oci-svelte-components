@@ -1,21 +1,23 @@
 <script>
+  import {createEventDispatcher} from 'svelte';
   import Button from './Button.svelte';
 
   export let filters;
   export let loadData;
-  export let pageSize;
+
+  const dispatch = createEventDispatcher();
 
   const appliedFilters = Object.values(filters).filter(f => f.applied);
 
   function clearAllFilters() {
-    reset();
+    dispatch('reset');
     filterHeading = null;
     filters = {};
     loadData(0, {});
   }
 
   function clearThisFilter(property) {
-    reset();
+    dispatch('reset');
     filterHeading = null;
     const newFilters = {...filters};
     delete newFilters[property];
@@ -31,11 +33,6 @@
     let description = getCondition(filter.operator1, filter.value1);
     description += getCondition(filter.operator2, filter.value2);
     return description;
-  }
-
-  function reset() {
-    startIndex = 0;
-    rowCount = pageSize;
   }
 </script>
 
