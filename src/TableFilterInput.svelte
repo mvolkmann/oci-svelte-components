@@ -1,8 +1,12 @@
 <script>
+  import {getContext} from 'svelte';
+
   export let filter;
   export let key;
   export let property;
   export let type = 'text';
+
+  const filtersStore = getContext('filtersStore');
 
   let value = filter[key];
   if (!value) {
@@ -19,7 +23,7 @@
         filter.operator2 = '<=';
       }
     }
-    filters = {...filters, [property]: filter};
+    $filtersStore = {...$filtersStore, [property]: filter};
   }
 </script>
 

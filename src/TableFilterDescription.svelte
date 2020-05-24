@@ -1,25 +1,26 @@
 <script>
-  import {createEventDispatcher} from 'svelte';
+  import {createEventDispatcher, getContext} from 'svelte';
   import Button from './Button.svelte';
 
-  export let filters;
   export let loadData;
 
   const dispatch = createEventDispatcher();
 
-  const appliedFilters = Object.values(filters).filter(f => f.applied);
+  const filtersStore = getContext('filtersStore');
+
+  const appliedFilters = Object.values($filtersStore).filter(f => f.applied);
 
   function clearAllFilters() {
     dispatch('reset');
-    filters = {};
+    $filtersStore = {};
     loadData(0, {});
   }
 
   function clearThisFilter(property) {
     dispatch('reset');
-    const newFilters = {...filters};
+    const newFilters = {...$filtersStore};
     delete newFilters[property];
-    filters = newFilters;
+    $filtersStore = newFilters;
     loadData(0, newFilters);
   }
 

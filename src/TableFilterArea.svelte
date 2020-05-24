@@ -1,21 +1,27 @@
 <script>
+  import {createEventDispatcher, getContext} from 'svelte';
   import Icon from './Icon.svelte';
   import TableFilterDescription from './TableFilterDescription.svelte';
   import TableFilterInputs from './TableFilterInputs.svelte';
 
   export let datePeriodFilters;
   export let filterAll;
-  export let filters;
   export let headings;
   export let loadData;
   export let pageSize;
 
+  const filtersStore = getContext('filtersStore');
+
+  const dispatch = createEventDispatcher();
+
   const anyFilters = headings.some(canFilterHeading);
 
+  let filterHeading = null;
+
   function applyFilters() {
-    Object.values(filters).forEach(filter => (filter.applied = true));
+    Object.values($filtersStore).forEach(filter => (filter.applied = true));
     filterHeading = null;
-    loadData(0, filters);
+    loadData(0, $filtersStore);
   }
 
   const canFilterHeading = heading =>
@@ -23,12 +29,17 @@
 
   function getFilterButtonClasses(heading) {
     const isSelected = heading === filterHeading;
-    const filter = filters[heading.property];
+    const filter = $filtersStore[heading.property];
     if (filter) filter.title = heading.title;
     const isSet = filter && filter.applied;
     const classes =
       'filter-btn' + (isSelected ? ' selected' : '') + (isSet ? ' set' : '');
     return classes;
+  }
+
+  function reset() {
+    filterHeading = null;
+    dispatch('reset');
   }
 </script>
 
@@ -38,7 +49,7 @@
       <Icon color="var(--secondary-color)" icon="filter" />
       <div class="heading">
         <div class="label">Filters Applied</div>
-        <TableFilterDescription {filters} {loadData} on:reset {pageSize} />
+        <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
       </div>
     </div>
     <div class="buttons">
@@ -60,7 +71,7 @@
           {filterAll}
           {filterHeading}
           {loadData}
-          on:reset
+          on:reset={reset}
           {pageSize} />
         <button class="apply primary" on:click={applyFilters}>Apply</button>
       </div>

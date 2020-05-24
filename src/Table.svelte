@@ -1,4 +1,6 @@
 <script>
+  import {setContext} from 'svelte';
+  import {writable} from 'svelte/store';
   //import getComponent from './component-map';
   import {postJson} from './fetch-util';
   import Info from './Info.svelte';
@@ -27,21 +29,22 @@
   export let pageSize = 15;
   export let sortAll = false;
 
+  const classes = 'table' + (className ? ' ' + className : '');
+  const thStyle = 'backgroundColor: ' + headingBgColor;
+
   let ascending = true;
   let atEnd = false;
   let data = [];
   let detailTr = null;
-  let filters = markAsApplied(defaultFilters);
-  let filterHeading = null;
+  let filtersStore = writable(markAsApplied(defaultFilters));
   let rowCount = pageSize;
   let sortHeading = null;
   let startIndex = 0;
 
-  const classes = 'table' + (className ? ' ' + className : '');
-  const thStyle = 'backgroundColor: ' + headingBgColor;
+  setContext('filtersStore', filtersStore);
 
   if (ascending || sortHeading || startIndex || rowCount) {
-    loadData(startIndex, filters);
+    loadData(startIndex, $filtersStore);
   }
 
   // It is important that startIndex and filters are passed in
@@ -84,7 +87,6 @@
   }
 
   function reset() {
-    filterHeading = null;
     startIndex = 0;
     rowCount = pageSize;
   }

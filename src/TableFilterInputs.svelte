@@ -1,12 +1,11 @@
 <script>
-  import {createEventDispatcher} from 'svelte';
+  import {createEventDispatcher, getContext} from 'svelte';
   import TableFilterInput from './TableFilterInput.svelte';
   import TableFilterSelect from './TableFilterSelect.svelte';
   import TableToggleButton from './TableToggleButton.svelte';
 
   export let datePeriodFilters;
   export let filterAll;
-  export let filters;
   export let heading;
   export let loadData;
 
@@ -21,12 +20,14 @@
     'ends with'
   ];
 
+  const filtersStore = getContext('filtersStore');
+
   let dispatch = createEventDispatcher();
   let selectedButton = '';
   let showCustomDateRange = false;
 
   const {property, type} = heading;
-  let filter = filters[property];
+  let filter = $filtersStore[property];
   if (!filter) filter = {property, title: heading.title};
 
   const canFilterHeading = heading =>
@@ -53,8 +54,8 @@
       property,
       value1
     };
-    filters = {...filters, [property]: newFilter};
-    loadData(0, filters);
+    $filtersStore = {...$filtersStore, [property]: newFilter};
+    loadData(0, $filtersStore);
   }
 
   function monthButtonClicked(label, months) {
