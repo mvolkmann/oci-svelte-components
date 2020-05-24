@@ -78,3 +78,82 @@
     {/if}
   </div>
 {/if}
+
+<style>
+  .filter-area button {
+    background-color: white;
+    border: solid var(--primary-color) 1px;
+    color: var(--primary-color);
+  }
+
+  .filter-area button.selected {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .filter-area button.set {
+    background-color: var(--set-background-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+
+  .filter-description {
+    display: flex;
+  }
+
+  .filter-description :global(.icon) {
+    font-size: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .filter-inputs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .filter-inputs > div {
+    text-align: left;
+  }
+
+  .filter-inputs > div > div {
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-inputs > div button {
+    margin-bottom: 0;
+  }
+
+  .filter-inputs .apply {
+    margin-bottom: 0.5rem;
+  }
+
+  .heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .heading > :global(button) {
+    padding: 0;
+  }
+
+  .heading :global(button) {
+    font-size: 0.8rem;
+    margin-right: 0;
+  }
+
+  .heading .label {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+  }
+
+  .heading :global(.title) {
+    font-weight: bold;
+  }
+
+  .heading > :global(.title) {
+    text-align: left;
+  }
+</style>

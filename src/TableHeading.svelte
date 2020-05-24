@@ -57,3 +57,27 @@
     {/if}
   </div>
 </th>
+
+<style>
+  th > .heading {
+    display: flex;
+    align-items: center;
+  }
+
+  th > .heading button {
+    background-color: transparent;
+    border: none;
+    padding-left: 0;
+  }
+
+  th > .heading :global(.icon) {
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+  }
+
+  @media (max-width: 760px) {
+    .heading > .title {
+      font-size: 0.7rem;
+    }
+  }
+</style>

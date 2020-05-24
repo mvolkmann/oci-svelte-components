@@ -29,3 +29,11 @@
     <option key={'option' + index}>{option}</option>
   {/each}
 </select>
+
+<style>
+  select {
+    box-sizing: border-box;
+    height: 38px;
+    margin-right: 0.5rem;
+  }
+</style>

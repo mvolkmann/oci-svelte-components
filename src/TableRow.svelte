@@ -29,7 +29,7 @@
 
   const getRowBgColor = index => (index % 2 === 0 ? evenBgColor : oddBgColor);
 
-  function showDetail(event) {
+  function toggleDetail(event) {
     // If a detail row is currently displayed, hide it.
     if (detailTr) {
       const tr = detailTr.previousSibling;
@@ -74,7 +74,7 @@
 
   {#if detailComponent}
     <td class="info">
-      <button on:click={e => showDetail(e)}>
+      <button on:click={e => toggleDetail(e)}>
         <Icon class="detail-icon" icon="chevron-circle-right" size="1x" />
       </button>
     </td>
@@ -87,3 +87,73 @@
     </td>
   </tr>
 {/if}
+
+<style>
+  .info :global(.detail-icon) {
+    color: lightgray;
+    font-size: 1rem;
+    transition-duration: var(--transition-duration);
+    transition-property: transform;
+    transform: rotate(0deg);
+  }
+
+  .detail-tr {
+    display: none;
+  }
+
+  .detail-tr > td > * {
+    max-height: 0;
+    transition-duration: var(--transition-duration);
+    transition-property: max-height;
+  }
+
+  :global(.show-detail .detail-icon) {
+    color: var(--primary-color);
+    transform: rotate(90deg);
+  }
+
+  :global(.detail-icon) {
+    color: var(--secondary-color);
+  }
+
+  :global(.show-detail) + .detail-tr {
+    display: table-row;
+  }
+
+  :global(.show-detail) + .detail-tr > td > * {
+    max-height: 100vh;
+  }
+
+  td {
+    border: none;
+    border-left: solid lightgray 1px;
+    text-align: left;
+  }
+
+  td:first-of-type {
+    border-left: none;
+  }
+
+  td.currency,
+  td.number {
+    text-align: right;
+  }
+
+  td.date,
+  td.info {
+    text-align: center;
+  }
+
+  td.info > button {
+    background-color: transparent;
+    border: none;
+    color: lightgray;
+    outline: none;
+  }
+
+  @media (max-width: 760px) {
+    td {
+      font-size: 0.7rem;
+    }
+  }
+</style>

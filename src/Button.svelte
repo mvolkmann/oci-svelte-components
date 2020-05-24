@@ -35,7 +35,6 @@
     background-color: transparent;
     border: none !important;
     color: var(--osc-primary-color, cornflowerblue);
-    font-weight: 300;
     padding-left: 0;
     padding-right: 0;
     text-decoration: underline;

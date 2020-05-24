@@ -60,7 +60,6 @@
 <style>
   .step-description {
     font-size: 1rem;
-    font-weight: 300;
     margin-bottom: 1rem;
   }
 
@@ -93,7 +92,6 @@
   .step-title {
     color: #363636;
     font-size: 1.4rem;
-    font-weight: 300;
     margin-top: 0.5rem;
   }
 

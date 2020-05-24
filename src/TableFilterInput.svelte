@@ -28,3 +28,10 @@
 </script>
 
 <input {type} on:change={e => onChange(e, key, type)} {value} />
+
+<style>
+  input {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+</style>
