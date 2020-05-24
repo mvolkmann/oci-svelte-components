@@ -21,6 +21,9 @@
     'ends with'
   ];
 
+  let selectedButton = '';
+  let showCustomDateRange = false;
+
   const {property, type} = heading;
   let filter = filters[property];
   if (!filter) filter = {property, title: heading.title};
@@ -91,11 +94,13 @@
           {#each datePeriodFilters as filter}
             <TableToggleButton
               label={filter.title}
-              on:click={() => monthButtonClicked(filter.title, filter.months)} />
+              on:click={() => monthButtonClicked(filter.title, filter.months)}
+              {selectedButton} />
           {/each}
           <TableToggleButton
             label="Custom Date Range"
-            on:click={customRangeButtonClicked} />
+            on:click={customRangeButtonClicked}
+            {selectedButton} />
         {/if}
       </div>
       {#if showCustomDateRange}

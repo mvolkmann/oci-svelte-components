@@ -34,8 +34,6 @@
   let filters = markAsApplied(defaultFilters);
   let filterHeading = null;
   let rowCount = pageSize;
-  let selectedButton = '';
-  let showCustomDateRange = false;
   let sortHeading = null;
   let startIndex = 0;
 
