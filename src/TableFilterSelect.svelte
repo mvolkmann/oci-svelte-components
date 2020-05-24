@@ -26,7 +26,7 @@
 
 <select on:blur={handler} on:change={handler} value={filter[key] || ''}>
   {#each options as option, index}
-    <option key={'option' + index}>{option}</option>
+    <option>{option}</option>
   {/each}
 </select>
 

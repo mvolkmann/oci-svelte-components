@@ -1,11 +1,10 @@
 <script>
-  import {createEventDispatcher} from 'svelte';
   import * as solid from '@fortawesome/free-solid-svg-icons';
+  import {createEventDispatcher} from 'svelte';
   import Icon from './Icon.svelte';
 
   export let ascending;
   export let heading;
-  export let index;
   export let sortAll;
   export let sortHeading;
   export let thStyle;
@@ -30,7 +29,7 @@
     '-' +
     (!sortedOn || ascending ? 'ascending' : 'descending');
 
-  const iconName = sortIconMap[key];
+  const icon = sortIconMap[key];
 
   const canSort = heading.canSort || (sortAll && heading.canSort === undefined);
 
@@ -45,14 +44,14 @@
   }
 </script>
 
-<th key={'heading-' + index} style={thStyle}>
+<th style={thStyle}>
   <div class="heading">
     <div class="title">{heading.title}</div>
     {#if canSort}
       <button on:click={() => sortData(heading)}>
         <Icon
           color={sortedOn ? 'var(--primary-color)' : 'var(--secondary-color)'}
-          icon={iconName} />
+          {icon} />
       </button>
     {/if}
   </div>

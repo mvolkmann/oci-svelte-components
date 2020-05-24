@@ -1,8 +1,10 @@
 <script>
+  import {faFilter} from '@fortawesome/free-solid-svg-icons';
   import {createEventDispatcher, getContext} from 'svelte';
   import Icon from './Icon.svelte';
   import TableFilterDescription from './TableFilterDescription.svelte';
   import TableFilterInputs from './TableFilterInputs.svelte';
+  console.log('TableFilterArea.svelte x: faFilter =', faFilter);
 
   export let datePeriodFilters;
   export let filterAll;
@@ -14,6 +16,8 @@
 
   const dispatch = createEventDispatcher();
 
+  const canFilterHeading = heading =>
+    heading.canFilter || (filterAll && heading.canFilter === undefined);
   const anyFilters = headings.some(canFilterHeading);
 
   let filterHeading = null;
@@ -23,9 +27,6 @@
     filterHeading = null;
     loadData(0, $filtersStore);
   }
-
-  const canFilterHeading = heading =>
-    heading.canFilter || (filterAll && heading.canFilter === undefined);
 
   function getFilterButtonClasses(heading) {
     const isSelected = heading === filterHeading;
@@ -46,7 +47,7 @@
 {#if anyFilters}
   <div class="filter-area">
     <div class="filter-description">
-      <Icon color="var(--secondary-color)" icon="filter" />
+      <Icon color="var(--secondary-color)" icon={faFilter} />
       <div class="heading">
         <div class="label">Filters Applied</div>
         <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
@@ -57,7 +58,6 @@
         {#if canFilterHeading(heading)}
           <button
             class={getFilterButtonClasses(heading)}
-            key={'heading-' + index}
             on:click={() => (filterHeading = heading)}>
             {heading.title}
           </button>

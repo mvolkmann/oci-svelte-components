@@ -62,6 +62,8 @@
       body.sortOn = sortHeading.property;
       body.type = sortHeading.type || 'string';
     }
+    console.log('Table.svelte loadData: getUrl =', getUrl);
+    console.log('Table.svelte loadData: body =', body);
     const result = await postJson(getUrl, body);
     const newData = result.records;
     const isLastRecord = result.isLast;

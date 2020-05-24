@@ -1,4 +1,5 @@
 <script>
+  import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
   import Icon from './Icon.svelte';
 
   export let data;
@@ -67,15 +68,13 @@
   class={getRowClass(rowIndex)}
   style={`backgroundColor: ${getRowBgColor(rowIndex)}`}>
   {#each headings as heading, columnIndex}
-    <td class={heading.type} key={'column-' + columnIndex}>
-      {formatValue(heading, data)}
-    </td>
+    <td class={heading.type}>{formatValue(heading, data)}</td>
   {/each}
 
   {#if detailComponent}
     <td class="info">
       <button on:click={e => toggleDetail(e)}>
-        <Icon class="detail-icon" icon="chevron-circle-right" size="1x" />
+        <Icon class="detail-icon" icon={faChevronCircleRight} size="1x" />
       </button>
     </td>
   {/if}

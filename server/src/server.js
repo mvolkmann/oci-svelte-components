@@ -7,7 +7,7 @@ const [, , port] = process.argv;
 
 const app = express();
 //app.use(express.static(storageDir));
-//app.use(express.json({limit: '15mb'}));
+app.use(express.json());
 logger.setup(app);
 app.use(cors());
 

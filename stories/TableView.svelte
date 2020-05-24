@@ -4,11 +4,11 @@
 
   const defaultFilters = {
     activityType: {
-      property: 'activityType',
-      title: 'Activity Type',
+      property: 'category',
+      title: 'Category',
       type: 'string',
       operator1: 'equals',
-      value1: 'Redemption'
+      value1: 'clothing'
     }
   };
 
@@ -20,28 +20,22 @@
       canFilter: true
     },
     {
-      property: 'activityType',
-      title: 'Activity Type',
+      property: 'category',
+      title: 'Category',
       canFilter: true
     },
     {
-      property: 'amount',
-      title: 'Amount',
+      property: 'price',
+      title: 'Price',
       type: 'currency',
       canFilter: true
-    },
-    {
-      property: 'pointsActivity',
-      title: 'Points Activity',
-      type: 'number'
     },
     {
       property: 'description',
       title: 'Description',
       canFilter: true
     },
-    {property: 'redemptionId', title: 'Redemption ID'},
-    {property: 'pointType', title: 'Point Type'}
+    {property: 'txnId', title: 'Transaction ID'}
   ];
 
   const URL = 'http://localhost:4000/transactions';
@@ -53,9 +47,10 @@
 
   const headingTooltip =
     '**Date**: The date of the transaction\n' +
-    '**Activity Type**: The type of transaction.\n' +
-    '**Amount**: The dollar amount of the purchases.\n' +
-    '**Points Activity**: The Reward Points applied or reduced from total.';
+    '**Category**: The category of transaction.\n' +
+    '**Price**: The dollar amount of the transaction.\n' +
+    '**Description**: A description of the transaction.';
+  '**Transaction ID**: An ID for the transaction.';
 </script>
 
 <Table

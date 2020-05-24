@@ -9,4 +9,4 @@
     (className ? ' ' + className : '');
 </script>
 
-<button class={classes} key={label} on:click={onClick}>{label}</button>
+<button class={classes} on:click={onClick}>{label}</button>
