@@ -65,11 +65,10 @@
 
 <tr
   class={getRowClass(rowIndex)}
-  style={{backgroundColor: getRowBgColor(rowIndex)}}>
+  style={`backgroundColor: ${getRowBgColor(rowIndex)}`}>
   {#each headings as heading, columnIndex}
     <td class={heading.type} key={'column-' + columnIndex}>
-      <!-- {obj[heading.property]} -->
-      {formatValue(heading, obj)}
+      {formatValue(heading, data)}
     </td>
   {/each}
 

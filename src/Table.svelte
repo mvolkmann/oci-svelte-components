@@ -84,6 +84,7 @@
   }
 
   function reset() {
+    filterHeading = null;
     startIndex = 0;
     rowCount = pageSize;
   }

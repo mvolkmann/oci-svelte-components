@@ -11,14 +11,12 @@
 
   function clearAllFilters() {
     dispatch('reset');
-    filterHeading = null;
     filters = {};
     loadData(0, {});
   }
 
   function clearThisFilter(property) {
     dispatch('reset');
-    filterHeading = null;
     const newFilters = {...filters};
     delete newFilters[property];
     filters = newFilters;
