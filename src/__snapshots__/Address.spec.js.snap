@@ -19,10 +19,10 @@ exports[`Address should match snapshot 1`] = `
         </label>
          
         <div
-          class="container svelte-sfmuks"
+          class="container svelte-rbnal8"
         >
           <select
-            class="osc-labeled-select svelte-sfmuks"
+            class="osc-select svelte-rbnal8"
           >
             <option
               value=""

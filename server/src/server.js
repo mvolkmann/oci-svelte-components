@@ -14,7 +14,7 @@ app.use(cors());
 // This is for testing the Table component.
 app.use('/transactions', transactionsApi);
 
-const usePort = port || 4000;
+const usePort = port || 4001;
 app.listen(usePort, err => {
   if (err) {
     console.error('error starting server', err);

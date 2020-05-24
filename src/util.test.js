@@ -20,8 +20,8 @@ test('indexOfNth on empty', () => {
 });
 
 test('indexOfNth on URL', () => {
-  const url = 'http://localhost:4000/garden-view/profile';
-  expect(indexOfNth(url, '/', 4)).toBe(33);
+  const url = 'http://localhost:4001/foo/bar';
+  expect(indexOfNth(url, '/', 4)).toBe(25);
 });
 
 test('kebabCase', () => {

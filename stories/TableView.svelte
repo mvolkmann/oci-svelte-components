@@ -38,7 +38,7 @@
     {property: 'txnId', title: 'Transaction ID'}
   ];
 
-  const URL = 'http://localhost:4000/transactions';
+  const URL = 'http://localhost:4001/transactions';
 
   const style = {
     '--primary-color': '#156F2D',
