@@ -1,15 +1,27 @@
 <script>
+  import * as solid from '@fortawesome/free-solid-svg-icons';
   import Icon from './Icon.svelte';
 
   export let ascending;
   export let heading;
   export let index;
+  export let pageSize;
   export let sortAll;
   export let sortHeading;
-  export let sortIconMap;
   export let thStyle;
 
   const sortedOn = heading === sortHeading;
+
+  const sortIconMap = {
+    'currency-ascending': solid.faSortNumericDown,
+    'currency-descending': solid.faSortNumericDownAlt,
+    'date-ascending': solid.faSortAmountDownAlt,
+    'date-descending': solid.faSortAmountDown,
+    'number-ascending': solid.faSortNumericDown,
+    'number-descending': solid.faSortNumericDownAlt,
+    'string-ascending': solid.faSortAlphaDown,
+    'string-descending': solid.faSortAlphaDownAlt
+  };
 
   const key =
     (heading.type || 'string') +

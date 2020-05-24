@@ -3,7 +3,10 @@
 
   export let data;
   export let detailComponent = false;
+  export let detailTr;
+  export let evenBgColor;
   export let headings;
+  export let oddBgColor;
   export let rowIndex;
 
   const getRowClass = index => (index % 2 === 0 ? 'even' : 'odd');

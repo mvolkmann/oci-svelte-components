@@ -3,9 +3,12 @@
   import TableFilterSelect from './TableFilterSelect.svelte';
   import TableToggleButton from './TableToggleButton.svelte';
 
+  export let datePeriodFilters;
   export let filterAll;
   export let filters;
   export let heading;
+  export let loadData;
+  export let pageSize;
 
   const LEFT_RELATIONAL_OPERATORS = ['', '>', '>=', '=', '!='];
   const RIGHT_RELATIONAL_OPERATORS = ['', '<=', '<'];
@@ -69,24 +72,26 @@
           {filter}
           key="operator1"
           options={LEFT_RELATIONAL_OPERATORS} />
-        <TableFilterInput {filter} key="value1" type="number" />
+        {property}
+        <TableFilterInput {filter} key="value1" {property} type="number" />
       </div>
       <div>
         <TableFilterSelect
           {filter}
           key="operator2"
           options={RIGHT_RELATIONAL_OPERATORS} />
-        <TableFilterInput {filter} key="value2" type="number" />
+        {property}
+        <TableFilterInput {filter} key="value2" {property} type="number" />
       </div>
     </div>
   {:else if type === 'date'}
     <div>
       <div>
         {#if selectedButton !== 'Custom Date Range'}
-          {#each dataPeriodFilters as filter}
+          {#each datePeriodFilters as filter}
             <TableToggleButton
-              {label}
-              on:click={() => monthButtonClicked(label, months)} />
+              label={filter.title}
+              on:click={() => monthButtonClicked(filter.title, filter.months)} />
           {/each}
           <TableToggleButton
             label="Custom Date Range"
@@ -97,13 +102,13 @@
         <div>
           <label class="date">
             Start Date
-            <TableFilterInput {filter} key="value1" type="date" />
+            <TableFilterInput {filter} key="value1" {property} type="date" />
           </label>
         </div>
         <div>
           <label class="date">
             End Date
-            <TableFilterInput {filter} key="value2" type="date" />
+            <TableFilterInput {filter} key="value2" {property} type="date" />
           </label>
         </div>
       {/if}
@@ -115,8 +120,9 @@
         <TableFilterSelect
           {filter}
           key="operator1"
-          options={STRING_OPERATORS} />
-        <TableFilterInput {filter} key="value1" />
+          options={STRING_OPERATORS}
+          {property} />
+        <TableFilterInput {filter} key="value1" {property} />
       </div>
     </div>
   {/if}

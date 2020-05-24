@@ -1,6 +1,7 @@
 <script>
   export let filter;
   export let key;
+  export let property;
   export let type = 'text';
 
   let value = filter[key];

@@ -2,6 +2,8 @@
   import Button from './Button.svelte';
 
   export let filters;
+  export let loadData;
+  export let pageSize;
 
   const appliedFilters = Object.values(filters).filter(f => f.applied);
 

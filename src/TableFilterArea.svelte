@@ -3,10 +3,21 @@
   import TableFilterDescription from './TableFilterDescription.svelte';
   import TableFilterInputs from './TableFilterInputs.svelte';
 
+  export let datePeriodFilters;
+  export let filterAll;
   export let filters;
   export let headings;
+  export let loadData;
+  export let pageSize;
 
   const anyFilters = headings.some(canFilterHeading);
+
+  function applyFilters() {
+    Object.values(filters).forEach(filter => (filter.applied = true));
+    startIndex = 0;
+    filterHeading = null;
+    loadData(0, filters);
+  }
 
   const canFilterHeading = heading =>
     heading.canFilter || (filterAll && heading.canFilter === undefined);
@@ -28,7 +39,7 @@
       <Icon color="var(--secondary-color)" icon="filter" />
       <div class="heading">
         <div class="label">Filters Applied</div>
-        <TableFilterDescription {filters} />
+        <TableFilterDescription {filters} {loadData} {pageSize} />
       </div>
     </div>
     <div class="buttons">
@@ -45,7 +56,12 @@
     </div>
     {#if filterHeading}
       <div class="filter-inputs">
-        <TableFilterInputs {filterHeading} />
+        <TableFilterInputs
+          {datePeriodFilters}
+          {filterAll}
+          {filterHeading}
+          {loadData}
+          {pageSize} />
         <button class="apply primary" on:click={applyFilters}>Apply</button>
       </div>
     {/if}

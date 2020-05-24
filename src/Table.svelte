@@ -1,8 +1,6 @@
 <script>
-  import Button from './Button.svelte';
   //import getComponent from './component-map';
   import {postJson} from './fetch-util';
-  import Icon from './Icon.svelte';
   import Info from './Info.svelte';
   import TableFilterArea from './TableFilterArea.svelte';
   import TableHeading from './TableHeading.svelte';
@@ -29,17 +27,6 @@
   export let pageSize = 15;
   export let sortAll = false;
 
-  const sortIconMap = {
-    'currency-ascending': 'sort-numeric-down',
-    'currency-descending': 'sort-numeric-down-alt',
-    'date-ascending': 'sort-amount-down-alt',
-    'date-descending': 'sort-amount-down',
-    'number-ascending': 'sort-numeric-down',
-    'number-descending': 'sort-numeric-down-alt',
-    'string-ascending': 'sort-alpha-down',
-    'string-descending': 'sort-alpha-down-alt'
-  };
-
   let ascending = true;
   let atEnd = false;
   let data = [];
@@ -56,14 +43,6 @@
     Object.values(filterMap).forEach(filter => (filter.applied = true));
     return filterMap;
   }
-
-  // Putting this in a variable whose name starts uppercase
-  // allows React to treat it as a component.
-  const DetailComponent = !detailComponent
-    ? null
-    : typeof detailComponent === 'string'
-    ? getComponent(detailComponent)
-    : detailComponent;
 
   const thStyle = 'backgroundColor: ' + headingBgColor;
 
@@ -85,12 +64,13 @@
     const result = await postJson(getUrl, body);
     const newData = result.records;
     const isLastRecord = result.isLast;
-    setAtEnd(isLastRecord);
+    atEnd = isLastRecord;
 
     if (startIndex === 0) {
-      setData(newData);
+      data = newData;
     } else {
-      setData(data => data.concat(newData));
+      data.push(...newData);
+      data = data; // to trigger reactivity
     }
   }
 
@@ -98,16 +78,9 @@
     loadData(startIndex, filters);
   }
 
-  function applyFilters() {
-    Object.values(filters).forEach(filter => (filter.applied = true));
-    setStartIndex(0);
-    filterHeading = null;
-    loadData(0, filters);
-  }
-
   function loadMoreResults() {
-    setStartIndex(rowCount);
-    setRowCount(rowCount => rowCount + pageSize);
+    startIndex = rowCount;
+    rowCount += pageSize;
     // Keep current sortHeading and ascending values.
   }
 
@@ -115,22 +88,26 @@
 </script>
 
 <div class={classes}>
-  <TableFilterArea {headings} />
+  <TableFilterArea
+    {datePeriodFilters}
+    {filterAll}
+    {headings}
+    {loadData}
+    {pageSize} />
   <table>
     <thead>
       <tr style={`backgroundColor: ${headingBgColor}`}>
         {#each headings as heading}
-          <TableHeading {heading} {thStyle} />
+          <TableHeading {heading} {pageSize} {sortAll} {thStyle} />
         {/each}
-        {#if DetailComponent}
+        {#if detailComponent}
           <th style={thStyle}>
             {#if headingTooltip}
               <Info
                 text={headingTooltip}
                 hPosition="left"
                 tipWidth="245px"
-                vPosition="center"
-              />
+                vPosition="center" />
             {/if}
           </th>
         {/if}
@@ -138,14 +115,18 @@
     </thead>
     <tbody>
       {#each data as rowData, rowIndex}
-      <TableRow data={rowData} {detailComponent} {headings} {rowIndex} />
+        <TableRow
+          data={rowData}
+          {detailComponent}
+          bind:detailTr
+          {evenBgColor}
+          {headings}
+          {oddBgColor}
+          {rowIndex} />
+      {/each}
     </tbody>
   </table>
-  <button
-    class="more-btn primary"
-    disabled={atEnd}
-    on:click={loadMoreResults}
-  >
+  <button class="more-btn primary" disabled={atEnd} on:click={loadMoreResults}>
     More Results
   </button>
 </div>
@@ -181,9 +162,9 @@
   }
 
   .detail-tr > td > * {
-      max-height: 0;
-      transition-duration: var(--transition-duration);
-      transition-property: max-height;
+    max-height: 0;
+    transition-duration: var(--transition-duration);
+    transition-property: max-height;
   }
 
   tbody > tr .detail-icon > svg {
@@ -240,7 +221,7 @@
   }
 
   .buttons button {
-      margin-top: 0.5rem;
+    margin-top: 0.5rem;
   }
 
   .filter-description {

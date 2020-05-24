@@ -2,6 +2,7 @@
   export let filter;
   export let key;
   export let options;
+  export let property;
 
   const handler = e => onChange(e, key, 'string');
 
