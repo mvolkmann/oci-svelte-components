@@ -34,14 +34,14 @@
   import {afterUpdate} from 'svelte';
   import {getId} from './util';
 
-  export let color = 'var(--osc-primary-color, cornflowerblue)';
+  export let color;
 
   // The specified CSS class can specify color and font-size.
   export let className = undefined;
 
   // This is an icon imported from a @fortawesome package.
   export let icon = undefined;
-  export let size = '1rem';
+  export let size;
 
   const id = getId('osc-icon-');
   const classes = 'osc-icon ' + id + (className ? ' ' + className : '');
@@ -49,8 +49,8 @@
   afterUpdate(() => {
     const element = document.querySelector('.' + id);
     if (element) {
-      element.style.color = color;
-      element.style.fontSize = size;
+      if (color) element.style.color = color;
+      if (size) element.style.fontSize = size;
     }
   });
 </script>

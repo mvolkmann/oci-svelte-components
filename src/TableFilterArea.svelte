@@ -47,7 +47,7 @@
 {#if anyFilters}
   <div class="filter-area">
     <div class="filter-description">
-      <Icon color="var(--secondary-color)" icon={faFilter} />
+      <Icon color="var(--osc-secondary-color, orange)" icon={faFilter} />
       <div class="heading">
         <div class="label">Filters Applied</div>
         <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
@@ -82,26 +82,34 @@
 <style>
   .filter-area button {
     background-color: white;
-    border: solid var(--primary-color) 1px;
-    color: var(--primary-color);
+    border: solid var(--osc-primary-color, cornflowerblue) 1px;
+    border-radius: var(--osc-border-radius, 4px);
+    color: var(--osc-primary-color, cornflowerblue);
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
   }
 
   .filter-area button.selected {
-    background-color: var(--primary-color);
+    background-color: var(--osc-primary-color, cornflowerblue);
     color: white;
   }
 
   .filter-area button.set {
     background-color: var(--set-background-color);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+    border-color: var(--osc-primary-color, cornflowerblue);
+    color: var(--osc-primary-color, cornflowerblue);
+  }
+
+  .filter-area .buttons {
+    margin: 0.5rem 0;
   }
 
   .filter-description {
     display: flex;
   }
 
-  .filter-description :global(.icon) {
+  .filter-description :global(.osc-icon) {
     font-size: 0.5rem;
     margin-right: 0.5rem;
   }

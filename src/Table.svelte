@@ -30,7 +30,7 @@
   export let sortAll = false;
 
   const classes = 'table' + (className ? ' ' + className : '');
-  const thStyle = 'backgroundColor: ' + headingBgColor;
+  const thStyle = 'background-color: ' + headingBgColor;
 
   let ascending = true;
   let atEnd = false;
@@ -117,9 +117,9 @@
             {#if headingTooltip}
               <Info
                 text={headingTooltip}
-                hPosition="left"
-                tipWidth="245px"
-                vPosition="center" />
+                hPosition="center"
+                tipWidth="340px"
+                vPosition="bottom" />
             {/if}
           </th>
         {/if}
@@ -165,6 +165,10 @@
     background-color: lightgray !important;
   }
 
+  table {
+    border-collapse: collapse;
+  }
+
   .table {
     --set-background-color: linen;
     --transition-duration: 0.5s;
@@ -177,7 +181,7 @@
   }
 
   .table > button.primary {
-    background-color: var(--primary-color) !important;
+    background-color: var(--osc-primary-color, cornflowerblue) !important;
     border: none !important;
     color: white !important;
   }

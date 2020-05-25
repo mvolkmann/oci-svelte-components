@@ -2,4 +2,4 @@
 /public/build/
 
 .DS_Store
-server/osc-server*.log
+/server/osc-server.log

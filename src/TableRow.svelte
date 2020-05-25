@@ -66,7 +66,7 @@
 
 <tr
   class={getRowClass(rowIndex)}
-  style={`backgroundColor: ${getRowBgColor(rowIndex)}`}>
+  style={`background-color: ${getRowBgColor(rowIndex)}`}>
   {#each headings as heading, columnIndex}
     <td class={heading.type}>{formatValue(heading, data)}</td>
   {/each}
@@ -107,12 +107,12 @@
   }
 
   :global(.show-detail .detail-icon) {
-    color: var(--primary-color);
+    color: var(--osc-primary-color, cornflowerblue);
     transform: rotate(90deg);
   }
 
   :global(.detail-icon) {
-    color: var(--secondary-color);
+    color: var(--osc-secondary-color, orange);
   }
 
   :global(.show-detail) + .detail-tr {
@@ -126,6 +126,7 @@
   td {
     border: none;
     border-left: solid lightgray 1px;
+    padding: 0.5rem;
     text-align: left;
   }
 

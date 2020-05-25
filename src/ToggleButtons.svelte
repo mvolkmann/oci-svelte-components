@@ -81,13 +81,9 @@
     color: white;
   } */
 
-  .icon {
+  .osc-toggle-buttons :global(.osc-icon) {
     margin-right: 0.5rem;
   }
-
-  /* .icon svg {
-    color: black;
-  } */
 
   .osc-toggle-buttons {
     display: flex;

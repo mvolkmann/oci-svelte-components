@@ -3,7 +3,7 @@
   import TransactionDetail from '../src/TransactionDetail.svelte';
 
   const defaultFilters = {
-    activityType: {
+    category: {
       property: 'category',
       title: 'Category',
       type: 'string',
@@ -41,8 +41,8 @@
   const URL = 'http://localhost:4001/transactions';
 
   const style = {
-    '--primary-color': '#156F2D',
-    '--secondary-color': '#D38848'
+    '--osc-primary-color': '#156F2D',
+    '--osc-secondary-color': '#D38848'
   };
 
   const headingTooltip =

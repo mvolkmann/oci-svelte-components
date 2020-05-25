@@ -8,6 +8,10 @@
   export let sortAll;
   export let sortHeading;
   export let thStyle;
+  console.log('TableHeading.svelte x: thStyle =', thStyle);
+
+  const SORTED_COLOR = 'var(--osc-primary-color, cornflowerblue)';
+  const UNSORTED_COLOR = 'var(--osc-secondary-color, orange)';
 
   const dispatch = createEventDispatcher();
 
@@ -49,29 +53,28 @@
     <div class="title">{heading.title}</div>
     {#if canSort}
       <button on:click={() => sortData(heading)}>
-        <Icon
-          color={sortedOn ? 'var(--primary-color)' : 'var(--secondary-color)'}
-          {icon} />
+        <Icon color={sortedOn ? SORTED_COLOR : UNSORTED_COLOR} {icon} />
       </button>
     {/if}
   </div>
 </th>
 
 <style>
-  th > .heading {
+  .heading {
     display: flex;
     align-items: center;
   }
 
-  th > .heading button {
+  .heading button {
     background-color: transparent;
     border: none;
+    margin-left: 0.5rem;
     padding-left: 0;
   }
 
-  th > .heading :global(.icon) {
-    font-size: 0.7rem;
-    margin-left: 0.5rem;
+  .heading :global(.osc-icon) {
+    color: var(--osc-secondary-color, orange);
+    font-size: 1.4rem;
   }
 
   @media (max-width: 760px) {
