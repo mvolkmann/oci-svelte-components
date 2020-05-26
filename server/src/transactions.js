@@ -81,9 +81,8 @@ api.post('/', (req, res) => {
   }
 
   // Filter the data.
-  for (const property of Object.keys(filters)) {
-    const filter = filters[property];
-    const {operator1, operator2, type, value1, value2} = filter;
+  for (const filter of filters) {
+    const {property, operator1, operator2, type, value1, value2} = filter;
     processFilter(property, type, operator1, value1);
     processFilter(property, type, operator2, value2);
   }

@@ -20,7 +20,7 @@
         filter.operator2 = '<=';
       }
     }
-    $filtersStore = {...$filtersStore, [property]: filter};
+    $filtersStore[filter.index] = filter;
   }
 </script>
 

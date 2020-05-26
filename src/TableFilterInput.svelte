@@ -3,7 +3,6 @@
 
   export let filter;
   export let key;
-  export let property;
   export let type = 'text';
 
   const filtersStore = getContext('filtersStore');
@@ -23,7 +22,7 @@
         filter.operator2 = '<=';
       }
     }
-    $filtersStore = {...$filtersStore, [property]: filter};
+    $filtersStore[filter.index] = filter;
   }
 </script>
 

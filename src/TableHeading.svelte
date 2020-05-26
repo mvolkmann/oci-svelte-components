@@ -8,7 +8,6 @@
   export let sortAll;
   export let sortHeading;
   export let thStyle;
-  console.log('TableHeading.svelte x: thStyle =', thStyle);
 
   const SORTED_COLOR = 'var(--osc-primary-color, cornflowerblue)';
   const UNSORTED_COLOR = 'var(--osc-secondary-color, orange)';

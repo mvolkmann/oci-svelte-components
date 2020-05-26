@@ -4,9 +4,6 @@
 
   const defaultFilters = {
     category: {
-      property: 'category',
-      title: 'Category',
-      type: 'string',
       operator1: 'equals',
       value1: 'clothing'
     }

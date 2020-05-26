@@ -5,8 +5,7 @@
   import TableToggleButton from './TableToggleButton.svelte';
 
   export let datePeriodFilters;
-  export let filterAll;
-  export let heading;
+  export let filter;
   export let loadData;
 
   const LEFT_RELATIONAL_OPERATORS = ['', '>', '>=', '=', '!='];
@@ -26,12 +25,7 @@
   let selectedButton = '';
   let showCustomDateRange = false;
 
-  const {property, type} = heading;
-  let filter = $filtersStore[property];
-  if (!filter) filter = {property, title: heading.title};
-
-  const canFilterHeading = heading =>
-    heading.canFilter || (filterAll && heading.canFilter === undefined);
+  $: ({property, title, type} = filter);
 
   function customRangeButtonClicked() {
     selectedButton = showCustomDateRange ? '' : 'Custom Date Range';
@@ -48,14 +42,14 @@
 
     const newFilter = {
       applied: true,
-      title: heading.title,
+      title,
       type: 'date',
       operator1: '>=',
       property,
       value1
     };
     $filtersStore = {...$filtersStore, [property]: newFilter};
-    loadData(0, $filtersStore);
+    loadData();
   }
 
   function monthButtonClicked(label, months) {
@@ -64,24 +58,22 @@
   }
 </script>
 
-{#if canFilterHeading(heading)}
+<div class="table-filter-inputs">
   {#if type === 'currency' || type === 'number'}
     <div>
-      <div>
+      <div class="row">
         <TableFilterSelect
           {filter}
           key="operator1"
           options={LEFT_RELATIONAL_OPERATORS} />
-        {property}
-        <TableFilterInput {filter} key="value1" {property} type="number" />
+        <TableFilterInput {filter} key="value1" type="number" />
       </div>
-      <div>
+      <div class="row">
         <TableFilterSelect
           {filter}
           key="operator2"
           options={RIGHT_RELATIONAL_OPERATORS} />
-        {property}
-        <TableFilterInput {filter} key="value2" {property} type="number" />
+        <TableFilterInput {filter} key="value2" type="number" />
       </div>
     </div>
   {:else if type === 'date'}
@@ -101,22 +93,22 @@
         {/if}
       </div>
       {#if showCustomDateRange}
-        <div>
+        <div class="row">
           <label class="date">
             Start Date
-            <TableFilterInput {filter} key="value1" {property} type="date" />
+            <TableFilterInput {filter} key="value1" type="date" />
           </label>
         </div>
-        <div>
+        <div class="row">
           <label class="date">
             End Date
-            <TableFilterInput {filter} key="value2" {property} type="date" />
+            <TableFilterInput {filter} key="value2" type="date" />
           </label>
         </div>
       {/if}
     </div>
   {:else}
-    // assumes type is "string"
+    <!-- assumes type is "string" -->
     <div>
       <div>
         <TableFilterSelect
@@ -124,8 +116,26 @@
           key="operator1"
           options={STRING_OPERATORS}
           {property} />
-        <TableFilterInput {filter} key="value1" {property} />
+        <TableFilterInput {filter} key="value1" />
       </div>
     </div>
   {/if}
-{/if}
+</div>
+
+<style>
+  .table-filter-inputs :global(button),
+  .table-filter-inputs :global(input),
+  .table-filter-inputs :global(select) {
+    --color: var(--osc-primary-color, cornflowerblue);
+    border: solid var(--color) 1px;
+    border-radius: var(--osc-border-radius, 4px);
+    color: var(--color);
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .table-filter-inputs .row {
+    margin-bottom: 0.5rem;
+  }
+</style>

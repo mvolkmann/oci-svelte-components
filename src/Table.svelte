@@ -36,25 +36,41 @@
   let atEnd = false;
   let data = [];
   let detailTr = null;
-  let filtersStore = writable(markAsApplied(defaultFilters));
   let rowCount = pageSize;
   let sortHeading = null;
   let startIndex = 0;
 
+  const canFilter = heading =>
+    heading.canFilter || (filterAll && heading.canFilter === undefined);
+
+  let filtersStore = writable(
+    headings.filter(canFilter).map((heading, index) => {
+      const defaultFilter = defaultFilters[heading.property];
+      return {
+        applied: Boolean(defaultFilter),
+        index,
+        property: heading.property,
+        title: heading.title,
+        type: heading.type,
+        ...defaultFilter
+      };
+    })
+  );
+
   setContext('filtersStore', filtersStore);
 
   if (ascending || sortHeading || startIndex || rowCount) {
-    loadData(startIndex, $filtersStore);
+    loadData(startIndex);
   }
 
   // It is important that startIndex and filters are passed in
   // rather than just using the state variables defined above!
   // There are calls to this that need to pass a different value
   // to get around the issue of state updates being asynchronous.
-  async function loadData(startIndex, filters) {
+  async function loadData(startIndex = 0) {
     const body = {
       ascending,
-      filters,
+      filters: $filtersStore.filter(f => f.applied),
       size: pageSize,
       start: startIndex
     };
@@ -62,8 +78,6 @@
       body.sortOn = sortHeading.property;
       body.type = sortHeading.type || 'string';
     }
-    console.log('Table.svelte loadData: getUrl =', getUrl);
-    console.log('Table.svelte loadData: body =', body);
     const result = await postJson(getUrl, body);
     const newData = result.records;
     const isLastRecord = result.isLast;
@@ -83,11 +97,6 @@
     // Keep current sortHeading and ascending values.
   }
 
-  function markAsApplied(filterMap) {
-    Object.values(filterMap).forEach(filter => (filter.applied = true));
-    return filterMap;
-  }
-
   function reset() {
     startIndex = 0;
     rowCount = pageSize;
@@ -95,12 +104,7 @@
 </script>
 
 <div class={classes}>
-  <TableFilterArea
-    {datePeriodFilters}
-    {filterAll}
-    {headings}
-    {loadData}
-    {pageSize} />
+  <TableFilterArea {datePeriodFilters} {filterAll} {loadData} {pageSize} />
   <table>
     <thead>
       <tr style={`backgroundColor: ${headingBgColor}`}>

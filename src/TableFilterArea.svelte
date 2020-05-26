@@ -4,80 +4,79 @@
   import Icon from './Icon.svelte';
   import TableFilterDescription from './TableFilterDescription.svelte';
   import TableFilterInputs from './TableFilterInputs.svelte';
-  console.log('TableFilterArea.svelte x: faFilter =', faFilter);
 
   export let datePeriodFilters;
-  export let filterAll;
-  export let headings;
   export let loadData;
   export let pageSize;
 
   const filtersStore = getContext('filtersStore');
+  $: filters = Object.values($filtersStore);
 
   const dispatch = createEventDispatcher();
 
-  const canFilterHeading = heading =>
-    heading.canFilter || (filterAll && heading.canFilter === undefined);
-  const anyFilters = headings.some(canFilterHeading);
-
-  let filterHeading = null;
+  let buttons = null;
+  let activeFilter = null;
 
   function applyFilters() {
-    Object.values($filtersStore).forEach(filter => (filter.applied = true));
-    filterHeading = null;
-    loadData(0, $filtersStore);
+    activeFilter.applied = true;
+    $filtersStore[activeFilter.index] = activeFilter;
+    activeFilter = null;
+
+    const selectedButton = buttons.querySelector('.selected');
+    selectedButton.classList.remove('selected');
+    selectedButton.classList.add('applied');
+
+    loadData();
   }
 
-  function getFilterButtonClasses(heading) {
-    const isSelected = heading === filterHeading;
-    const filter = $filtersStore[heading.property];
-    if (filter) filter.title = heading.title;
-    const isSet = filter && filter.applied;
-    const classes =
-      'filter-btn' + (isSelected ? ' selected' : '') + (isSet ? ' set' : '');
-    return classes;
+  function getFilterButtonClasses(filter) {
+    const isApplied = filter && filter.applied;
+    const isSelected = filter === activeFilter;
+    return (
+      'filter-btn ' +
+      (isApplied ? ' applied' : '') +
+      (isSelected ? ' selected' : '')
+    );
   }
 
   function reset() {
-    filterHeading = null;
+    activeFilter = null;
     dispatch('reset');
   }
 </script>
 
-{#if anyFilters}
-  <div class="filter-area">
-    <div class="filter-description">
-      <Icon color="var(--osc-secondary-color, orange)" icon={faFilter} />
-      <div class="heading">
-        <div class="label">Filters Applied</div>
-        <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
-      </div>
+<div class="filter-area">
+  <div class="filter-description">
+    <Icon
+      color="var(--osc-secondary-color, orange)"
+      icon={faFilter}
+      size="1rem" />
+    <div class="heading">
+      <div class="label">Filters Applied:</div>
+      <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
     </div>
-    <div class="buttons">
-      {#each headings as heading, index}
-        {#if canFilterHeading(heading)}
-          <button
-            class={getFilterButtonClasses(heading)}
-            on:click={() => (filterHeading = heading)}>
-            {heading.title}
-          </button>
-        {/if}
-      {/each}
-    </div>
-    {#if filterHeading}
-      <div class="filter-inputs">
-        <TableFilterInputs
-          {datePeriodFilters}
-          {filterAll}
-          {filterHeading}
-          {loadData}
-          on:reset={reset}
-          {pageSize} />
-        <button class="apply primary" on:click={applyFilters}>Apply</button>
-      </div>
-    {/if}
   </div>
-{/if}
+  <div bind:this={buttons} class="buttons">
+    {#each filters as filter, index}
+      <button
+        class={getFilterButtonClasses(filter)}
+        on:click={() => (activeFilter = filter)}>
+        {filter.title}
+      </button>
+    {/each}
+  </div>
+  {#if activeFilter}
+    <div class="filter-inputs">
+      <TableFilterInputs
+        {datePeriodFilters}
+        filter={activeFilter}
+        {loadData}
+        on:reset={reset}
+        {pageSize} />
+      <button class="apply primary" on:click={applyFilters}>Apply</button>
+    </div>
+  {/if}
+</div>
 
 <style>
   .filter-area button {
@@ -90,15 +89,15 @@
     padding: 0.5rem;
   }
 
-  .filter-area button.selected {
-    background-color: var(--osc-primary-color, cornflowerblue);
-    color: white;
-  }
-
-  .filter-area button.set {
+  .filter-area button.applied {
     background-color: var(--set-background-color);
     border-color: var(--osc-primary-color, cornflowerblue);
     color: var(--osc-primary-color, cornflowerblue);
+  }
+
+  .filter-area button.selected {
+    background-color: var(--osc-primary-color, cornflowerblue);
+    color: white;
   }
 
   .filter-area .buttons {
@@ -153,7 +152,7 @@
   }
 
   .heading .label {
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin-right: 0.5rem;
   }
 

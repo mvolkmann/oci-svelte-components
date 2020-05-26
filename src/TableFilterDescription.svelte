@@ -8,20 +8,22 @@
 
   const filtersStore = getContext('filtersStore');
 
-  const appliedFilters = Object.values($filtersStore).filter(f => f.applied);
+  $: appliedFilters = Object.values($filtersStore).filter(f => f.applied);
 
   function clearAllFilters() {
     dispatch('reset');
-    $filtersStore = {};
-    loadData(0, {});
+    $filtersStore = [];
+    loadData();
   }
 
-  function clearThisFilter(property) {
+  function clearFilter(filter) {
+    const {index, property, title, type} = filter;
+
+    // Create a new filter object that omits filtering data.
+    $filtersStore[index] = {applied: false, index, property, title, type};
+
     dispatch('reset');
-    const newFilters = {...$filtersStore};
-    delete newFilters[property];
-    $filtersStore = newFilters;
-    loadData(0, newFilters);
+    loadData();
   }
 
   function getCondition(operator, value) {
@@ -48,10 +50,7 @@
     {/if}
     <span class="title">&nbsp;{filter.title}&nbsp;</span>
     <span>{getDescription(filter)}&nbsp;(</span>
-    <Button
-      asLink
-      label="clear"
-      on:click={() => clearThisFilter(filter.property)} />
+    <Button asLink label="clear" on:click={() => clearFilter(filter)} />
     <span>)</span>
   {/each}
 {/if}
