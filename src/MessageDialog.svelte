@@ -69,6 +69,8 @@
 
 <script>
   // Render this in top-most component, typically in App.svelte.
+
+  import Button from './Button.svelte';
   import Dialog from './Dialog.svelte';
 
   export let dialogRef;
@@ -80,13 +82,24 @@
     <div>
       <div class="text" />
       <div class="buttons">
-        <button className="small" on:click={() => respond(dialogRef, true)}>
+        <Button className="small" on:click={() => respond(dialogRef, true)}>
           {'Yes'}
-        </button>
-        <button className="small" on:click={() => respond(dialogRef, false)}>
+        </Button>
+        <Button className="small" on:click={() => respond(dialogRef, false)}>
           {'No'}
-        </button>
+        </Button>
       </div>
     </div>
   </Dialog>
 </div>
+
+<style>
+  .message-dialog :global(.buttons) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .message-dialog :global(.osc-button) {
+    margin: 1rem 0.5rem 0 0.5rem;
+  }
+</style>

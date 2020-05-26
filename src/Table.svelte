@@ -1,6 +1,7 @@
 <script>
   import {setContext} from 'svelte';
   import {writable} from 'svelte/store';
+  import Button from './Button.svelte';
   //import getComponent from './component-map';
   import {postJson} from './fetch-util';
   import Info from './Info.svelte';
@@ -16,12 +17,12 @@
   ];
 
   export let className = '';
+  export let dataUrl;
   export let datePeriodFilters = defaultDatePeriodFilters;
   export let defaultFilters = {};
   export let detailComponent;
   export let evenBgColor = 'white';
   export let filterAll = false;
-  export let getUrl;
   export let headings;
   export let headingBgColor = '#f2F2F2';
   export let headingTooltip;
@@ -78,7 +79,7 @@
       body.sortOn = sortHeading.property;
       body.type = sortHeading.type || 'string';
     }
-    const result = await postJson(getUrl, body);
+    const result = await postJson(dataUrl, body);
     const newData = result.records;
     const isLastRecord = result.isLast;
     atEnd = isLastRecord;
@@ -145,9 +146,12 @@
       {/each}
     </tbody>
   </table>
-  <button class="more-btn primary" disabled={atEnd} on:click={loadMoreResults}>
+  <Button
+    className="more-btn primary"
+    disabled={atEnd}
+    on:click={loadMoreResults}>
     More
-  </button>
+  </Button>
 </div>
 
 <style>

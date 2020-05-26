@@ -55,6 +55,7 @@
 <script>
   import {onMount} from 'svelte';
   import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
+  import Button from './Button.svelte';
   import Icon from './Icon.svelte';
   import Toast from './Toast.svelte';
   import {getId} from './util';
@@ -82,10 +83,10 @@
 <div bind:this={ref} class={classes} {id}>
   {#each data as {component, props, title}, index}
     <div class="drawer" key={title}>
-      <button on:click={() => toggleDrawer(id, index)} type="button">
+      <Button on:click={() => toggleDrawer(id, index)}>
         <div class="title">{title}</div>
         <Icon color="white" icon={faChevronCircleRight} />
-      </button>
+      </Button>
       <div class="content">
         <svelte:component this={component} {...props} />
       </div>
@@ -104,7 +105,7 @@
     width: var(--drawer-width);
   }
 
-  .drawer > button {
+  .drawer > :global(.osc-button) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -119,7 +120,7 @@
     width: 100%;
   }
 
-  .drawer:not(:first-of-type) > button {
+  .drawer:not(:first-of-type) > :global(.osc-button) {
     margin-top: 0.5rem;
   }
 
@@ -168,7 +169,7 @@
   .horizontal .drawer > .content {
     border: none;
     position: absolute;
-    left: calc(var(--drawer-width) + 1rem);
+    left: calc(var(--drawer-width) + 0.5rem);
     top: 0;
 
     margin-top: 0;

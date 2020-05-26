@@ -1,5 +1,6 @@
 <script>
   import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
+  import Button from './Button.svelte';
   import Icon from './Icon.svelte';
 
   export let data;
@@ -73,9 +74,9 @@
 
   {#if detailComponent}
     <td class="info">
-      <button on:click={e => toggleDetail(e)}>
+      <Button on:click={e => toggleDetail(e)}>
         <Icon class="detail-icon" icon={faChevronCircleRight} size="1x" />
-      </button>
+      </Button>
     </td>
   {/if}
 </tr>

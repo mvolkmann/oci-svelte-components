@@ -13,6 +13,7 @@
   const classes = 'carousel' + (className ? ' ' + className : '');
 
   $: maxPageIndex = Math.ceil(elements.length / elementsPerPage) - 1;
+  $: dotArray = Array(maxPageIndex + 1);
   $: advanceWidth = (elementWidth + elementMargin) * elementsPerPage;
   $: pageWidth = elementMargin + advanceWidth;
   $: centerStyle = `height: ${height}px; width: ${pageWidth}px;`;
@@ -67,11 +68,10 @@
   </section>
   {#if showDots}
     <footer>
-      {#each Array(maxPageIndex + 1) as _, index}
+      {#each dotArray as _, index}
         <button
           class={'dot' + (index === pageIndex ? ' current' : '')}
-          on:click={() => (pageIndex = index)}
-          type="button" />
+          on:click={() => (pageIndex = index)} />
       {/each}
     </footer>
   {/if}
@@ -86,14 +86,7 @@
     margin-bottom: 1rem;
   }
 
-  button {
-    background-color: transparent;
-    border: none;
-    color: #8b8b8b;
-    font-size: 36px;
-  }
-
-  button:disabled {
+  .carousel :global(button:disabled) {
     color: lightgray;
   }
 
@@ -114,7 +107,7 @@
     transition-property: left;
   }
 
-  .dot {
+  footer .dot {
     --size: 10px;
     height: var(--size);
     width: var(--size);
@@ -125,7 +118,7 @@
     padding: 0;
   }
 
-  .dot.current {
+  footer .dot.current {
     background-color: var(--osc-primary-color, cornflowerblue);
   }
 
@@ -138,5 +131,11 @@
   section {
     display: inline-flex;
     align-items: center;
+  }
+
+  section button {
+    border: none;
+    color: #8b8b8b;
+    font-size: 2.5rem;
   }
 </style>

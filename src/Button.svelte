@@ -1,12 +1,8 @@
 <script>
-  import {createEventDispatcher} from 'svelte';
-
   export let asLink = false;
   export let className = '';
-  export let label;
+  export let disabled = false;
   export let type = 'button'; // not 'submit'
-
-  const dispatch = createEventDispatcher();
 
   const classes =
     'osc-button' +
@@ -14,21 +10,26 @@
     (asLink ? ' as-link' : '');
 </script>
 
-<button class={classes} on:click={() => dispatch('click')} {type}>
-  {label}
+<button class={classes} {disabled} on:click {type}>
+  <slot />
 </button>
 
 <style>
   button {
-    background-color: var(--osc-primary-color, gray);
-    border: none;
-    border-radius: var(--osc-border-radius, 0);
-    color: white;
+    --color: var(--osc-primary-color, cornflowerblue);
+    border: solid var(--color) 1px;
+    border-radius: var(--osc-border-radius, 4px);
+    color: var(--color);
     display: inline-block;
     font-size: var(--osc-button-font-size, 1rem);
     font-weight: bold;
+    margin-right: 0.5rem;
     padding: 0.5rem 1rem;
-    text-transform: uppercase;
+  }
+
+  button:disabled {
+    border-color: lightgray;
+    color: lightgray;
   }
 
   button.as-link {
@@ -43,5 +44,10 @@
 
   button:focus {
     outline-color: var(--osc-secondary-color, orange);
+  }
+
+  .primary {
+    background-color: var(--osc-primary-color, cornflowerblue);
+    color: white;
   }
 </style>

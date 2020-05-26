@@ -1,6 +1,7 @@
 <script>
   import * as solid from '@fortawesome/free-solid-svg-icons';
   import {createEventDispatcher} from 'svelte';
+  import Button from './Button.svelte';
   import Icon from './Icon.svelte';
 
   export let ascending;
@@ -53,9 +54,9 @@
   <div class="heading">
     <div class="title">{heading.title}</div>
     {#if canSort}
-      <button on:click={() => sortData(heading)}>
+      <Button on:click={() => sortData(heading)}>
         <Icon color={sortedOn ? SORTED_COLOR : UNSORTED_COLOR} {icon} />
-      </button>
+      </Button>
     {/if}
   </div>
 </th>
@@ -66,7 +67,7 @@
     align-items: center;
   }
 
-  .heading button {
+  .heading :global(.osc-button) {
     background-color: transparent;
     border: none;
     margin-left: 0.5rem;

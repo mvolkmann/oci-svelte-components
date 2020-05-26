@@ -1,4 +1,6 @@
 <script>
+  import Button from './Button.svelte';
+
   export let className = '';
   export let label;
   export let onClick;
@@ -9,4 +11,4 @@
     (className ? ' ' + className : '');
 </script>
 
-<button class={classes} on:click={onClick}>{label}</button>
+<Button className={classes} on:click={onClick}>{label}</Button>

@@ -1,39 +1,28 @@
 <script>
+  import Select from './Select.svelte';
   import {getContext} from 'svelte';
 
   export let filter;
   export let key;
   export let options;
-  export let property;
 
   const filtersStore = getContext('filtersStore');
 
-  const handler = e => onChange(e, key, 'string');
-
-  function onChange(event, key, type) {
-    filter[key] = event.currentTarget.value;
-    filter.type = type;
-    if (type === 'date') {
-      if (key.endsWith('1')) {
-        filter.operator1 = '>=';
-      } else {
-        filter.operator2 = '<=';
-      }
-    }
+  function onChange(event) {
+    filter[key] = event.detail;
     $filtersStore[filter.index] = filter;
   }
 </script>
 
-<select on:blur={handler} on:change={handler} value={filter[key] || ''}>
-  {#each options as option, index}
-    <option>{option}</option>
-  {/each}
-</select>
+<Select
+  className="table-filter-select"
+  on:blur={onChange}
+  on:change={onChange}
+  {options}
+  value={filter[key] || ''} />
 
 <style>
-  select {
-    box-sizing: border-box;
-    height: 38px;
-    margin-right: 0.5rem;
+  :global(.osc-labeled.table-filter-select) {
+    display: inline-flex;
   }
 </style>

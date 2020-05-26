@@ -1,6 +1,7 @@
 <script>
   import {faFilter} from '@fortawesome/free-solid-svg-icons';
   import {createEventDispatcher, getContext} from 'svelte';
+  import Button from './Button.svelte';
   import Icon from './Icon.svelte';
   import TableFilterDescription from './TableFilterDescription.svelte';
   import TableFilterInputs from './TableFilterInputs.svelte';
@@ -58,11 +59,11 @@
   </div>
   <div bind:this={buttons} class="buttons">
     {#each filters as filter, index}
-      <button
-        class={getFilterButtonClasses(filter)}
+      <Button
+        className={getFilterButtonClasses(filter)}
         on:click={() => (activeFilter = filter)}>
         {filter.title}
-      </button>
+      </Button>
     {/each}
   </div>
   {#if activeFilter}
@@ -73,29 +74,22 @@
         {loadData}
         on:reset={reset}
         {pageSize} />
-      <button class="apply primary" on:click={applyFilters}>Apply</button>
+      <Button className="apply primary" on:click={applyFilters}>Apply</Button>
     </div>
   {/if}
 </div>
 
 <style>
-  .filter-area button {
-    background-color: white;
-    border: solid var(--osc-primary-color, cornflowerblue) 1px;
-    border-radius: var(--osc-border-radius, 4px);
-    color: var(--osc-primary-color, cornflowerblue);
-    font-size: 1rem;
+  .filter-area :global(.osc-button) {
     margin-right: 0.5rem;
-    padding: 0.5rem;
   }
 
-  .filter-area button.applied {
+  .filter-area :global(.osc-button.applied) {
+    /*TODO: Where is this var set? */
     background-color: var(--set-background-color);
-    border-color: var(--osc-primary-color, cornflowerblue);
-    color: var(--osc-primary-color, cornflowerblue);
   }
 
-  .filter-area button.selected {
+  .filter-area :global(.osc-button.selected) {
     background-color: var(--osc-primary-color, cornflowerblue);
     color: white;
   }

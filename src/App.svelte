@@ -185,7 +185,7 @@
         showDots />
     </div>
 
-    <Button label="Submit" type="submit" />
+    <Button type="submit">Submit</Button>
   </form>
 </main>
 

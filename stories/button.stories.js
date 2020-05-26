@@ -1,10 +1,5 @@
-import {action} from '@storybook/addon-actions';
-import Button from '../src/Button.svelte';
+import ButtonView from './ButtonView.svelte';
 
 export default {title: 'Button'};
 
-export const basic = () => ({
-  Component: Button,
-  props: {label: 'Press Me'},
-  on: {click: action('clicked')}
-});
+export const basic = () => ({Component: ButtonView});

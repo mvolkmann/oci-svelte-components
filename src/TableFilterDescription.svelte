@@ -41,7 +41,7 @@
   <div>none</div>
 {:else}
   <span>(</span>
-  <Button asLink label="clear all" on:click={clearAllFilters} />
+  <Button asLink on:click={clearAllFilters}>clear all</Button>
   <span>):</span>
 
   {#each appliedFilters as filter, index}
@@ -50,7 +50,7 @@
     {/if}
     <span class="title">&nbsp;{filter.title}&nbsp;</span>
     <span>{getDescription(filter)}&nbsp;(</span>
-    <Button asLink label="clear" on:click={() => clearFilter(filter)} />
+    <Button asLink on:click={() => clearFilter(filter)}>clear</Button>
     <span>)</span>
   {/each}
 {/if}

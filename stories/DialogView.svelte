@@ -6,7 +6,7 @@
   let dialogRef;
 </script>
 
-<Button label="Show Dialog" on:click={() => dialogRef.show()} />
+<Button on:click={() => dialogRef.show()}>Show Dialog</Button>
 
 <Dialog bind:ref={dialogRef} icon={solid.faHeart} title="My Dialog">
   <div>My Content</div>

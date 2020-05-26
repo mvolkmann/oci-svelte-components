@@ -47,13 +47,13 @@ input,
 button,
 select,
 textarea {
+  border: solid lightgray 1px;
+  border-radius: var(--osc-border-radius, 4px);
+  box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
+  margin: 0 0 0.5rem 0;
   padding: 0.4em;
-  margin: 0 0 0.5em 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
 }
 
 input:disabled {
@@ -62,24 +62,6 @@ input:disabled {
 
 input[type='range'] {
   height: 0;
-}
-
-button {
-  color: #333;
-  background-color: #f4f4f4;
-  outline: none;
-}
-
-button:disabled {
-  color: #999;
-}
-
-button:not(:disabled):active {
-  background-color: #ddd;
-}
-
-button:focus {
-  border-color: #666;
 }
 
 select::after {

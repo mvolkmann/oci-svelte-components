@@ -96,16 +96,14 @@
 </script>
 
 <div class={classes} style={styleObjectToString(toastStyle)}>
-  <button className="close" on:click={closeToast} type="button">
-    &#10006;
-  </button>
+  <button class="close" on:click={closeToast} type="button">&#10006;</button>
   {#each lines as line (line)}
     <Line {line} />
   {/each}
 </div>
 
 <style>
-  button {
+  .close {
     --size: 24px;
     background-color: white;
     color: var(--background-color);

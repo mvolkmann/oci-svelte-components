@@ -36,8 +36,11 @@
     ref.style.width = parseInt(width) + 24 + 'px';
   }
 
-  const handleChange = event =>
-    update(store, path, event.target.value, dispatch);
+  function handleChange(event) {
+    const {value} = event.target;
+    update(store, path, value, dispatch);
+    dispatch('change', value);
+  }
 
   $: classes =
     'osc-select' +
@@ -48,11 +51,11 @@
   if (width) style.width = width;
 </script>
 
-<Labeled {info} {label} {required} {vertical}>
+<Labeled className={classes} {info} {label} {required} {vertical}>
   <div class="container">
     <select
       bind:this={ref}
-      class={classes}
+      on:blur={handleChange}
       on:change={handleChange}
       {required}
       {value}>
@@ -69,6 +72,10 @@
 </Labeled>
 
 <style>
+  :global(.select) {
+    display: inline-flex;
+  }
+
   .container {
     display: inline-block;
     position: relative;
@@ -90,7 +97,9 @@
     -moz-appearance: none;
     -webkit-appearance: none;
 
-    border-radius: var(--osc-border-radius, 0);
+    background-color: transparent;
+    border: solid lightgray 1px;
+    border-radius: var(--osc-border-radius, 4px);
     font-size: 1rem;
     height: 36px;
     margin-bottom: 0;

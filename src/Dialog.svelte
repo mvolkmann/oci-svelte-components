@@ -53,7 +53,9 @@
       <Icon color="white" {icon} />
       <div class="title">{title}</div>
       {#if canClose}
-        <button class="close-btn" on:click={close}>&#x2716;</button>
+        <button class="close-btn" on:click={close} type="button">
+          &#x2716;
+        </button>
       {/if}
     </header>
   {/if}
@@ -94,20 +96,6 @@
     border: none;
     box-shadow: 0 0 10px darkgray;
     padding: 0;
-  }
-
-  dialog :global(.buttons) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 0.625rem;
-  }
-
-  dialog :global(.buttons button) {
-    border-radius: var(--osc-border-radius, 0);
-    font-size: 1rem;
-    margin-left: var(--space);
   }
 
   .dialog > header {

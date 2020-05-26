@@ -1,4 +1,6 @@
 <script>
+  import Button from './Button.svelte';
+
   export let className = undefined;
   export let completeLabel = 'Complete';
   export let nextLabel = 'Next';
@@ -27,8 +29,8 @@
       {#each steps as step, index}
         <button
           class={'step' + (index === stepIndex ? ' current' : '')}
-          key={step.title}
-          on:click={() => (stepIndex = index)}>
+          on:click={() => (stepIndex = index)}
+          type="button">
           <div class="step-number">{index + 1}</div>
           <div class="step-title">{step.title}</div>
         </button>
@@ -38,19 +40,19 @@
       <svelte:component this={step.component} {...step.props} />
       <div class="buttons">
         {#if !onFirstStep}
-          <button class="next-prev-btn" on:click={() => stepIndex--}>
+          <Button className="next-prev-btn" on:click={() => stepIndex--}>
             {previousLabel}
-          </button>
+          </Button>
         {/if}
         {#if !onLastStep}
-          <button class="next-prev-btn" on:click={() => stepIndex++}>
+          <Button className="next-prev-btn" on:click={() => stepIndex++}>
             {nextLabel}
-          </button>
+          </Button>
         {/if}
         {#if onLastStep}
-          <button class="complete-btn" on:click={onComplete}>
+          <Button className="complete-btn" on:click={onComplete}>
             {completeLabel}
-          </button>
+          </Button>
         {/if}
       </div>
     </div>
@@ -73,6 +75,36 @@
     outline: none;
   }
 
+  .step.current .step-number {
+    background-color: var(--osc-primary-color, cornflowerblue);
+    color: white;
+  }
+
+  .step.current .step-title {
+    color: var(--osc-primary-color, cornflowerblue);
+    margin-top: 0.5rem;
+  }
+
+  .step-content {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .step-content :global(.osc-button) {
+    background-color: var(--osc-primary-color, cornflowerblue);
+    border-radius: 6px;
+    color: white;
+    font-size: 1.2rem;
+    margin-right: 2rem;
+    padding: 0.5rem 2rem;
+  }
+
+  .step-content .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
   .step-number {
     --size: 3rem;
 
@@ -93,37 +125,6 @@
     color: #363636;
     font-size: 1.4rem;
     margin-top: 0.5rem;
-  }
-
-  .step.current .step-number {
-    background-color: var(--osc-primary-color, cornflowerblue);
-    color: white;
-  }
-
-  .step.current .step-title {
-    color: var(--osc-primary-color, cornflowerblue);
-    margin-top: 0.5rem;
-  }
-
-  .step-content {
-    margin: 2rem 0;
-    text-align: center;
-  }
-
-  .step-content button {
-    background-color: var(--osc-primary-color, cornflowerblue);
-    border-radius: 6px;
-    color: white;
-    font-size: 1.2rem;
-    margin-right: 2rem;
-    margin-top: 2rem;
-    padding: 0.5rem 2rem;
-    text-transform: uppercase;
-  }
-
-  .step-content .buttons {
-    display: flex;
-    justify-content: center;
   }
 
   .steps {

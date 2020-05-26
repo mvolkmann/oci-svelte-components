@@ -52,9 +52,9 @@
 </script>
 
 <Table
+  dataUrl={URL}
   {defaultFilters}
   detailComponent={TransactionDetail}
-  getUrl={URL}
   {headings}
   {headingTooltip}
   sortAll
