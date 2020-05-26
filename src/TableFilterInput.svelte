@@ -30,10 +30,9 @@
 
 <style>
   input {
-    --color: var(--osc-primary-color, cornflowerblue);
+    --color: lightgray;
     border: solid var(--color) 1px;
     border-radius: var(--osc-border-radius, 4px);
-    color: var(--color);
     font-size: 1rem;
     margin-right: 0.5rem;
     padding: 0.5rem;

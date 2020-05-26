@@ -4,7 +4,7 @@
   export let disabled = false;
   export let type = 'button'; // not 'submit'
 
-  const classes =
+  $: classes =
     'osc-button' +
     (className ? ' ' + className : '') +
     (asLink ? ' as-link' : '');

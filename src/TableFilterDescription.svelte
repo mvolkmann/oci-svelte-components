@@ -12,7 +12,7 @@
 
   function clearAllFilters() {
     dispatch('reset');
-    $filtersStore = [];
+    $filtersStore.map(clearFilter);
     loadData();
   }
 

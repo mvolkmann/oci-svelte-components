@@ -11,22 +11,15 @@
   export let pageSize;
 
   const filtersStore = getContext('filtersStore');
-  $: filters = Object.values($filtersStore);
 
   const dispatch = createEventDispatcher();
 
-  let buttons = null;
   let activeFilter = null;
 
   function applyFilters() {
     activeFilter.applied = true;
     $filtersStore[activeFilter.index] = activeFilter;
     activeFilter = null;
-
-    const selectedButton = buttons.querySelector('.selected');
-    selectedButton.classList.remove('selected');
-    selectedButton.classList.add('applied');
-
     loadData();
   }
 
@@ -57,8 +50,8 @@
       <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
     </div>
   </div>
-  <div bind:this={buttons} class="buttons">
-    {#each filters as filter, index}
+  <div class="buttons">
+    {#each $filtersStore as filter, index}
       <Button
         className={getFilterButtonClasses(filter)}
         on:click={() => (activeFilter = filter)}>
@@ -80,7 +73,7 @@
 </div>
 
 <style>
-  .filter-area :global(.osc-button) {
+  .filter-area :global(.osc-button:not(.as-link)) {
     margin-right: 0.5rem;
   }
 

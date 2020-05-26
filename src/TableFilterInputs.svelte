@@ -60,64 +60,58 @@
 
 <div class="table-filter-inputs">
   {#if type === 'currency' || type === 'number'}
-    <div>
-      <div class="row">
-        <TableFilterSelect
-          {filter}
-          key="operator1"
-          options={LEFT_RELATIONAL_OPERATORS} />
-        <TableFilterInput {filter} key="value1" type="number" />
-      </div>
-      <div class="row">
-        <TableFilterSelect
-          {filter}
-          key="operator2"
-          options={RIGHT_RELATIONAL_OPERATORS} />
-        <TableFilterInput {filter} key="value2" type="number" />
-      </div>
+    <div class="row">
+      <TableFilterSelect
+        {filter}
+        key="operator1"
+        options={LEFT_RELATIONAL_OPERATORS} />
+      <TableFilterInput {filter} key="value1" type="number" />
+    </div>
+    <div class="row">
+      <TableFilterSelect
+        {filter}
+        key="operator2"
+        options={RIGHT_RELATIONAL_OPERATORS} />
+      <TableFilterInput {filter} key="value2" type="number" />
     </div>
   {:else if type === 'date'}
     <div>
-      <div>
-        {#if selectedButton !== 'Custom Date Range'}
-          {#each datePeriodFilters as filter}
-            <TableToggleButton
-              label={filter.title}
-              on:click={() => monthButtonClicked(filter.title, filter.months)}
-              {selectedButton} />
-          {/each}
+      {#if selectedButton !== 'Custom Date Range'}
+        {#each datePeriodFilters as filter}
           <TableToggleButton
-            label="Custom Date Range"
-            on:click={customRangeButtonClicked}
+            label={filter.title}
+            on:click={() => monthButtonClicked(filter.title, filter.months)}
             {selectedButton} />
-        {/if}
-      </div>
-      {#if showCustomDateRange}
-        <div class="row">
-          <label class="date">
-            Start Date
-            <TableFilterInput {filter} key="value1" type="date" />
-          </label>
-        </div>
-        <div class="row">
-          <label class="date">
-            End Date
-            <TableFilterInput {filter} key="value2" type="date" />
-          </label>
-        </div>
+        {/each}
+        <TableToggleButton
+          label="Custom Date Range"
+          on:click={customRangeButtonClicked}
+          {selectedButton} />
       {/if}
     </div>
+    {#if showCustomDateRange}
+      <div class="row">
+        <label class="date">
+          Start Date
+          <TableFilterInput {filter} key="value1" type="date" />
+        </label>
+      </div>
+      <div class="row">
+        <label class="date">
+          End Date
+          <TableFilterInput {filter} key="value2" type="date" />
+        </label>
+      </div>
+    {/if}
   {:else}
     <!-- assumes type is "string" -->
-    <div>
-      <div>
-        <TableFilterSelect
-          {filter}
-          key="operator1"
-          options={STRING_OPERATORS}
-          {property} />
-        <TableFilterInput {filter} key="value1" />
-      </div>
+    <div class="row">
+      <TableFilterSelect
+        {filter}
+        key="operator1"
+        options={STRING_OPERATORS}
+        {property} />
+      <TableFilterInput {filter} key="value1" />
     </div>
   {/if}
 </div>
@@ -134,6 +128,7 @@
   }
 
   .table-filter-inputs .row {
+    display: flex;
     margin-bottom: 0.5rem;
   }
 
