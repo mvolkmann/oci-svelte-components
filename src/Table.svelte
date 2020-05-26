@@ -60,10 +60,6 @@
 
   setContext('filtersStore', filtersStore);
 
-  $: if (ascending || sortHeading || startIndex || rowCount) {
-    loadData(startIndex);
-  }
-
   // It is important that startIndex and filters are passed in
   // rather than just using the state variables defined above!
   // There are calls to this that need to pass a different value
@@ -94,8 +90,9 @@
 
   function loadMoreResults() {
     startIndex = rowCount;
-    rowCount += pageSize;
     // Keep current sortHeading and ascending values.
+    loadData(startIndex);
+    rowCount += pageSize;
   }
 
   function reset() {
@@ -105,7 +102,12 @@
 </script>
 
 <div class={classes}>
-  <TableFilterArea {datePeriodFilters} {filterAll} {loadData} {pageSize} />
+  <TableFilterArea
+    {datePeriodFilters}
+    {filterAll}
+    {loadData}
+    on:reset={reset}
+    {pageSize} />
   <table>
     <thead>
       <tr style={`backgroundColor: ${headingBgColor}`}>
@@ -181,6 +183,7 @@
     border: none;
     font-weight: normal;
     padding: 1rem;
+
     position: sticky;
     top: 0;
     z-index: 1; /* so Icon components in data rows scroll below these */

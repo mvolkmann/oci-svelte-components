@@ -31,26 +31,21 @@
   }
 
   function getDescription(filter) {
-    let description = getCondition(filter.operator1, filter.value1);
-    description += getCondition(filter.operator2, filter.value2);
-    return description;
+    const desc1 = getCondition(filter.operator1, filter.value1);
+    const desc2 = getCondition(filter.operator2, filter.value2);
+    return desc2 ? desc1 + ' and ' + desc2 : desc1;
   }
 </script>
 
 {#if appliedFilters.length === 0}
   <div>none</div>
 {:else}
-  <span>(</span>
   <Button asLink on:click={clearAllFilters}>clear all</Button>
-  <span>):</span>
 
   {#each appliedFilters as filter, index}
-    {#if index > 0}
-      <span>&nbsp;/</span>
-    {/if}
+    <span>&nbsp;/</span>
     <span class="title">&nbsp;{filter.title}&nbsp;</span>
-    <span>{getDescription(filter)}&nbsp;(</span>
+    <span>{getDescription(filter)}&nbsp;</span>
     <Button asLink on:click={() => clearFilter(filter)}>clear</Button>
-    <span>)</span>
   {/each}
 {/if}

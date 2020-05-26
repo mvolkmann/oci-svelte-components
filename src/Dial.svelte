@@ -24,7 +24,6 @@
 
   // Compute new arc paths if the gap or size changes.
   $: if (gap || size) {
-    console.log('Dial.svelte x: gap =', gap);
     fullPath = getPath(100);
     filledPath = getPath((value / max) * 100, true);
   }

@@ -17,7 +17,6 @@
     }
   });
 
-  $: console.log('DateRangeView.svelte x: $globalStore =', $globalStore);
   $: ({endLabel, label, startLabel, vertical} = $globalStore.dateRange);
 </script>
 

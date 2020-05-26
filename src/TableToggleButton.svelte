@@ -3,12 +3,11 @@
 
   export let className = '';
   export let label;
-  export let onClick;
-  export let selectedButton;
+  export let selectedLabel;
 
   const classes =
-    (label === selectedButton ? 'selected' : '') +
+    (label === selectedLabel ? 'selected' : '') +
     (className ? ' ' + className : '');
 </script>
 
-<Button className={classes} on:click={onClick}>{label}</Button>
+<Button className={classes} on:click>{label}</Button>

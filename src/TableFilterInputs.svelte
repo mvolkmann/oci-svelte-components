@@ -22,17 +22,17 @@
   const filtersStore = getContext('filtersStore');
 
   let dispatch = createEventDispatcher();
-  let selectedButton = '';
   let showCustomDateRange = false;
 
   $: ({property, title, type} = filter);
 
   function customRangeButtonClicked() {
-    selectedButton = showCustomDateRange ? '' : 'Custom Date Range';
     showCustomDateRange = !showCustomDateRange;
+    filter.selectedLabel = showCustomDateRange ? 'Custom Date Range' : '';
+    $filtersStore[filter.index] = filter;
   }
 
-  function filterToMonths(months) {
+  function monthButtonClicked(label, months) {
     const date = new Date();
     date.setMonth(date.getMonth() - months);
     const value1 =
@@ -40,21 +40,14 @@
 
     dispatch('reset');
 
-    const newFilter = {
-      applied: true,
-      title,
-      type: 'date',
-      operator1: '>=',
-      property,
-      value1
-    };
-    $filtersStore = {...$filtersStore, [property]: newFilter};
-    loadData();
-  }
+    filter.applied = true;
+    filter.operator1 = '>=';
+    filter.value1 = value1;
+    filter.selectedLabel = label;
 
-  function monthButtonClicked(label, months) {
-    selectedButton = label;
-    filterToMonths(months);
+    $filtersStore[filter.index] = filter;
+
+    loadData();
   }
 </script>
 
@@ -76,17 +69,17 @@
     </div>
   {:else if type === 'date'}
     <div>
-      {#if selectedButton !== 'Custom Date Range'}
-        {#each datePeriodFilters as filter}
+      {#if filter.selectedLabel !== 'Custom Date Range'}
+        {#each datePeriodFilters as dpf}
           <TableToggleButton
-            label={filter.title}
-            on:click={() => monthButtonClicked(filter.title, filter.months)}
-            {selectedButton} />
+            label={dpf.title}
+            on:click={() => monthButtonClicked(dpf.title, dpf.months)}
+            selectedLabel={filter.selectedLabel} />
         {/each}
         <TableToggleButton
           label="Custom Date Range"
           on:click={customRangeButtonClicked}
-          {selectedButton} />
+          selectedLabel={filter.selectedLabel} />
       {/if}
     </div>
     {#if showCustomDateRange}

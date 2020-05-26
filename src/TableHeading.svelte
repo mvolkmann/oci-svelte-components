@@ -80,6 +80,13 @@
     font-size: 1.4rem;
   }
 
+  th {
+    padding: 2px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
   @media (max-width: 760px) {
     .heading > .title {
       font-size: 0.7rem;
