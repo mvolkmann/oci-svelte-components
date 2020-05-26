@@ -60,6 +60,8 @@
 
   setContext('filtersStore', filtersStore);
 
+  loadData();
+
   // It is important that startIndex and filters are passed in
   // rather than just using the state variables defined above!
   // There are calls to this that need to pass a different value

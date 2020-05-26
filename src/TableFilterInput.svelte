@@ -2,21 +2,21 @@
   import {getContext} from 'svelte';
 
   export let filter;
-  export let key;
+  export let property;
   export let type = 'text';
 
   const filtersStore = getContext('filtersStore');
 
-  let value = filter[key];
+  let value = filter[property];
   if (!value) {
     value = type === 'date' ? new Date() : type === 'number' ? 0 : '';
   }
 
-  function onChange(event, key, type) {
-    filter[key] = event.currentTarget.value;
+  function onChange(event, property, type) {
+    filter[property] = event.currentTarget.value;
     filter.type = type;
     if (type === 'date') {
-      if (key.endsWith('1')) {
+      if (property.endsWith('1')) {
         filter.operator1 = '>=';
       } else {
         filter.operator2 = '<=';
@@ -26,7 +26,7 @@
   }
 </script>
 
-<input {type} on:change={e => onChange(e, key, type)} {value} />
+<input {type} on:change={e => onChange(e, property, type)} {value} />
 
 <style>
   input {
