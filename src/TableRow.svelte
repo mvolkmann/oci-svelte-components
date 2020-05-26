@@ -89,19 +89,11 @@
 {/if}
 
 <style>
-  .info :global(.detail-icon) {
-    color: lightgray;
-    font-size: 1rem;
-    transition-duration: var(--transition-duration);
-    transition-property: transform;
-    transform: rotate(0deg);
-  }
-
   .detail-tr {
     display: none;
   }
 
-  .detail-tr > td > * {
+  .detail-tr > td > :global(*) {
     max-height: 0;
     transition-duration: var(--transition-duration);
     transition-property: max-height;
@@ -120,7 +112,7 @@
     display: table-row;
   }
 
-  :global(.show-detail) + .detail-tr > td > * {
+  :global(.show-detail) + .detail-tr > td > :global(*) {
     max-height: 100vh;
   }
 
@@ -145,11 +137,19 @@
     text-align: center;
   }
 
-  td.info > button {
+  td.info > :global(button) {
     background-color: transparent;
     border: none;
     color: lightgray;
     outline: none;
+  }
+
+  td.info :global(.detail-icon) {
+    color: lightgray;
+    font-size: 1rem;
+    transition-duration: var(--transition-duration);
+    transition-property: transform;
+    transform: rotate(0deg);
   }
 
   @media (max-width: 760px) {

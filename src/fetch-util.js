@@ -1,5 +1,5 @@
 import {taskEnd, taskStart} from './Spinner.svelte';
-import {goHome, sleep} from './util';
+import {goHome /*, sleep*/} from './util';
 
 const URL_PREFIX = process.env.URL_PREFIX;
 

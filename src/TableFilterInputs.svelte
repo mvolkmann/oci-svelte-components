@@ -136,4 +136,10 @@
   .table-filter-inputs .row {
     margin-bottom: 0.5rem;
   }
+
+  @media (max-width: 760px) {
+    .table-filter-inputs :global(button) {
+      font-size: 0.8rem;
+    }
+  }
 </style>

@@ -155,19 +155,6 @@
 </div>
 
 <style>
-  button {
-    margin-right: 0.5rem;
-  }
-
-  .buttons {
-    margin-bottom: 0.5rem;
-    text-align: left;
-  }
-
-  .buttons button {
-    margin-top: 0.5rem;
-  }
-
   .detail-td {
     padding: 0;
   }
@@ -190,18 +177,6 @@
     --transition-duration: 0.5s;
   }
 
-  .table > button {
-    border: none;
-    margin-top: 1rem;
-    padding: 0.5rem 2rem;
-  }
-
-  .table > button.primary {
-    background-color: var(--osc-primary-color, cornflowerblue) !important;
-    border: none !important;
-    color: white !important;
-  }
-
   th {
     border: none;
     font-weight: normal;
@@ -212,14 +187,6 @@
   }
 
   @media (max-width: 760px) {
-    .filter-inputs button {
-      font-size: 0.8rem;
-    }
-
-    .info > button {
-      padding: 0;
-    }
-
     th {
       padding: 0.5rem 0.25rem;
     }

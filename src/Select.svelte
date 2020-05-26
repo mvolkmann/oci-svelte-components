@@ -72,7 +72,7 @@
 </Labeled>
 
 <style>
-  :global(.select) {
+  :global(.osc-select) {
     display: inline-flex;
   }
 
@@ -114,12 +114,5 @@
 
   select:invalid {
     border: solid var(--osc-error-color, red) 1px;
-  }
-
-  select.vertical {
-    flex-direction: column;
-    align-items: flex-start;
-
-    padding-top: 8px; /* not sure why this is needed */
   }
 </style>

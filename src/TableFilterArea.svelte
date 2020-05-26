@@ -114,19 +114,7 @@
     flex-wrap: wrap;
   }
 
-  .filter-inputs > div {
-    text-align: left;
-  }
-
-  .filter-inputs > div > div {
-    margin-bottom: 0.5rem;
-  }
-
-  .filter-inputs > div button {
-    margin-bottom: 0;
-  }
-
-  .filter-inputs .apply {
+  .filter-inputs :global(.apply) {
     margin-bottom: 0.5rem;
   }
 
