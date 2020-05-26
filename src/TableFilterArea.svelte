@@ -73,6 +73,10 @@
 </div>
 
 <style>
+  .filter-area {
+    margin-bottom: 0.5rem;
+  }
+
   .filter-area :global(.osc-button:not(.as-link)) {
     margin-right: 0.5rem;
   }
@@ -88,7 +92,7 @@
   }
 
   .filter-area .buttons {
-    margin: 0.5rem 0;
+    margin-top: 0.5rem;
   }
 
   .filter-description {
@@ -108,7 +112,7 @@
   }
 
   .filter-inputs :global(.apply) {
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
   }
 
   .heading {

@@ -68,19 +68,17 @@
       <TableFilterInput {filter} property="value2" type="number" />
     </div>
   {:else if type === 'date'}
-    <div>
-      {#if filter.selectedLabel !== 'Custom Date Range'}
-        {#each datePeriodFilters as dpf}
-          <TableToggleButton
-            label={dpf.title}
-            on:click={() => monthButtonClicked(dpf.title, dpf.months)}
-            selectedLabel={filter.selectedLabel} />
-        {/each}
+    <div class="row">
+      {#each datePeriodFilters as dpf}
         <TableToggleButton
-          label="Custom Date Range"
-          on:click={customRangeButtonClicked}
+          label={dpf.title}
+          on:click={() => monthButtonClicked(dpf.title, dpf.months)}
           selectedLabel={filter.selectedLabel} />
-      {/if}
+      {/each}
+      <TableToggleButton
+        label="Custom Date Range"
+        on:click={customRangeButtonClicked}
+        selectedLabel={filter.selectedLabel} />
     </div>
     {#if showCustomDateRange}
       <div class="row">
@@ -88,8 +86,6 @@
           Start Date
           <TableFilterInput {filter} property="value1" type="date" />
         </label>
-      </div>
-      <div class="row">
         <label class="date">
           End Date
           <TableFilterInput {filter} property="value2" type="date" />
@@ -110,6 +106,10 @@
 </div>
 
 <style>
+  .table-filter-inputs {
+    margin-top: 0.5rem;
+  }
+
   .table-filter-inputs :global(button),
   .table-filter-inputs :global(.table-filter-input),
   .table-filter-inputs :global(.table-filter-select) {
@@ -122,7 +122,10 @@
 
   .table-filter-inputs .row {
     display: flex;
-    margin-bottom: 0.5rem;
+  }
+
+  .table-filter-inputs .row:not(:first-of-type) {
+    margin-top: 0.5rem;
   }
 
   @media (max-width: 760px) {
