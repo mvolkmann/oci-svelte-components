@@ -1,4 +1,5 @@
 <script>
+  import Spinner from '../src/Spinner.svelte';
   import Table from '../src/Table.svelte';
   import TransactionDetail from '../src/TransactionDetail.svelte';
 
@@ -58,3 +59,5 @@
   {headingTooltip}
   sortAll
   {style} />
+
+<Spinner />

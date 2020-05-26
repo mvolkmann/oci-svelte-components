@@ -5,6 +5,7 @@
 
   export let ascending;
   export let heading;
+  export let loadData;
   export let sortAll;
   export let sortHeading;
   export let thStyle;
@@ -13,8 +14,6 @@
   const UNSORTED_COLOR = 'var(--osc-secondary-color, orange)';
 
   const dispatch = createEventDispatcher();
-
-  const sortedOn = heading === sortHeading;
 
   const sortIconMap = {
     'currency-ascending': solid.faSortNumericDown,
@@ -27,23 +26,26 @@
     'string-descending': solid.faSortAlphaDownAlt
   };
 
-  const key =
+  const canSort = heading.canSort || (sortAll && heading.canSort === undefined);
+
+  $: sortedOn = heading === sortHeading;
+
+  $: key =
     (heading.type || 'string') +
     '-' +
     (!sortedOn || ascending ? 'ascending' : 'descending');
 
-  const icon = sortIconMap[key];
-
-  const canSort = heading.canSort || (sortAll && heading.canSort === undefined);
+  $: icon = sortIconMap[key];
 
   function sortData(heading) {
     dispatch('reset');
-    sortHeading = heading;
     ascending = !sortHeading
       ? true
       : heading === sortHeading
       ? !ascending
       : true;
+    sortHeading = heading;
+    loadData();
   }
 </script>
 
@@ -68,6 +70,7 @@
     background-color: transparent;
     border: none;
     margin-left: 0.5rem;
+    margin-right: 2px;
     padding-left: 0;
   }
 

@@ -93,7 +93,7 @@ async function postPutJson(method, urlSuffix, obj, responseType) {
     };
 
     //TODO: Artificial delay to test Spinner.
-    await sleep(1000);
+    //await sleep(2000);
 
     const url = getUrl(urlSuffix);
     const res = await fetch(url, options);

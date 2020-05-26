@@ -59,7 +59,7 @@
 
   setContext('filtersStore', filtersStore);
 
-  if (ascending || sortHeading || startIndex || rowCount) {
+  $: if (ascending || sortHeading || startIndex || rowCount) {
     loadData(startIndex);
   }
 
@@ -110,7 +110,10 @@
       <tr style={`backgroundColor: ${headingBgColor}`}>
         {#each headings as heading}
           <TableHeading
+            bind:ascending
+            bind:sortHeading
             {heading}
+            {loadData}
             on:reset={reset}
             {pageSize}
             {sortAll}
@@ -143,7 +146,7 @@
     </tbody>
   </table>
   <button class="more-btn primary" disabled={atEnd} on:click={loadMoreResults}>
-    More Results
+    More
   </button>
 </div>
 
@@ -163,6 +166,11 @@
 
   .detail-td {
     padding: 0;
+  }
+
+  .more-btn {
+    border-radius: var(--osc-border-radius, 4px);
+    font-size: 1rem;
   }
 
   .more-btn:disabled {
