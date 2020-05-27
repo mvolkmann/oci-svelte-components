@@ -92,14 +92,18 @@
 {/if}
 
 <style>
-  .detail-td {
+  .detail-tr > td {
     padding: 0;
   }
 
   .detail-tr > td > :global(*) {
+    box-sizing: border-box;
     max-height: 0;
+    overflow: hidden;
+    padding-bottom: 0;
+    padding-top: 0;
     transition-duration: var(--osc-transition-duration, 0.5s);
-    transition-property: max-height;
+    transition-property: padding-bottom, padding-top, max-height;
   }
 
   .info :global(.osc-button) {
@@ -125,7 +129,8 @@
   }
 
   :global(.show-detail) + .detail-tr > td > :global(*) {
-    padding: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
     max-height: 100vh;
   }
 

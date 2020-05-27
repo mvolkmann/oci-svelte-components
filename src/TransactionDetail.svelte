@@ -13,15 +13,6 @@
 </div>
 
 <style>
-  .transaction-detail {
-    /* --osc-primary-color with "10" at end for opacity? */
-    --background-color: #0e652510;
-
-    background-color: var(--background-color);
-    overflow-y: hidden;
-    text-align: left;
-  }
-
   .label {
     font-size: 1rem;
     font-weight: bold;
@@ -30,5 +21,14 @@
 
   .label:first-of-type {
     margin-top: 0;
+  }
+
+  .transaction-detail {
+    /* --osc-primary-color with "10" at end for opacity? */
+    --background-color: #0e652510;
+
+    background-color: var(--background-color);
+    padding: 0.5rem;
+    text-align: left;
   }
 </style>
