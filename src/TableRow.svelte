@@ -4,7 +4,7 @@
   import Icon from './Icon.svelte';
 
   export let data;
-  export let detailComponent = false;
+  export let detailComponent = undefined;
   export let detailTr;
   export let evenBgColor;
   export let headings;
@@ -92,18 +92,14 @@
 {/if}
 
 <style>
-  .detail-tr {
-    display: none;
+  .detail-td {
+    padding: 0;
   }
 
   .detail-tr > td > :global(*) {
     max-height: 0;
     transition-duration: var(--osc-transition-duration, 0.5s);
     transition-property: max-height;
-  }
-
-  :global(.show-detail .detail-icon) {
-    transform: rotate(90deg) !important;
   }
 
   .info :global(.osc-button) {
@@ -120,11 +116,16 @@
     transform: rotate(0deg);
   }
 
+  :global(.show-detail .detail-icon) {
+    transform: rotate(90deg) !important;
+  }
+
   :global(.show-detail) + .detail-tr {
     display: table-row;
   }
 
   :global(.show-detail) + .detail-tr > td > :global(*) {
+    padding: 0.5rem;
     max-height: 100vh;
   }
 

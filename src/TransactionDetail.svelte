@@ -18,8 +18,7 @@
     --background-color: #0e652510;
 
     background-color: var(--background-color);
-    border-top: solid var(--osc-primary-color, cornflowerblue) 2px;
-    padding: 0.5rem;
+    overflow-y: hidden;
     text-align: left;
   }
 

@@ -21,7 +21,7 @@
   export let dataUrl;
   export let datePeriodFilters = defaultDatePeriodFilters;
   export let defaultFilters = {};
-  export let detailComponent;
+  export let detailComponent = undefined;
   export let evenBgColor = 'white';
   export let filterAll = false;
   export let headings;
