@@ -7,6 +7,7 @@
   export let ascending;
   export let heading;
   export let loadData;
+  export let mobile;
   export let sortAll;
   export let sortHeading;
   export let thStyle;
@@ -50,16 +51,18 @@
   }
 </script>
 
-<th style={thStyle}>
-  <div class="heading">
-    <div class="title">{heading.title}</div>
-    {#if canSort}
-      <Button on:click={() => sortData(heading)}>
-        <Icon color={sortedOn ? SORTED_COLOR : UNSORTED_COLOR} {icon} />
-      </Button>
-    {/if}
-  </div>
-</th>
+{#if !heading.optional || !mobile}
+  <th style={thStyle}>
+    <div class="heading">
+      <div class="title">{heading.title}</div>
+      {#if canSort}
+        <Button on:click={() => sortData(heading)}>
+          <Icon color={sortedOn ? SORTED_COLOR : UNSORTED_COLOR} {icon} />
+        </Button>
+      {/if}
+    </div>
+  </th>
+{/if}
 
 <style>
   .heading {

@@ -16,6 +16,7 @@
     {title: 'YTD', months: 12}
   ];
 
+  export let breakpoint = undefined;
   export let className = '';
   export let dataUrl;
   export let datePeriodFilters = defaultDatePeriodFilters;
@@ -37,9 +38,12 @@
   let atEnd = false;
   let data = [];
   let detailTr = null;
+  let innerWidth;
   let rowCount = pageSize;
   let sortHeading = null;
   let startIndex = 0;
+
+  $: mobile = breakpoint && innerWidth <= breakpoint;
 
   const canFilter = heading =>
     heading.canFilter || (filterAll && heading.canFilter === undefined);
@@ -103,6 +107,8 @@
   }
 </script>
 
+<svelte:window bind:innerWidth />
+
 <div class={classes}>
   <TableFilterArea
     {datePeriodFilters}
@@ -119,12 +125,13 @@
             bind:sortHeading
             {heading}
             {loadData}
+            {mobile}
             on:reset={reset}
             {pageSize}
             {sortAll}
             {thStyle} />
         {/each}
-        {#if detailComponent}
+        {#if detailComponent && mobile}
           <th style={thStyle}>
             {#if headingTooltip}
               <Info
@@ -145,6 +152,7 @@
           bind:detailTr
           {evenBgColor}
           {headings}
+          {mobile}
           {oddBgColor}
           {rowIndex} />
       {/each}

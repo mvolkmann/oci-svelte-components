@@ -31,9 +31,10 @@
     {
       property: 'description',
       title: 'Description',
-      canFilter: true
+      canFilter: true,
+      optional: true
     },
-    {property: 'txnId', title: 'Transaction ID'}
+    {property: 'txnId', title: 'Transaction ID', optional: true}
   ];
 
   const URL = 'http://localhost:4001/transactions';
@@ -52,6 +53,7 @@
 </script>
 
 <Table
+  breakpoint={600}
   dataUrl={URL}
   {defaultFilters}
   detailComponent={TransactionDetail}

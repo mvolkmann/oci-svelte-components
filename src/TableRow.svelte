@@ -8,6 +8,7 @@
   export let detailTr;
   export let evenBgColor;
   export let headings;
+  export let mobile;
   export let oddBgColor;
   export let rowIndex;
 
@@ -34,7 +35,7 @@
   function toggleDetail(event) {
     // If a detail row is currently displayed, hide it.
     if (detailTr) {
-      const tr = detailTr.previousSibling;
+      const tr = detailTr.previousElementSibling;
       if (tr) tr.classList.remove('show-detail');
     }
 
@@ -46,7 +47,7 @@
     if (!tr) return;
 
     // Find the detail row that immediately follows this row.
-    const newDetailTr = tr.nextSibling;
+    const newDetailTr = tr.nextElementSibling;
     if (!newDetailTr) return;
 
     // If we clicked the detail icon of a row
@@ -69,13 +70,15 @@
   class={getRowClass(rowIndex)}
   style={`background-color: ${getRowBgColor(rowIndex)}`}>
   {#each headings as heading, columnIndex}
-    <td class={heading.type}>{formatValue(heading, data)}</td>
+    {#if !heading.optional || !mobile}
+      <td class={heading.type}>{formatValue(heading, data)}</td>
+    {/if}
   {/each}
 
-  {#if detailComponent}
+  {#if detailComponent && mobile}
     <td class="info">
       <Button on:click={e => toggleDetail(e)}>
-        <Icon class="detail-icon" icon={faChevronCircleRight} size="1x" />
+        <Icon className="detail-icon" icon={faChevronCircleRight} size="1x" />
       </Button>
     </td>
   {/if}
@@ -95,17 +98,26 @@
 
   .detail-tr > td > :global(*) {
     max-height: 0;
-    transition-duration: var(--transition-duration);
+    transition-duration: var(--osc-transition-duration, 0.5s);
     transition-property: max-height;
   }
 
   :global(.show-detail .detail-icon) {
-    color: var(--osc-primary-color, cornflowerblue);
-    transform: rotate(90deg);
+    transform: rotate(90deg) !important;
   }
 
-  :global(.detail-icon) {
+  .info :global(.osc-button) {
+    background-color: transparent;
+    border: none;
+    margin-right: 0;
+    outline: none;
+  }
+
+  .info :global(.osc-button svg) {
     color: var(--osc-secondary-color, orange);
+    transition-duration: var(--osc-transition-duration, 0.5s);
+    transition-property: transform;
+    transform: rotate(0deg);
   }
 
   :global(.show-detail) + .detail-tr {
@@ -135,21 +147,6 @@
   td.date,
   td.info {
     text-align: center;
-  }
-
-  td.info > :global(button) {
-    background-color: transparent;
-    border: none;
-    color: lightgray;
-    outline: none;
-  }
-
-  td.info :global(.detail-icon) {
-    color: lightgray;
-    font-size: 1rem;
-    transition-duration: var(--transition-duration);
-    transition-property: transform;
-    transform: rotate(0deg);
   }
 
   @media (max-width: 760px) {

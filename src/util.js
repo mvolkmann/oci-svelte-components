@@ -121,7 +121,7 @@ export function kebabCase(text) {
 
 export function logCssVar(label, element, name) {
   const value = getComputedStyle(element).getPropertyValue(name);
-  console.log(label, 'CSS variable', name, '=', value);
+  console.info(label, 'CSS variable', name, '=', value);
 }
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
