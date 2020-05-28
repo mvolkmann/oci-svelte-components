@@ -14,7 +14,15 @@ export function writableSession(key, initialValue) {
   return store;
 }
 
-export const globalStore = writableSession('global', {});
+export const globalStore = writableSession('global', {
+  user: {
+    happy: false,
+    profile: {
+      firstName: '',
+      lastName: ''
+    }
+  }
+});
 
 export function update(store, path, value, dispatch) {
   //console.log('stores.js update: setting', path, 'to', value);
