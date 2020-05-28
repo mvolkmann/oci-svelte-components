@@ -41,12 +41,15 @@
 
   function sortData(heading) {
     dispatch('reset');
+
     ascending = !sortHeading
       ? true
       : heading === sortHeading
       ? !ascending
       : true;
+
     sortHeading = heading;
+
     loadData();
   }
 </script>
@@ -72,7 +75,6 @@
   }
 
   header :global(.osc-icon) {
-    color: var(--osc-secondary-color, orange);
     font-size: 1.4rem;
   }
 
