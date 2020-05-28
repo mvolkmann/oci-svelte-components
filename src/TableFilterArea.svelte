@@ -14,28 +14,32 @@
 
   const dispatch = createEventDispatcher();
 
-  let activeFilter = null;
+  let selectedFilter = null;
 
-  function applyFilters() {
-    activeFilter.applied = true;
-    $filtersStore[activeFilter.index] = activeFilter;
-    activeFilter = null;
-    loadData();
+  async function applyFilters() {
+    selectedFilter.applied = true;
+    $filtersStore[selectedFilter.index] = selectedFilter;
+    await loadData();
+    selectedFilter = null;
   }
 
   function getFilterButtonClasses(filter) {
-    const isApplied = filter && filter.applied;
-    const isSelected = filter === activeFilter;
     return (
       'filter-btn ' +
-      (isApplied ? ' applied' : '') +
-      (isSelected ? ' selected' : '')
+      (filter && filter.applied ? ' applied' : '') +
+      (filter === selectedFilter ? ' selected' : '')
     );
   }
 
   function reset() {
-    activeFilter = null;
+    selectedFilter = null;
     dispatch('reset');
+  }
+
+  function selectFilter(filter) {
+    if (selectedFilter) $filtersStore[selectedFilter.index].selected = false;
+    selectedFilter = filter;
+    $filtersStore[selectedFilter.index].selected = true;
   }
 </script>
 
@@ -51,24 +55,25 @@
     </div>
   </div>
   <div class="buttons">
-    {#each $filtersStore as filter, index}
+    {#each $filtersStore as filter, index (filter.title + filter.selected)}
       <Button
         className={getFilterButtonClasses(filter)}
-        on:click={() => (activeFilter = filter)}>
+        on:click={() => selectFilter(filter)}
+        primary={filter === selectedFilter}>
         {filter.title}
       </Button>
     {/each}
   </div>
-  {#if activeFilter}
-    <div class="filter-inputs">
+  {#if selectedFilter}
+    <form class="filter-inputs" on:submit|preventDefault={applyFilters}>
       <TableFilterInputs
         {datePeriodFilters}
-        filter={activeFilter}
+        filter={selectedFilter}
         {loadData}
         on:reset={reset}
         {pageSize} />
-      <Button className="apply" on:click={applyFilters} primary>Apply</Button>
-    </div>
+      <Button className="apply" primary type="submit">Apply</Button>
+    </form>
   {/if}
 </div>
 
@@ -77,26 +82,19 @@
     margin-bottom: 0.5rem;
   }
 
-  .filter-area :global(.osc-button:not(.as-link)) {
+  .filter-area :global(.filter-btn) {
     margin-right: 0.5rem;
+    outline: none;
   }
 
-  .filter-area :global(.osc-button.applied) {
-    /*TODO: Where is this var set? */
+  .filter-area :global(.applied:not(.selected)) {
+    /* This variable is set in Table.svelte. */
     background-color: var(--set-background-color);
-  }
-
-  .filter-area :global(.osc-button.selected) {
-    background-color: var(--osc-primary-color, cornflowerblue);
-    color: white;
-  }
-
-  .filter-area .buttons {
-    margin-top: 0.5rem;
   }
 
   .filter-description {
     display: flex;
+    margin-bottom: 0.5rem;
   }
 
   .filter-description :global(.osc-icon) {

@@ -83,10 +83,11 @@
 
   .container::after {
     content: '\25bc';
+    font-size: 0.8rem;
     pointer-events: none;
     position: absolute;
-    top: 9px;
-    right: 5px;
+    top: 11px;
+    right: 6px;
   }
 
   select {
