@@ -1,5 +1,6 @@
 <script>
   export let asLink = false;
+  export let bare = false;
   export let className = '';
   export let disabled = false;
   export let primary = false;
@@ -8,6 +9,7 @@
   $: classes =
     'osc-button' +
     (asLink ? ' as-link' : '') +
+    (bare ? ' bare' : '') +
     (className ? ' ' + className : '') +
     (primary ? ' primary' : '');
 </script>
@@ -42,6 +44,13 @@
     padding-right: 0;
     text-decoration: underline;
     text-transform: none;
+  }
+
+  button.bare {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
   }
 
   button:focus {

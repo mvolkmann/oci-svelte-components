@@ -53,32 +53,25 @@
 
 {#if !heading.optional || !mobile}
   <th style={thStyle}>
-    <div class="heading">
+    <header>
       <div class="title">{heading.title}</div>
       {#if canSort}
-        <Button on:click={() => sortData(heading)}>
+        <Button bare on:click={() => sortData(heading)}>
           <Icon color={sortedOn ? SORTED_COLOR : UNSORTED_COLOR} {icon} />
         </Button>
       {/if}
-    </div>
+    </header>
   </th>
 {/if}
 
 <style>
-  .heading {
+  header {
     display: flex;
     align-items: center;
     padding: 0.5rem;
   }
 
-  .heading :global(.osc-button) {
-    background-color: transparent;
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .heading :global(.osc-icon) {
+  header :global(.osc-icon) {
     color: var(--osc-secondary-color, orange);
     font-size: 1.4rem;
   }
@@ -89,7 +82,7 @@
   }
 
   @media (max-width: 760px) {
-    .heading > .title {
+    header > .title {
       font-size: 0.7rem;
     }
   }
