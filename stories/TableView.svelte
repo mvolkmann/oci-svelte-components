@@ -39,11 +39,6 @@
 
   const URL = 'http://localhost:4001/transactions';
 
-  const style = {
-    '--osc-primary-color': '#156F2D',
-    '--osc-secondary-color': '#D38848'
-  };
-
   const headingTooltip =
     '**Date**: The date of the transaction\n' +
     '**Category**: The category of transaction.\n' +
@@ -59,7 +54,6 @@
   detailComponent={TransactionDetail}
   {headings}
   {headingTooltip}
-  sortAll
-  {style} />
+  sortAll />
 
 <Spinner />

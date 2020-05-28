@@ -68,14 +68,14 @@
   .heading {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
   }
 
   .heading :global(.osc-button) {
     background-color: transparent;
     border: none;
-    margin-left: 0.5rem;
-    margin-right: 2px;
-    padding-left: 0;
+    margin: 0;
+    padding: 0;
   }
 
   .heading :global(.osc-icon) {
@@ -84,10 +84,14 @@
   }
 
   th {
-    padding: 2px;
     position: sticky;
     top: 0;
     z-index: 1;
+  }
+
+  .title {
+    font-weight: normal;
+    margin-right: 0.5rem;
   }
 
   @media (max-width: 760px) {
