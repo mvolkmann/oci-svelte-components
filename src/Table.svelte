@@ -160,14 +160,12 @@
     <tbody>
       {#each data as rowData, rowIndex}
         <TableRow
+          bgColor={rowIndex % 2 === 0 ? evenBgColor : oddBgColor}
           data={rowData}
           {detailComponent}
           bind:detailTr
-          {evenBgColor}
           {headings}
-          {mobile}
-          {oddBgColor}
-          {rowIndex} />
+          {mobile} />
       {/each}
     </tbody>
   </table>

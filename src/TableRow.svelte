@@ -3,16 +3,12 @@
   import Button from './Button.svelte';
   import Icon from './Icon.svelte';
 
+  export let bgColor;
   export let data;
   export let detailComponent = undefined;
   export let detailTr;
-  export let evenBgColor;
   export let headings;
   export let mobile;
-  export let oddBgColor;
-  export let rowIndex;
-
-  const getRowClass = index => (index % 2 === 0 ? 'even' : 'odd');
 
   function formatValue(heading, obj) {
     const value = obj[heading.property];
@@ -29,8 +25,6 @@
 
     return value;
   }
-
-  const getRowBgColor = index => (index % 2 === 0 ? evenBgColor : oddBgColor);
 
   function toggleDetail(event) {
     // If a detail row is currently displayed, hide it.
@@ -64,9 +58,7 @@
   }
 </script>
 
-<tr
-  class={getRowClass(rowIndex)}
-  style={`background-color: ${getRowBgColor(rowIndex)}`}>
+<tr style={`background-color: ${bgColor}`}>
   {#each headings as heading, columnIndex}
     {#if !heading.optional || !mobile}
       <td class={heading.type}>{formatValue(heading, data)}</td>
