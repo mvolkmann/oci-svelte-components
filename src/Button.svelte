@@ -50,6 +50,7 @@
     background-color: transparent;
     border: none;
     margin: 0;
+    outline: none;
     padding: 0;
   }
 

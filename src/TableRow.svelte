@@ -10,6 +10,8 @@
   export let headings;
   export let mobile;
 
+  const iconColor = 'var(--osc-secondary-color, orange)';
+
   function formatValue(heading, obj) {
     const value = obj[heading.property];
 
@@ -66,9 +68,9 @@
   {/each}
 
   {#if detailComponent && mobile}
-    <td class="info">
-      <Button on:click={e => toggleDetail(e)}>
-        <Icon className="detail-icon" icon={faChevronCircleRight} size="1x" />
+    <td class="detail">
+      <Button bare on:click={e => toggleDetail(e)}>
+        <Icon color={iconColor} icon={faChevronCircleRight} size="1rem" />
       </Button>
     </td>
   {/if}
@@ -96,32 +98,24 @@
     transition-property: padding-bottom, padding-top, max-height;
   }
 
-  .info :global(.osc-button) {
-    background-color: transparent;
-    border: none;
-    margin-right: 0;
-    outline: none;
+  :global(.show-detail) + .detail-tr > td > :global(*) {
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    max-height: 100vh;
   }
 
-  .info :global(.osc-button svg) {
-    color: var(--osc-secondary-color, orange);
+  .detail :global(svg) {
     transition-duration: var(--osc-transition-duration, 0.5s);
     transition-property: transform;
     transform: rotate(0deg);
   }
 
-  :global(.show-detail .detail-icon) {
-    transform: rotate(90deg) !important;
+  :global(.show-detail .detail svg) {
+    transform: rotate(90deg);
   }
 
   :global(.show-detail) + .detail-tr {
     display: table-row;
-  }
-
-  :global(.show-detail) + .detail-tr > td > :global(*) {
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
-    max-height: 100vh;
   }
 
   td {
@@ -141,7 +135,7 @@
   }
 
   td.date,
-  td.info {
+  td.detail {
     text-align: center;
   }
 
