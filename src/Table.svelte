@@ -104,10 +104,9 @@
     }
   }
 
-  function loadMoreResults() {
+  async function loadMoreResults() {
     startIndex = rowCount;
-    // Keep current sortHeading and ascending values.
-    loadData(startIndex);
+    await loadData(startIndex);
     rowCount += pageSize;
   }
 
@@ -168,6 +167,7 @@
       {/each}
     </tbody>
   </table>
+
   <Button
     className="more-btn"
     disabled={atEnd}
@@ -176,6 +176,7 @@
     More
   </Button>
 </div>
+
 <MessageDialog bind:dialogRef />
 
 <style>
