@@ -83,12 +83,6 @@
     font-size: 1.4rem;
   }
 
-  th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
-
   .title {
     font-weight: normal;
     margin-right: 0.5rem;

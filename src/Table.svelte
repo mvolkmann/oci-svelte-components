@@ -184,10 +184,6 @@
 <MessageDialog bind:dialogRef />
 
 <style>
-  .detail-td {
-    padding: 0;
-  }
-
   .osc-table {
     --set-background-color: linen;
     --transition-duration: 0.5s;
@@ -197,23 +193,13 @@
     margin-top: 1rem;
   }
 
-  table {
-    border-collapse: collapse;
-  }
-
-  th {
-    border: none;
-    font-weight: normal;
-    padding: 1rem;
-
+  .osc-table :global(th) {
     position: sticky;
     top: 0;
     z-index: 1; /* so Icon components in data rows scroll below these */
   }
 
-  @media (max-width: 760px) {
-    th {
-      padding: 0.5rem 0.25rem;
-    }
+  table {
+    border-collapse: collapse;
   }
 </style>
