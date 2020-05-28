@@ -83,6 +83,7 @@
   }
 
   .filter-area :global(.filter-btn) {
+    margin-top: 0.5rem;
     margin-right: 0.5rem;
     outline: none;
   }
@@ -94,7 +95,6 @@
 
   .filter-description {
     display: flex;
-    margin-bottom: 0.5rem;
   }
 
   .filter-description :global(svg) {

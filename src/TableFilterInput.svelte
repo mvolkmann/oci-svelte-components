@@ -35,6 +35,7 @@
     border-radius: var(--osc-border-radius, 4px);
     font-size: 1rem;
     margin-right: 0.5rem;
+    margin-top: 0.5rem;
     padding: 0.5rem;
   }
 </style>

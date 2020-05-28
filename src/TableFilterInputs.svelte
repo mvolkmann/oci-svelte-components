@@ -106,10 +106,6 @@
 </div>
 
 <style>
-  .date {
-    margin-top: 0.5rem;
-  }
-
   .table-filter-inputs :global(button),
   .table-filter-inputs :global(.table-filter-input),
   .table-filter-inputs :global(.table-filter-select) {

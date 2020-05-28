@@ -102,7 +102,7 @@
     border: solid lightgray 1px;
     border-radius: var(--osc-border-radius, 4px);
     font-size: 1rem;
-    height: 36px;
+    height: 37px;
     margin-bottom: 0;
     padding-left: 0.5rem;
     position: relative;
