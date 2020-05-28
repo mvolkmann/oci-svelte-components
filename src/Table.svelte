@@ -5,6 +5,7 @@
   //import getComponent from './component-map';
   import {postJson} from './fetch-util';
   import Info from './Info.svelte';
+  import MessageDialog, {error} from './MessageDialog.svelte';
   import TableFilterArea from './TableFilterArea.svelte';
   import TableHeading from './TableHeading.svelte';
   import TableRow from './TableRow.svelte';
@@ -38,6 +39,7 @@
   let atEnd = false;
   let data = [];
   let detailTr = null;
+  let dialogRef;
   let innerWidth;
   let rowCount = pageSize;
   let sortHeading = null;
@@ -81,16 +83,24 @@
       body.sortOn = sortHeading.property;
       body.type = sortHeading.type || 'string';
     }
-    const result = await postJson(dataUrl, body);
-    const newData = result.records;
-    const isLastRecord = result.isLast;
-    atEnd = isLastRecord;
 
-    if (startIndex === 0) {
-      data = newData;
-    } else {
-      data.push(...newData);
-      data = data; // to trigger reactivity
+    try {
+      const result = await postJson(dataUrl, body);
+      const newData = result.records;
+      const isLastRecord = result.isLast;
+      atEnd = isLastRecord;
+
+      if (startIndex === 0) {
+        data = newData;
+      } else {
+        data.push(...newData);
+        data = data; // to trigger reactivity
+      }
+    } catch (e) {
+      const title = 'Table failed to get data';
+      const text = `${e.message} ${dataUrl}`;
+      console.error('Table.svelte loadData:', text);
+      error({dialogRef, text, title});
     }
   }
 
@@ -118,7 +128,7 @@
     {pageSize} />
   <table>
     <thead>
-      <tr style={`backgroundColor: ${headingBgColor}`}>
+      <tr>
         {#each headings as heading}
           <TableHeading
             bind:ascending
@@ -165,6 +175,7 @@
     More
   </Button>
 </div>
+<MessageDialog bind:dialogRef />
 
 <style>
   .detail-td {
