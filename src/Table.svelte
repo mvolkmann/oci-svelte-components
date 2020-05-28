@@ -32,13 +32,19 @@
   export let pageSize = 15;
   export let sortAll = false;
 
-  const classes = 'table' + (className ? ' ' + className : '');
+  const classes = 'osc-table' + (className ? ' ' + className : '');
   const thStyle = 'background-color: ' + headingBgColor;
 
   let ascending = true;
   let atEnd = false;
   let data = [];
+
+  // This holds the currently opened detail row that can only be displayed
+  // when the window width is less than the breakpoint value.
+  // It must be maintained here so it can be
+  // shared with all instances of TableRow.
   let detailTr = null;
+
   let dialogRef;
   let innerWidth;
   let rowCount = pageSize;
@@ -77,7 +83,7 @@
       ascending,
       filters: $filtersStore.filter(f => f.applied),
       size: pageSize,
-      start: startIndex
+      startIndex
     };
     if (sortHeading) {
       body.sortOn = sortHeading.property;
@@ -86,14 +92,12 @@
 
     try {
       const result = await postJson(dataUrl, body);
-      const newData = result.records;
-      const isLastRecord = result.isLast;
-      atEnd = isLastRecord;
+      atEnd = result.isLast;
 
       if (startIndex === 0) {
-        data = newData;
+        data = result.records;
       } else {
-        data.push(...newData);
+        data.push(...result.records);
         data = data; // to trigger reactivity
       }
     } catch (e) {
@@ -184,22 +188,17 @@
     padding: 0;
   }
 
-  .more-btn {
-    border-radius: var(--osc-border-radius, 4px);
-    font-size: 1rem;
+  .osc-table {
+    --set-background-color: linen;
+    --transition-duration: 0.5s;
   }
 
-  .more-btn:disabled {
-    background-color: lightgray !important;
+  .osc-table :global(.more-btn) {
+    margin-top: 1rem;
   }
 
   table {
     border-collapse: collapse;
-  }
-
-  .table {
-    --set-background-color: linen;
-    --transition-duration: 0.5s;
   }
 
   th {

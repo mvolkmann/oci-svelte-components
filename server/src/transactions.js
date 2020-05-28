@@ -5,12 +5,12 @@ const logger = require('./logger');
 const api = express.Router();
 
 api.post('/', (req, res) => {
-  const {ascending, filters, size, sortOn, start = 0, type} = req.body;
+  const {ascending, filters, size, sortOn, startIndex = 0, type} = req.body;
   const sortDetails = sortOn
     ? ` sorted on ${sortOn} (${type}) ${ascending ? 'ascending' : 'descending'}`
     : '';
   let msg =
-    `start = ${start}, size = ${size}` +
+    `startIndex = ${startIndex}, size = ${size}` +
     `${sortDetails} with filters ${JSON.stringify(filters)}`;
   const operation = 'get transactions';
   logger.info(req, operation, msg);
@@ -87,10 +87,12 @@ api.post('/', (req, res) => {
     processFilter(property, type, operator2, value2);
   }
 
-  const isLast = start + size + 1 >= array.length;
+  const isLast = startIndex + size + 1 >= array.length;
 
   // Return only the requested subset.
-  const transactions = size ? array.slice(start, start + size) : array;
+  const transactions = size
+    ? array.slice(startIndex, startIndex + size)
+    : array;
   msg = `returning ${transactions.length} transactions`;
   logger.info(req, operation, msg);
   res.json({isLast, records: transactions});
