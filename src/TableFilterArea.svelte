@@ -97,14 +97,14 @@
     margin-bottom: 0.5rem;
   }
 
-  .filter-description :global(.osc-icon) {
-    font-size: 0.5rem;
+  .filter-description :global(svg) {
     margin-right: 0.5rem;
+    position: relative;
+    top: 2px;
   }
 
   .filter-inputs {
     display: flex;
-    justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
   }

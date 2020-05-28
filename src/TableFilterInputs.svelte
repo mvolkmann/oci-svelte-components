@@ -106,13 +106,14 @@
 </div>
 
 <style>
-  .table-filter-inputs {
+  .date {
     margin-top: 0.5rem;
   }
 
   .table-filter-inputs :global(button),
   .table-filter-inputs :global(.table-filter-input),
   .table-filter-inputs :global(.table-filter-select) {
+    margin-top: 0.5rem;
     margin-right: 0.5rem;
   }
 
@@ -122,15 +123,6 @@
 
   .table-filter-inputs .row {
     display: flex;
-  }
-
-  .table-filter-inputs .row:not(:first-of-type) {
-    margin-top: 0.5rem;
-  }
-
-  @media (max-width: 760px) {
-    .table-filter-inputs :global(button) {
-      font-size: 0.8rem;
-    }
+    flex-wrap: wrap;
   }
 </style>
