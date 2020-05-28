@@ -67,7 +67,7 @@
         {loadData}
         on:reset={reset}
         {pageSize} />
-      <Button className="apply primary" on:click={applyFilters}>Apply</Button>
+      <Button className="apply" on:click={applyFilters} primary>Apply</Button>
     </div>
   {/if}
 </div>

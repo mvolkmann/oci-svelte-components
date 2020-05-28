@@ -2,12 +2,14 @@
   export let asLink = false;
   export let className = '';
   export let disabled = false;
+  export let primary = false;
   export let type = 'button'; // not 'submit'
 
   $: classes =
     'osc-button' +
+    (asLink ? ' as-link' : '') +
     (className ? ' ' + className : '') +
-    (asLink ? ' as-link' : '');
+    (primary ? ' primary' : '');
 </script>
 
 <button class={classes} {disabled} on:click {type}>

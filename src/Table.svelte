@@ -169,9 +169,10 @@
     </tbody>
   </table>
   <Button
-    className="more-btn primary"
+    className="more-btn"
     disabled={atEnd}
-    on:click={loadMoreResults}>
+    on:click={loadMoreResults}
+    primary>
     More
   </Button>
 </div>
