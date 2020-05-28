@@ -60,8 +60,6 @@
 
     // Open a new detail row.
     detailTr = newDetailTr;
-    const detailTd = detailTr.firstChild;
-    detailTd.setAttribute('colspan', '100%');
     tr.classList.add('show-detail');
   }
 </script>
@@ -85,7 +83,7 @@
 </tr>
 {#if detailComponent}
   <tr class="detail-tr">
-    <td class="detail-td">
+    <td colspan="100%" class="detail-td">
       <svelte:component this={detailComponent} {data} />
     </td>
   </tr>
