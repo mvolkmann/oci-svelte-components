@@ -1,9 +1,17 @@
 <script>
+  import get from 'lodash-es/get';
   import {quintOut} from 'svelte/easing';
   import {crossfade} from 'svelte/transition';
   import {flip} from 'svelte/animate';
+  import Labeled from './Labeled.svelte';
+  import {globalStore, update} from './stores';
 
-  export let items;
+  // Set items or path.
+  export let items = [];
+  export let label = undefined;
+  export let path = undefined; // to an array of strings
+  export let store = globalStore;
+  export let vertical;
 
   let container;
   let dragContainer;
@@ -12,6 +20,8 @@
   let offsetY;
 
   const [send, receive] = crossfade({});
+
+  $: if (path) items = get($store, path);
 
   function mouseDown(event) {
     const dragElement = event.target;
@@ -49,13 +59,14 @@
       items.splice(index, 0, dragItem);
     }
     items = items; // trigger reactivity
+    if (path) update(store, path, items);
 
     dragContainer.style.visibility = 'hidden';
     dragItem = null;
   }
 </script>
 
-<div class="osc-reorder">
+<Labeled {label} {vertical}>
   <div bind:this={container} class="container">
     {#each items as item (item)}
       <div
@@ -74,13 +85,13 @@
       {dragItem}
     </div>
   </div>
-</div>
+</Labeled>
 
 <style>
   .container {
-    border: solid red 2px;
+    border: solid var(--osc-primary-color, cornflowerblue) 1px;
     display: flex;
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .drag-container {
@@ -88,12 +99,22 @@
     visibility: hidden;
   }
 
+  .drag-container > .item {
+    /*background-color: #6495eda0; /* cornflowerblue with opacity */
+    background-color: #ffa500c0; /* orange with opacity */
+  }
+
   .item {
     display: inline-block;
-    background-color: #cccccce0;
-    border: solid blue 3px;
+    background-color: var(--osc-primary-color, cornflowerblue);
+    color: white;
     cursor: move;
-    margin-right: 1rem;
-    padding: 1rem;
+    margin-left: 0;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .item:last-of-type {
+    margin-right: 0;
   }
 </style>
