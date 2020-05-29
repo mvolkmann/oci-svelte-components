@@ -1,8 +1,6 @@
 <script>
-  import {faFilter} from '@fortawesome/free-solid-svg-icons';
   import {createEventDispatcher, getContext} from 'svelte';
   import Button from './Button.svelte';
-  import Icon from './Icon.svelte';
   import TableFilterDescription from './TableFilterDescription.svelte';
   import TableFilterInputs from './TableFilterInputs.svelte';
 
@@ -44,16 +42,7 @@
 </script>
 
 <div class="filter-area">
-  <div class="filter-description">
-    <Icon
-      color="var(--osc-secondary-color, orange)"
-      icon={faFilter}
-      size="1rem" />
-    <div class="heading">
-      <div class="label">Filters Applied:</div>
-      <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
-    </div>
-  </div>
+  <TableFilterDescription {loadData} on:reset={reset} {pageSize} />
   <div class="buttons">
     {#each $filtersStore as filter, index (filter.title + filter.applied + filter.selected)}
       <Button
@@ -93,16 +82,6 @@
     background-color: var(--osc-table-filter-set-color, linen);
   }
 
-  .filter-description {
-    display: flex;
-  }
-
-  .filter-description :global(svg) {
-    margin-right: 0.5rem;
-    position: relative;
-    top: 2px;
-  }
-
   .filter-inputs {
     display: flex;
     align-items: flex-start;
@@ -112,33 +91,5 @@
   .filter-inputs :global(.apply) {
     margin-bottom: 0;
     margin-top: 0.5rem;
-  }
-
-  .heading {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .heading > :global(button) {
-    padding: 0;
-  }
-
-  .heading :global(button) {
-    font-size: 0.8rem;
-    margin-right: 0;
-  }
-
-  .heading .label {
-    font-size: 1rem;
-    margin-right: 0.5rem;
-  }
-
-  .heading :global(.title) {
-    font-weight: bold;
-  }
-
-  .heading > :global(.title) {
-    text-align: left;
   }
 </style>
