@@ -1,11 +1,26 @@
 :root {
+  --osc-primary-color: cornflowerblue;
+  --osc-secondary-color: orange;
+
+  --osc-border-color: var(--osc-primary-color);
   --osc-border-radius: 4px;
   --osc-button-font-weight: bold;
+  --osc-card-background-color: linen;
+  --osc-dialog-close-button-hover-color: lightgray;
+  --osc-disabled-color: lightgray;
   --osc-error-color: red;
   --osc-label-font-size: 1rem;
   --osc-label-font-weight: bold;
-  --osc-primary-color: cornflowerblue;
-  --osc-secondary-color: orange;
+  --osc-slider-limit-color: black;
+  --osc-slider-track-color: lightgray;
+  --osc-table-filter-set-color: linen;
+  --osc-thermometer-background-color: var(--osc-secondary-color);
+  --osc-thermometer-color: var(--osc-primary-color);
+  --osc-thermometer-label-color: black;
+  --osc-toggle-buttons-background-color: lightgray;
+  --osc-toggle-buttons-color: black;
+  --osc-toggle-buttons-selected-background-color: var(--osc-primary-color);
+  --osc-toggle-buttons-selected-color: white;
   --osc-transition-duration: 0.5s;
   --osc-warning-color: red;
 }
@@ -47,7 +62,7 @@ input,
 button,
 select,
 textarea {
-  border: solid lightgray 1px;
+  border: solid var(--osc-border-color) 1px;
   border-radius: var(--osc-border-radius, 4px);
   box-sizing: border-box;
   font-family: inherit;

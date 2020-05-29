@@ -80,7 +80,7 @@
   }
 
   .close-btn:hover {
-    color: lightgray;
+    color: var(--osc-dialog-close-button-hover-color, lightgray);
   }
 
   dialog {
@@ -103,7 +103,7 @@
     justify-content: space-between;
     align-items: center;
 
-    background-color: cornflowerblue;
+    background-color: var(--osc-primary-color, cornflowerblue);
     box-sizing: border-box;
     padding: var(--space);
     width: 100%;

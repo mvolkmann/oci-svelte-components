@@ -70,7 +70,7 @@
     width: var(--size);
     height: var(--size);
     border-radius: calc(var(--size) / 2);
-    border: solid lightgray 1px;
+    border: solid var(--osc-border-color, lightgray) 1px;
 
     font-size: 1rem;
     margin: 0 0.5rem 0 1rem;

@@ -183,7 +183,6 @@
 
 <style>
   .osc-table {
-    --set-background-color: linen;
     --transition-duration: 0.5s;
   }
 

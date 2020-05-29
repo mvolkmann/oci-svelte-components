@@ -3,7 +3,6 @@
 
   const PLAYING_CARD_RATIO = 2.5 / 3.5;
 
-  export let backgroundColor = 'linen';
   export let className = undefined;
   export let height = '320';
   export let imageUrl;
@@ -12,10 +11,7 @@
   export let width = height * PLAYING_CARD_RATIO;
 
   const classes = 'card' + (className ? ' ' + className : '');
-  const style =
-    `--background-color: ${backgroundColor}; ` +
-    `--height: ${height}px; ` +
-    `--width: ${width}px`;
+  const style = `--height: ${height}px; ` + `--width: ${width}px`;
 </script>
 
 <div class={classes} {style}>
@@ -39,7 +35,7 @@
     display: inline-flex;
     flex-direction: column;
 
-    background-color: var(--background-color);
+    background-color: var(--osc-card-background-color, linen);
     border: none;
     border-radius: 10px;
     box-shadow: 5px 5px 5px #666;

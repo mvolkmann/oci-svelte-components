@@ -99,7 +99,7 @@
     -webkit-appearance: none;
 
     background-color: transparent;
-    border: solid lightgray 1px;
+    border: solid var(--osc-border-color, lightgray) 1px;
     border-radius: var(--osc-border-radius, 4px);
     font-size: 1rem;
     height: 37px;

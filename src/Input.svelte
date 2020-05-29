@@ -105,7 +105,7 @@
 <style>
   input,
   textarea {
-    border: solid lightgray 1px;
+    border: solid var(--osc-border-color, lightgray) 1px;
     border-radius: var(--osc-border-radius, 4px);
     font-size: 1rem;
     margin-bottom: 0;

@@ -5,6 +5,7 @@
   import Accordion from './Accordion.svelte';
   import Address from './Address.svelte';
   import Button from './Button.svelte';
+  import Card from './Card.svelte';
   import Carousel from './Carousel.svelte';
   import Dial from './Dial.svelte';
   import Hello from './Hello.svelte';
@@ -183,6 +184,13 @@
         elementWidth={carouselElementWidth}
         height={396}
         showDots />
+    </div>
+
+    <div>
+      <Card
+        imageUrl="https://avatars0.githubusercontent.com/u/79312?s=460&v=4"
+        text="This is a demo card."
+        title="Demo Card" />
     </div>
 
     <Button type="submit">Submit</Button>

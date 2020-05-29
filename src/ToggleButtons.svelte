@@ -46,11 +46,11 @@
     display: flex;
     align-items: center;
 
-    background-color: lightgray;
+    background-color: var(--osc-toggle-buttons-background-color, orange);
     border: none;
     border-left: solid black 1px;
     border-radius: 0;
-    color: black;
+    color: var(--osc-toggle-buttons-color, orange);
     font-size: 1rem;
     outline: none;
     height: var(--height);
@@ -73,8 +73,11 @@
   }
 
   button.selected {
-    background-color: var(--osc-primary-color, cornflowerblue);
-    color: white;
+    background-color: var(
+      --osc-toggle-buttons-selected-background-color,
+      cornflowerblue
+    );
+    color: var(--osc-toggle-buttons-selected-color, white);
   }
 
   /* button.selected svg {

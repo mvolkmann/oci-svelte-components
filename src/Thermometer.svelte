@@ -7,11 +7,12 @@
   const PADDING = 4;
   const SUM = BORDER_WIDTH + PADDING;
 
-  export let backgroundColor = '#DADADA';
+  export let backgroundColor =
+    'var(--osc-thermometer-background-color, orange)';
   export let className = '';
-  export let color = 'var(--osc-primary-color, cornflowerblue)';
+  export let color = 'var(--osc-thermometer-color, cornflowerblue)';
   export let height = 50;
-  export let labelColor = 'var(--osc-secondary-color, orange)';
+  export let labelColor = 'var(--osc-thermometer-label-color, black)';
   export let path;
   export let store = globalStore;
   export let width = 300;

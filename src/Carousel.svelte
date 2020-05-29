@@ -87,7 +87,7 @@
   }
 
   .carousel :global(button:disabled) {
-    color: lightgray;
+    color: var(--osc-disabled-color, lightgray);
   }
 
   .center {
@@ -100,7 +100,7 @@
     display: flex;
     align-items: center;
 
-    background-color: lightgray;
+    background-color: var(--osc-border-color, lightgray);
     position: absolute;
     left: 0;
     transition-duration: 1s;

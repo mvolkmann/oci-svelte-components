@@ -120,7 +120,7 @@
 
   td {
     border: none;
-    border-left: solid lightgray 1px;
+    border-left: solid var(--osc-border-color, lightgray) 1px;
     padding: 0.5rem;
     text-align: left;
   }

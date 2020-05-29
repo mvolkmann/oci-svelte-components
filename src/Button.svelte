@@ -32,8 +32,9 @@
   }
 
   button:disabled {
-    border-color: lightgray;
-    color: lightgray;
+    --color: var(--osc-disabled-color, lightgray);
+    border-color: var(--color);
+    color: var(--color);
   }
 
   button.as-link {
@@ -59,7 +60,7 @@
   }
 
   .primary {
-    background-color: var(--osc-primary-color, cornflowerblue);
+    background-color: var(--osc-primary-color, cornflowerblue) !important;
     color: white;
   }
 </style>

@@ -25,7 +25,7 @@
 
   function getFilterButtonClasses(filter) {
     return (
-      'filter-btn ' +
+      'filter-btn' +
       (filter && filter.applied ? ' applied' : '') +
       (filter === selectedFilter ? ' selected' : '')
     );
@@ -55,7 +55,7 @@
     </div>
   </div>
   <div class="buttons">
-    {#each $filtersStore as filter, index (filter.title + filter.selected)}
+    {#each $filtersStore as filter, index (filter.title + filter.applied + filter.selected)}
       <Button
         className={getFilterButtonClasses(filter)}
         on:click={() => selectFilter(filter)}
@@ -83,14 +83,14 @@
   }
 
   .filter-area :global(.filter-btn) {
+    margin-bottom: 0;
     margin-top: 0.5rem;
     margin-right: 0.5rem;
     outline: none;
   }
 
-  .filter-area :global(.applied:not(.selected)) {
-    /* This variable is set in Table.svelte. */
-    background-color: var(--set-background-color);
+  .filter-area :global(.applied) {
+    background-color: var(--osc-table-filter-set-color, linen);
   }
 
   .filter-description {
@@ -110,6 +110,7 @@
   }
 
   .filter-inputs :global(.apply) {
+    margin-bottom: 0;
     margin-top: 0.5rem;
   }
 

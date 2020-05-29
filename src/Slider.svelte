@@ -161,7 +161,7 @@
   }
 
   .track {
-    background-color: lightgray;
+    background-color: var(--osc-slider-track-color, lightgray);
     border: none;
     display: inline-block;
     height: var(--track-height);
@@ -170,7 +170,7 @@
   }
 
   .track.limits {
-    --limit-style: solid black 1px;
+    --limit-style: solid var(--osc-slider-limit-color, black) 1px;
     border-left: var(--limit-style);
     border-right: var(--limit-style);
   }

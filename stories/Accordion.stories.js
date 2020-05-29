@@ -1,6 +1,5 @@
 import Accordion from '../src/Accordion.svelte';
 import Hello from '../src/Hello.svelte';
-import './global.css';
 
 export default {title: 'Accordion'};
 

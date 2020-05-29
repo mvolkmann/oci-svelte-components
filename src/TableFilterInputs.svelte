@@ -109,8 +109,7 @@
   .table-filter-inputs :global(button),
   .table-filter-inputs :global(.table-filter-input),
   .table-filter-inputs :global(.table-filter-select) {
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
+    margin: 0.5rem 0.5rem 0 0;
   }
 
   .table-filter-inputs :global(.osc-labeled) {

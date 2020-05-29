@@ -29,12 +29,10 @@
 
 <style>
   input {
-    --color: lightgray;
-    border: solid var(--color) 1px;
+    border: solid var(--osc-border-color, lightgray) 1px;
     border-radius: var(--osc-border-radius, 4px);
     font-size: 1rem;
-    margin-right: 0.5rem;
-    margin-top: 0.5rem;
+    margin: 0.5rem 0.5rem 0 0;
     padding: 0.5rem;
   }
 </style>

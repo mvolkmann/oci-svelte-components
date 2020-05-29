@@ -6,10 +6,10 @@
 
   globalStore.set({
     thermometer: {
-      backgroundColor: '#ffa500', // orange
-      color: '#6495ed', // cornflowerblue
+      backgroundColor: 'var(--osc-thermometer-background-color, orange)',
+      color: 'var(--osc-thermometer-color, cornflowerblue)',
       height: 50,
-      labelColor: '#ffa500', // orange
+      labelColor: 'var(--osc-thermometer-label-color, black)',
       value: 20,
       width: 300
     }
