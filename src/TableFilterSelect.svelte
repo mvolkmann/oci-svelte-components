@@ -20,9 +20,3 @@
   on:change={onChange}
   {options}
   value={filter[key] || ''} />
-
-<style>
-  :global(.osc-labeled.table-filter-select) {
-    display: inline-flex;
-  }
-</style>
