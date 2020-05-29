@@ -59,7 +59,7 @@
   <div bind:this={container} class="container">
     {#each items as item (item)}
       <div
-        animate:flip
+        animate:flip={{duration: 500}}
         class="item"
         in:receive={{key: item}}
         out:send={{key: item}}
@@ -90,7 +90,7 @@
 
   .item {
     display: inline-block;
-    background-color: #cccccc80;
+    background-color: #cccccce0;
     border: solid blue 3px;
     cursor: move;
     margin-right: 1rem;
