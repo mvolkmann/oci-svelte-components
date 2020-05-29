@@ -3,14 +3,13 @@
 
   export let filter;
   export let property;
-  export let type = 'text';
 
   const filtersStore = getContext('filtersStore');
 
-  let value = filter[property];
-  if (!value) {
-    value = type === 'date' ? new Date() : type === 'number' ? 0 : '';
-  }
+  const {type} = filter;
+  let value =
+    filter[property] ||
+    (type === 'date' ? new Date() : type === 'number' ? 0 : '');
 
   function onChange(event, property, type) {
     filter[property] = event.currentTarget.value;

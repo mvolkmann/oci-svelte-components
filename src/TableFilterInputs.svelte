@@ -58,14 +58,14 @@
         {filter}
         key="operator1"
         options={LEFT_RELATIONAL_OPERATORS} />
-      <TableFilterInput {filter} property="value1" type="number" />
+      <TableFilterInput {filter} property="value1" />
     </div>
     <div class="row">
       <TableFilterSelect
         {filter}
         key="operator2"
         options={RIGHT_RELATIONAL_OPERATORS} />
-      <TableFilterInput {filter} property="value2" type="number" />
+      <TableFilterInput {filter} property="value2" />
     </div>
   {:else if type === 'date'}
     <div class="row">
@@ -84,11 +84,11 @@
       <div class="row">
         <label class="date">
           Start Date
-          <TableFilterInput {filter} property="value1" type="date" />
+          <TableFilterInput {filter} property="value1" />
         </label>
         <label class="date">
           End Date
-          <TableFilterInput {filter} property="value2" type="date" />
+          <TableFilterInput {filter} property="value2" />
         </label>
       </div>
     {/if}
