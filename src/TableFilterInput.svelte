@@ -6,8 +6,8 @@
 
   const filtersStore = getContext('filtersStore');
 
-  const {type} = filter;
-  let value =
+  $: type = filter.type;
+  $: value =
     filter[property] ||
     (type === 'date' ? new Date() : type === 'number' ? 0 : '');
 
