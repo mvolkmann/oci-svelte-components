@@ -1,8 +1,8 @@
 <script>
   import {createEventDispatcher, getContext} from 'svelte';
+  import Button from './Button.svelte';
   import TableFilterInput from './TableFilterInput.svelte';
   import TableFilterSelect from './TableFilterSelect.svelte';
-  import TableToggleButton from './TableToggleButton.svelte';
 
   export let datePeriodFilters;
   export let filter;
@@ -70,15 +70,17 @@
   {:else if type === 'date'}
     <div class="row">
       {#each datePeriodFilters as dpf}
-        <TableToggleButton
-          label={dpf.title}
-          on:click={() => monthButtonClicked(dpf.title, dpf.months)}
-          selectedLabel={filter.selectedLabel} />
+        <Button
+          className={filter.selectedLabel === dpf.title ? 'selected' : ''}
+          on:click={() => monthButtonClicked(dpf.title, dpf.months)}>
+          {dpf.title}
+        </Button>
       {/each}
-      <TableToggleButton
-        label="Custom Date Range"
-        on:click={customRangeButtonClicked}
-        selectedLabel={filter.selectedLabel} />
+      <Button
+        className={filter.selectedLabel === 'Custom Date Range' ? 'selected' : ''}
+        on:click={customRangeButtonClicked}>
+        Custom Date Range
+      </Button>
     </div>
     {#if showCustomDateRange}
       <div class="row">
