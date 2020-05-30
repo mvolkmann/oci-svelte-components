@@ -1,6 +1,5 @@
 <script>
   import get from 'lodash-es/get';
-  import {quintOut} from 'svelte/easing';
   import {crossfade} from 'svelte/transition';
   import {flip} from 'svelte/animate';
   import Labeled from './Labeled.svelte';
@@ -18,6 +17,8 @@
   let dragItem;
   let offsetX;
   let offsetY;
+  let overItem;
+  let overPercent;
 
   const [send, receive] = crossfade({});
 
@@ -41,28 +42,52 @@
   function mouseMove(event) {
     if (!dragItem) return;
 
+    const {clientX} = event;
+    const children = Array.from(container.children);
+    const newOverItem = children.find(child => {
+      const {width, x} = child.getBoundingClientRect();
+      const isOver = x <= clientX && clientX <= x + width;
+      if (isOver) overPercent = (clientX - x) / width;
+      return isOver;
+    });
+
+    if (newOverItem) {
+      if (newOverItem !== overItem) {
+        if (overItem) overItem.classList.remove('over');
+        newOverItem.classList.add('over');
+        overItem = newOverItem;
+      }
+
+      const onLeftSide = overPercent < 0.5;
+      overItem.classList.add(onLeftSide ? 'left' : 'right');
+      overItem.classList.remove(onLeftSide ? 'right' : 'left');
+    }
+
     dragContainer.style.left = event.x - offsetX + 'px';
     dragContainer.style.top = event.y - offsetY + 'px';
   }
 
   function mouseUp(event) {
     // Find child before the drop location.
-    const {clientX} = event;
-    const index = Array.from(container.children).findIndex(
-      child => clientX < child.getBoundingClientRect().x
-    );
+    const children = Array.from(container.children);
+    const index = children.findIndex(child => child === overItem);
+    const isLeft = overItem.classList.contains('left');
 
     // Insert the item being dragged back into items.
     if (index === -1) {
       items.push(dragItem);
     } else {
-      items.splice(index, 0, dragItem);
+      items.splice(isLeft ? index : index + 1, 0, dragItem);
     }
     items = items; // trigger reactivity
     if (path) update(store, path, items);
 
     dragContainer.style.visibility = 'hidden';
     dragItem = null;
+
+    overItem.classList.remove('left');
+    overItem.classList.remove('right');
+    overItem = null;
   }
 </script>
 
@@ -75,13 +100,13 @@
         in:receive={{key: item}}
         out:send={{key: item}}
         on:mousedown={mouseDown}>
-        {item}
+        <div class="inner">{item}</div>
       </div>
     {/each}
   </div>
 
   <div bind:this={dragContainer} class="drag-container">
-    <div class="item" on:mousemove={mouseMove} on:mouseup={mouseUp}>
+    <div class="inner" on:mousemove={mouseMove} on:mouseup={mouseUp}>
       {dragItem}
     </div>
   </div>
@@ -89,9 +114,12 @@
 
 <style>
   .container {
+    --space: 0.5rem;
+    --target-color: lightgray;
+
     border: solid var(--osc-primary-color, cornflowerblue) 1px;
     display: flex;
-    padding: 0.5rem;
+    padding: 0 calc(var(--space) / 2);
   }
 
   .drag-container {
@@ -99,22 +127,30 @@
     visibility: hidden;
   }
 
-  .drag-container > .item {
-    /*background-color: #6495eda0; /* cornflowerblue with opacity */
+  .drag-container > .inner {
     background-color: #ffa500c0; /* orange with opacity */
+    cursor: move;
+  }
+
+  .inner {
+    background-color: var(--osc-primary-color, cornflowerblue);
+    color: white;
+    margin: var(--space) calc(var(--space) / 2);
+    padding: 0.5rem;
   }
 
   .item {
     display: inline-block;
-    background-color: var(--osc-primary-color, cornflowerblue);
-    color: white;
+    border-left: solid 1px white;
+    border-right: solid 1px white;
     cursor: move;
-    margin-left: 0;
-    margin-right: 0.5rem;
-    padding: 0.5rem;
   }
 
-  .item:last-of-type {
-    margin-right: 0;
+  .container > :global(.over.left) {
+    border-left-color: var(--target-color);
+  }
+
+  .container > :global(.over.right) {
+    border-right-color: var(--target-color);
   }
 </style>
