@@ -24,7 +24,6 @@
 
   const dispatch = createEventDispatcher();
 
-  let invalid = false;
   let ref;
 
   $: if (path) value = get($store, path);
@@ -45,7 +44,6 @@
   $: classes =
     'osc-select' +
     (className ? ' ' + className : '') +
-    (value && invalid ? ' invalid' : '') +
     (vertical ? ' vertical' : '');
 
   if (width) style.width = width;
@@ -111,9 +109,5 @@
 
   select:focus {
     outline-color: var(--osc-secondary-color, orange);
-  }
-
-  select:invalid {
-    border: solid var(--osc-error-color, red) 1px;
   }
 </style>
