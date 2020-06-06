@@ -60,6 +60,13 @@
     .scaleLinear()
     .domain([data.length, 0]) // reversed order
     .range([usableHeight, 0]); // top to bottom
+  /*
+  const yAxisScale = d3
+    .scaleBand()
+    .rangeRound([0, height])
+    .padding(0.1) // 10% spread between all the bars
+    .domain(data.map(labelAccessor));
+  */
   const yAxis = d3
     .axisLeft(yAxisScale)
     .ticks(data.length)
@@ -95,6 +102,7 @@
       .append('rect')
       .attr('width', data => widthScale(valueAccessor(data)))
       .attr('height', BAR_HEIGHT)
+      //.attr('height', yAxisScale.bandwidth())
       // Cannot use an arrow function because we need the value of "this".
       .on('mousemove', function (data) {
         // Configure the tooltip.
@@ -121,6 +129,7 @@
       .text(data => valueAccessor(data))
       .attr('x', data => widthScale(valueAccessor(data)) - 24) // at end of bar
       .attr('y', barTotal / 2 + 3); // centered vertically
+    //.attr('y', data => yAxisScale(labelAccessor(data)));
 
     svg
       .append('g')
