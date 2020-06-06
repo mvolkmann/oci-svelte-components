@@ -67,7 +67,7 @@
     dragContainer.style.top = event.y - offsetY + 'px';
   }
 
-  function mouseUp(event) {
+  function mouseUp(/*event*/) {
     // Find child before the drop location.
     const children = Array.from(container.children);
     const index = children.findIndex(child => child === overItem);

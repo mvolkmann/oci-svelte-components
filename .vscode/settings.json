@@ -3,6 +3,7 @@
     "PINO",
     "crossfade",
     "dedupe",
+    "mouseout",
     "sirv",
     "uuidv"
   ]
