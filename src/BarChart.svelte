@@ -78,23 +78,16 @@
     // Create a selection containing one SVG group for each data value.
     const barGroups = svg
       .selectAll('.bar')
+      //TODO: Do you need to pass a key function to data?
       .data(data, data => labelAccessor(data) + valueAccessor(data))
-      .enter()
-      .append('g')
+      .join('g')
       .attr('class', 'bar');
 
     // Create a rect in each SVG group.
     barGroups
       .append('rect')
       .attr('height', barSize)
-      .attr('width', data => {
-        //TODO: This code is not executed again when data changes!
-        const value = valueAccessor(data);
-        console.log('BarChart.svelte x: value =', value);
-        const width = valueScale(value);
-        console.log('BarChart.svelte x: width =', width);
-        return width;
-      })
+      .attr('width', data => valueScale(valueAccessor(data)))
       .attr('x', LEFT_PADDING)
       .attr('y', data => PADDING + labelScale(labelAccessor(data)))
       //.attr('height', labelScale.bandwidth())
@@ -127,8 +120,6 @@
         'y',
         data => PADDING + labelScale(labelAccessor(data)) + TEXT_HEIGHT
       );
-
-    barGroups.exit().remove();
 
     // Add the value axis with minor tick marks.
     svg
