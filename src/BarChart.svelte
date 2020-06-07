@@ -95,6 +95,10 @@
       .attr('transform', labelAxisTransform);
   });
 
+  function getTextX(data) {
+    return leftPadding + valueScale(valueAccessor(data)) - 3;
+  }
+
   function getTextY(data) {
     const barHeight = labelScale.bandwidth();
     return padding + labelScale(labelAccessor(data)) + 2 + barHeight / 2;
@@ -161,9 +165,10 @@
 
   function updateText(text) {
     text
-      .classed('hide', data => valueAccessor(data) <= 5)
-      .text(data => valueAccessor(data))
-      .attr('x', data => leftPadding + valueScale(valueAccessor(data)) - 3)
+      // Hide the text with CSS if it won't fit on the bar.
+      .classed('hide', data => valueAccessor(data) < 5)
+      .text(valueAccessor)
+      .attr('x', getTextX)
       .attr('y', getTextY);
   }
 </script>
