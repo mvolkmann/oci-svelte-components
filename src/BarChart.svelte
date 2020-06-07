@@ -69,11 +69,9 @@
       .range([0, usableMinor]);
     labelAxis = d3.axisLeft(labelScale);
     labelAxisTransform = `translate(${leftPadding}, ${padding})`;
+
+    if (svg) renderChart(data);
   }
-
-  // Re-render the chart any time data changes.
-
-  $: if (svg && data) renderChart(data);
 
   onMount(() => {
     // Create a D3 selection from a DOM element.
