@@ -6,7 +6,6 @@
   export let data;
   export let height;
   //export let horizontal = false;
-  export let id;
   export let labelAccessor;
   export let maxValue;
   export let valueAccessor;
@@ -19,6 +18,8 @@
 
   const usableHeight = height - PADDING * 2 - X_AXIS_HEIGHT;
   const usableWidth = width - LEFT_PADDING - PADDING;
+
+  let container;
 
   $: classes = 'bar-chart' + (className ? ' ' + className : '');
 
@@ -61,12 +62,14 @@
   const barSize = labelScale.bandwidth();
   const labelAxisTransform = `translate(${LEFT_PADDING}, ${PADDING})`;
 
-  let container, svg, tooltip;
+  let svg, tooltip;
 
   onMount(() => {
-    container = d3.select('#' + id);
-    svg = container.select('svg');
-    tooltip = container.select('.tooltip');
+    // Create a D3 selection from a DOM element.
+    const containerSelection = d3.select(container);
+
+    svg = containerSelection.select('svg');
+    tooltip = containerSelection.select('.tooltip');
 
     // Add the value axis with minor tick marks.
     svg
@@ -167,7 +170,7 @@
   }
 </script>
 
-<div class={classes} {id}>
+<div bind:this={container} class={classes}>
   <svg {width} {height} />
   <div class="tooltip" />
 </div>
