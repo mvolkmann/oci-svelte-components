@@ -7,21 +7,24 @@
   export let height;
   //export let horizontal = false;
   export let labelAccessor;
+  export let leftPadding = 70;
   export let maxValue;
+  export let padding = 20;
   export let valueAccessor;
   export let width;
 
-  const LEFT_PADDING = 70;
-  const PADDING = 20;
   const TEXT_HEIGHT = 15;
   const X_AXIS_HEIGHT = 30;
 
-  const usableHeight = height - PADDING * 2 - X_AXIS_HEIGHT;
-  const usableWidth = width - LEFT_PADDING - PADDING;
+  const usableHeight = height - padding * 2 - X_AXIS_HEIGHT;
+  const usableWidth = width - leftPadding - padding;
 
-  let container;
+  let container, svg, tooltip;
 
   $: classes = 'bar-chart' + (className ? ' ' + className : '');
+
+  // Re-render the chart any time data changes.
+  $: if (svg && data) renderChart(data);
 
   // This is passed as a prop now.
   //const maxValue = d3.max(data, valueAccessor);
@@ -48,8 +51,8 @@
     // highStore is guaranteed to be a multiple of 10.
     .tickPadding(10) // space between end of tick and label; default is 3
     .tickSize(10);
-  const valueAxisTransform = `translate(${LEFT_PADDING}, ${
-    PADDING + usableHeight
+  const valueAxisTransform = `translate(${leftPadding}, ${
+    padding + usableHeight
   })`;
 
   const labelScale = d3
@@ -60,9 +63,7 @@
     .range([0, usableHeight]);
   const labelAxis = d3.axisLeft(labelScale);
   const barSize = labelScale.bandwidth();
-  const labelAxisTransform = `translate(${LEFT_PADDING}, ${PADDING})`;
-
-  let svg, tooltip;
+  const labelAxisTransform = `translate(${leftPadding}, ${padding})`;
 
   onMount(() => {
     // Create a D3 selection from a DOM element.
@@ -92,9 +93,6 @@
       .attr('class', 'y-axis')
       .attr('transform', labelAxisTransform);
   });
-
-  // Re-render the chart any time data changes.
-  $: if (svg && data) renderChart(data);
 
   function mouseMove(data) {
     // Configure the tooltip.
@@ -130,21 +128,22 @@
             .append('rect')
             .attr('height', barSize)
             .attr('width', data => valueScale(valueAccessor(data)))
-            .attr('x', LEFT_PADDING)
-            .attr('y', data => PADDING + labelScale(labelAccessor(data)))
+            .attr('x', leftPadding)
+            .attr('y', data => padding + labelScale(labelAccessor(data)))
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
 
           bar
             .append('text')
             .text(data => valueAccessor(data))
+            .classed('hide', data => valueAccessor(data) <= 5)
             .attr(
               'x',
-              data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24
+              data => leftPadding + valueScale(valueAccessor(data)) - 3
             ) // at end of bar
             .attr(
               'y',
-              data => PADDING + labelScale(labelAccessor(data)) + TEXT_HEIGHT
+              data => padding + labelScale(labelAccessor(data)) + TEXT_HEIGHT
             );
 
           return bar;
@@ -155,10 +154,11 @@
             .attr('width', data => valueScale(valueAccessor(data)));
           update
             .select('text')
+            .classed('hide', data => valueAccessor(data) <= 5)
             .text(data => valueAccessor(data))
             .attr(
               'x',
-              data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24
+              data => leftPadding + valueScale(valueAccessor(data)) - 3
             ); // at end of bar
           return update;
         },
@@ -176,9 +176,18 @@
 </div>
 
 <style>
+  .bar-chart :global(.bar rect) {
+    fill: cornflowerblue;
+  }
+
   .bar-chart :global(.bar text) {
     fill: white;
     pointer-events: none;
+    text-anchor: end;
+  }
+
+  .bar-chart :global(.hide) {
+    display: none;
   }
 
   .bar-chart :global(.major-x-axis > .tick > line) {
@@ -187,10 +196,6 @@
 
   .bar-chart :global(.minor-x-axis) {
     color: orange;
-  }
-
-  .bar-chart :global(rect) {
-    fill: cornflowerblue;
   }
 
   .bar-chart :global(svg) {
