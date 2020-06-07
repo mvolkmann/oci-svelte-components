@@ -22,7 +22,7 @@
 
   function addPlayer() {
     const {players} = $globalStore;
-    players.push({name: 'Player' + players.length, score: 50});
+    players.push({name: 'Player' + (players.length + 1), score: 50});
     $globalStore.players = players;
   }
 

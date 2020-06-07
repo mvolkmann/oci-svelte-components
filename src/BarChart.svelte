@@ -13,9 +13,7 @@
   export let valueAccessor;
   export let width;
 
-  const TEXT_HEIGHT = 15;
   const X_AXIS_HEIGHT = 30;
-
   const usableHeight = height - padding * 2 - X_AXIS_HEIGHT;
   const usableWidth = width - leftPadding - padding;
 
@@ -105,32 +103,28 @@
       .text(valueAccessor(data))
       .style('left', d3.event.pageX + 'px')
       .style('top', d3.event.pageY + 'px');
-    // Show the tooltip.
-    tooltip.style('opacity', 1);
-    // Fade the bar.
-    d3.select(this).style('opacity', 0.5);
+    tooltip.style('opacity', 1); // shows tooltip
+    d3.select(this).style('opacity', 0.5); // fades bar
   }
 
   function mouseOut() {
-    // Hide the tooltip.
-    tooltip.style('opacity', 0);
-    // Restore the bar opacity.
-    d3.select(this).style('opacity', 1);
+    tooltip.style('opacity', 0); // hides tooltip
+    d3.select(this).style('opacity', 1); // restores bar opacity
   }
 
   function renderChart(data) {
     updateLabelAxis(data);
 
-    // Create a selection containing one SVG group for each data value.
-    const barGroups = svg
+    svg
       .selectAll('.bar')
-      //TODO: Do you need to pass a key function to data?
-      .data(data, data => labelAccessor(data))
+      .data(data)
       .join(
         enter => {
+          // Create an SVG group for each data value.
           const bar = enter.append('g');
           bar.attr('class', 'bar');
 
+          // Append an SVG rect element to the group.
           const rect = bar
             .append('rect')
             .attr('x', leftPadding)
@@ -138,18 +132,17 @@
             .on('mouseout', mouseOut);
           updateRect(rect);
 
+          // Append an SVG text element to the group.
           const text = bar.append('text').attr('alignment-baseline', 'middle');
           updateText(text);
-
-          return bar;
         },
         update => {
           updateRect(update.select('rect'));
           updateText(update.select('text'));
-          return update;
+          return update; // must return this
         },
         exit => {
-          return exit.remove();
+          exit.remove();
         }
       )
       .attr('class', 'bar');
