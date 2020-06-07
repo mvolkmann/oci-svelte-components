@@ -65,11 +65,6 @@
   const labelAxisTransform = `translate(${leftPadding}, ${padding})`;
   let labelAxisSelector;
 
-  function updateLabelAxis(data) {
-    labelScale.domain(data.map(labelAccessor));
-    labelAxisSelector.call(labelAxis);
-  }
-
   onMount(() => {
     // Create a D3 selection from a DOM element.
     const containerSelection = d3.select(container);
@@ -120,8 +115,6 @@
 
   function renderChart(data) {
     updateLabelAxis(data);
-    console.log('BarChart.svelte x: labelScale("Mark") =', labelScale('Mark'));
-    console.log('BarChart.svelte x: labelScale("Tami") =', labelScale('Tami'));
 
     // Create a selection containing one SVG group for each data value.
     const barGroups = svg
@@ -133,14 +126,12 @@
           const bar = enter.append('g');
           bar.attr('class', 'bar');
 
-          bar
+          const rect = bar
             .append('rect')
-            .attr('height', labelScale.bandwidth())
-            .attr('width', data => valueScale(valueAccessor(data)))
             .attr('x', leftPadding)
-            .attr('y', data => padding + labelScale(labelAccessor(data)))
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
+          updateRect(rect);
 
           bar
             .append('text')
@@ -158,11 +149,7 @@
           return bar;
         },
         update => {
-          update
-            .select('rect')
-            .attr('height', labelScale.bandwidth())
-            .attr('width', data => valueScale(valueAccessor(data)))
-            .attr('y', data => padding + labelScale(labelAccessor(data)));
+          updateRect(update.select('rect'));
 
           update
             .select('text')
@@ -184,6 +171,18 @@
         }
       )
       .attr('class', 'bar');
+  }
+
+  function updateLabelAxis(data) {
+    labelScale.domain(data.map(labelAccessor));
+    labelAxisSelector.call(labelAxis);
+  }
+
+  function updateRect(rect) {
+    rect
+      .attr('height', labelScale.bandwidth())
+      .attr('width', data => valueScale(valueAccessor(data)))
+      .attr('y', data => padding + labelScale(labelAccessor(data)));
   }
 </script>
 
