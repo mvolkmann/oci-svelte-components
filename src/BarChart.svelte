@@ -139,13 +139,9 @@
         update => {
           updateRect(update.select('rect'));
           updateText(update.select('text'));
-          return update; // must return this
         },
-        exit => {
-          exit.remove();
-        }
-      )
-      .attr('class', 'bar');
+        exit => exit.remove()
+      );
   }
 
   function updateLabelAxis(data) {
