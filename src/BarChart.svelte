@@ -94,6 +94,11 @@
       .attr('transform', labelAxisTransform);
   });
 
+  function getTextY(data) {
+    const barHeight = labelScale.bandwidth();
+    return padding + labelScale(labelAccessor(data)) + 2 + barHeight / 2;
+  }
+
   function mouseMove(data) {
     // Configure the tooltip.
     tooltip
@@ -132,7 +137,9 @@
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
           updateRect(rect);
-          updateText(bar.append('text'));
+
+          const text = bar.append('text').attr('alignment-baseline', 'middle');
+          updateText(text);
 
           return bar;
         },
@@ -165,10 +172,7 @@
       .classed('hide', data => valueAccessor(data) <= 5)
       .text(data => valueAccessor(data))
       .attr('x', data => leftPadding + valueScale(valueAccessor(data)) - 3)
-      .attr(
-        'y',
-        data => padding + labelScale(labelAccessor(data)) + TEXT_HEIGHT
-      );
+      .attr('y', getTextY);
   }
 </script>
 
