@@ -67,6 +67,27 @@
     container = d3.select('#' + id);
     svg = container.select('svg');
     tooltip = container.select('.tooltip');
+
+    // Add the value axis with minor tick marks.
+    svg
+      .append('g')
+      .call(valueAxisMinor)
+      .attr('class', 'minor-x-axis')
+      .attr('transform', valueAxisTransform);
+
+    // Add the value axis with major tick marks.
+    svg
+      .append('g')
+      .call(valueAxisMajor)
+      .attr('class', 'major-x-axis')
+      .attr('transform', valueAxisTransform);
+
+    // Add the label axis with label values.
+    svg
+      .append('g')
+      .call(labelAxis)
+      .attr('class', 'y-axis')
+      .attr('transform', labelAxisTransform);
   });
 
   // Re-render the chart any time data changes.
@@ -143,27 +164,6 @@
         }
       )
       .attr('class', 'bar');
-
-    // Add the value axis with minor tick marks.
-    svg
-      .append('g')
-      .call(valueAxisMinor)
-      .attr('class', 'minor-x-axis')
-      .attr('transform', valueAxisTransform);
-
-    // Add the value axis with major tick marks.
-    svg
-      .append('g')
-      .call(valueAxisMajor)
-      .attr('class', 'major-x-axis')
-      .attr('transform', valueAxisTransform);
-
-    // Add the label axis with label values.
-    svg
-      .append('g')
-      .call(labelAxis)
-      .attr('class', 'y-axis')
-      .attr('transform', labelAxisTransform);
   }
 </script>
 
