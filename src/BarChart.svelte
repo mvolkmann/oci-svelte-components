@@ -13,7 +13,10 @@
   export let valueAccessor;
   export let width;
 
+  // We could compute this based on the rendered height of the x-axis,
+  // but it is needed before that is rendered.
   const X_AXIS_HEIGHT = 30;
+
   const usableHeight = height - padding * 2 - X_AXIS_HEIGHT;
   const usableWidth = width - leftPadding - padding;
 
