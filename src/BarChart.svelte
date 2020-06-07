@@ -72,54 +72,77 @@
   // Re-render the chart any time data changes.
   $: if (svg && data) renderChart(data);
 
-  function renderChart(data) {
-    console.log('BarChart.svelte renderChart: data =', data);
+  function mouseMove(data) {
+    // Configure the tooltip.
+    tooltip
+      .text(valueAccessor(data))
+      .style('left', d3.event.pageX + 'px')
+      .style('top', d3.event.pageY + 'px');
+    // Show the tooltip.
+    tooltip.style('opacity', 1);
+    // Fade the bar.
+    d3.select(this).style('opacity', 0.5);
+  }
 
+  function mouseOut() {
+    // Hide the tooltip.
+    tooltip.style('opacity', 0);
+    // Restore the bar opacity.
+    d3.select(this).style('opacity', 1);
+  }
+
+  function renderChart(data) {
     // Create a selection containing one SVG group for each data value.
     const barGroups = svg
       .selectAll('.bar')
       //TODO: Do you need to pass a key function to data?
-      .data(data, data => labelAccessor(data) + valueAccessor(data))
-      .join('g')
+      .data(data, data => labelAccessor(data))
+      .join(
+        enter => {
+          const bar = enter.append('g');
+          bar.attr('class', 'bar');
+
+          bar
+            .append('rect')
+            .attr('height', barSize)
+            .attr('width', data => valueScale(valueAccessor(data)))
+            .attr('x', LEFT_PADDING)
+            .attr('y', data => PADDING + labelScale(labelAccessor(data)))
+            .on('mousemove', mouseMove)
+            .on('mouseout', mouseOut);
+
+          bar
+            .append('text')
+            .text(data => valueAccessor(data))
+            .attr(
+              'x',
+              data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24
+            ) // at end of bar
+            .attr(
+              'y',
+              data => PADDING + labelScale(labelAccessor(data)) + TEXT_HEIGHT
+            );
+
+          return bar;
+        },
+        update => {
+          update
+            .select('rect')
+            .attr('width', data => valueScale(valueAccessor(data)));
+          update
+            .select('text')
+            .text(data => valueAccessor(data))
+            .attr(
+              'x',
+              data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24
+            ); // at end of bar
+          return update;
+        },
+        exit => {
+          return exit.remove();
+        }
+      )
       .attr('class', 'bar');
-
-    // Create a rect in each SVG group.
-    barGroups
-      .append('rect')
-      .attr('height', barSize)
-      .attr('width', data => valueScale(valueAccessor(data)))
-      .attr('x', LEFT_PADDING)
-      .attr('y', data => PADDING + labelScale(labelAccessor(data)))
-      //.attr('height', labelScale.bandwidth())
-      // Cannot use an arrow function because we need the value of "this".
-      .on('mousemove', function (data) {
-        // Configure the tooltip.
-        tooltip
-          .text(valueAccessor(data))
-          .style('left', d3.event.pageX + 'px')
-          .style('top', d3.event.pageY + 'px');
-        // Show the tooltip.
-        tooltip.style('opacity', 1);
-        // Fade the bar.
-        d3.select(this).style('opacity', 0.5);
-      })
-      // Cannot use an arrow function because we need the value of "this".
-      .on('mouseout', function () {
-        // Hide the tooltip.
-        tooltip.style('opacity', 0);
-        // Restore the bar opacity.
-        d3.select(this).style('opacity', 1);
-      });
-
-    // Create text for each SVG group.
-    barGroups
-      .append('text')
-      .text(data => valueAccessor(data))
-      .attr('x', data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24) // at end of bar
-      .attr(
-        'y',
-        data => PADDING + labelScale(labelAccessor(data)) + TEXT_HEIGHT
-      );
 
     // Add the value axis with minor tick marks.
     svg
