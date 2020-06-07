@@ -80,11 +80,11 @@
       .selectAll('.bar')
       .data(data, data => labelAccessor(data) + valueAccessor(data))
       .enter()
-      .append('g');
+      .append('g')
+      .attr('class', 'bar');
 
     // Create a rect in each SVG group.
     barGroups
-      .attr('class', 'bar')
       .append('rect')
       .attr('height', barSize)
       .attr('width', data => {
