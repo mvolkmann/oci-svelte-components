@@ -78,14 +78,14 @@
     // Create a selection containing one SVG group for each data value.
     const barGroups = svg
       .selectAll('.bar')
-      .data(data, data => labelAccessor(data));
+      .data(data, data => labelAccessor(data))
+      .enter()
+      .append('g');
     //.exit()
     //.remove();
 
     // Create a rect in each SVG group.
     barGroups
-      .enter()
-      .append('g')
       .attr('class', 'bar')
       .append('rect')
       .attr('height', barSize)
@@ -122,7 +122,6 @@
 
     // Create text for each SVG group.
     barGroups
-      .enter()
       .append('text')
       .text(data => valueAccessor(data))
       .attr('x', data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24) // at end of bar
