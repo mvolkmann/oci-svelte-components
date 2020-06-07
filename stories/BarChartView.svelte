@@ -13,7 +13,7 @@
       {name: 'Amanda', score: 50},
       {name: 'Jeremy', score: 68}
     ],
-    horizontalChart: false
+    horizontalChart: true
   });
 
   const height = 160;

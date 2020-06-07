@@ -13,60 +13,67 @@
   export let valueAccessor;
   export let width;
 
-  $: console.log('BarChart.svelte x: horizontal =', horizontal);
-
   // We could compute this based on the rendered height of the x-axis,
   // but it is needed before that is rendered.
-  const X_AXIS_HEIGHT = 30;
+  const BOTTOM_AXIS_HEIGHT = 30;
 
-  const usableHeight = height - padding * 2 - X_AXIS_HEIGHT;
+  const usableHeight = height - padding * 2 - BOTTOM_AXIS_HEIGHT;
   const usableWidth = width - leftPadding - padding;
 
-  let container, svg, tooltip;
+  let container, labelAxis, labelAxisSelector, labelAxisTransform, labelScale;
+  let majorPosition, majorSize, minorPosition, minorSize, svg, tooltip;
+  let valueAxisMajor, valueAxisMinor, valueAxisTransform, valueScale;
 
   $: classes = 'bar-chart' + (className ? ' ' + className : '');
 
+  $: {
+    if (horizontal) {
+      majorPosition = 'x';
+      majorSize = 'width';
+      minorPosition = 'y';
+      minorSize = 'height';
+    } else {
+      majorPosition = 'y';
+      majorSize = 'height';
+      minorPosition = 'x';
+      minorSize = 'width';
+    }
+
+    const usableMajor = horizontal ? usableWidth : usableHeight;
+    const usableMinor = horizontal ? usableHeight : usableWidth;
+
+    valueScale = d3.scaleLinear().domain([0, maxValue]).range([0, usableMajor]);
+
+    const valueAxisScale = d3
+      .scaleLinear()
+      .domain([0, maxValue])
+      .range([0, usableMajor]);
+    valueAxisMinor = d3
+      .axisBottom(valueAxisScale)
+      .ticks(maxValue) // show a tick at every 1
+      .tickFormat('') // hides labels
+      .tickSize(5); // length of each tick (default is 6)
+    valueAxisMajor = d3
+      .axisBottom(valueAxisScale)
+      .ticks(maxValue / 10) // show a tick at every multiple of 10
+      // highStore is guaranteed to be a multiple of 10.
+      .tickPadding(10) // space between end of tick and label; default is 3
+      .tickSize(10);
+    valueAxisTransform = `translate(${leftPadding}, ${padding + usableMinor})`;
+
+    labelScale = d3
+      .scaleBand()
+      .rangeRound([0, usableMinor])
+      .padding(0.1) // 10% spread between all the bars
+      .domain(data.map(labelAccessor))
+      .range([0, usableMinor]);
+    labelAxis = d3.axisLeft(labelScale);
+    labelAxisTransform = `translate(${leftPadding}, ${padding})`;
+  }
+
   // Re-render the chart any time data changes.
+
   $: if (svg && data) renderChart(data);
-
-  // This is passed as a prop now.
-  //const maxValue = d3.max(data, valueAccessor);
-
-  // Create a linear scale that maps values from zero to the maximum score
-  // to values from zero to the usable width of the SVG.
-  const valueScale = d3
-    .scaleLinear()
-    .domain([0, maxValue])
-    .range([0, usableWidth]);
-
-  const valueAxisScale = d3
-    .scaleLinear()
-    .domain([0, maxValue])
-    .range([0, usableWidth]);
-  const valueAxisMinor = d3
-    .axisBottom(valueAxisScale)
-    .ticks(maxValue) // show a tick at every 1
-    .tickFormat('') // hides labels
-    .tickSize(5); // length of each tick (default is 6)
-  const valueAxisMajor = d3
-    .axisBottom(valueAxisScale)
-    .ticks(maxValue / 10) // show a tick at every multiple of 10
-    // highStore is guaranteed to be a multiple of 10.
-    .tickPadding(10) // space between end of tick and label; default is 3
-    .tickSize(10);
-  const valueAxisTransform = `translate(${leftPadding}, ${
-    padding + usableHeight
-  })`;
-
-  const labelScale = d3
-    .scaleBand()
-    .rangeRound([0, usableHeight])
-    .padding(0.1) // 10% spread between all the bars
-    .domain(data.map(labelAccessor))
-    .range([0, usableHeight]);
-  const labelAxis = d3.axisLeft(labelScale);
-  const labelAxisTransform = `translate(${leftPadding}, ${padding})`;
-  let labelAxisSelector;
 
   onMount(() => {
     // Create a D3 selection from a DOM element.
@@ -136,7 +143,7 @@
           // Append an SVG rect element to the group.
           const rect = bar
             .append('rect')
-            .attr('x', leftPadding)
+            .attr(majorPosition, leftPadding)
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
           updateRect(rect);
@@ -160,9 +167,9 @@
 
   function updateRect(rect) {
     rect
-      .attr('height', labelScale.bandwidth())
-      .attr('width', data => valueScale(valueAccessor(data)))
-      .attr('y', data => padding + labelScale(labelAccessor(data)));
+      .attr(minorSize, labelScale.bandwidth())
+      .attr(majorSize, data => valueScale(valueAccessor(data)))
+      .attr(minorPosition, data => padding + labelScale(labelAccessor(data)));
   }
 
   function updateText(text) {
@@ -170,8 +177,8 @@
       // Hide the text with CSS if it won't fit on the bar.
       .classed('hide', data => valueAccessor(data) < 5)
       .text(valueAccessor)
-      .attr('x', getTextX)
-      .attr('y', getTextY);
+      .attr(majorPosition, getTextX)
+      .attr(minorPosition, getTextY);
   }
 </script>
 
