@@ -5,13 +5,15 @@
   export let className = '';
   export let data;
   export let height;
-  //export let horizontal = false;
+  export let horizontal = false;
   export let labelAccessor;
   export let leftPadding = 70;
   export let maxValue;
   export let padding = 20;
   export let valueAccessor;
   export let width;
+
+  $: console.log('BarChart.svelte x: horizontal =', horizontal);
 
   // We could compute this based on the rendered height of the x-axis,
   // but it is needed before that is rendered.

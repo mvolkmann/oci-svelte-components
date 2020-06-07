@@ -3,6 +3,7 @@
   import BarChart from '../src/BarChart.svelte';
   import Button from '../src/Button.svelte';
   import Slider from '../src/Slider.svelte';
+  import Toggle from '../src/Toggle.svelte';
   import {globalStore} from '../src/stores';
 
   globalStore.set({
@@ -11,7 +12,8 @@
       {name: 'Tami', score: 40},
       {name: 'Amanda', score: 50},
       {name: 'Jeremy', score: 68}
-    ]
+    ],
+    horizontalChart: false
   });
 
   const height = 160;
@@ -33,6 +35,8 @@
   }
 </script>
 
+<Toggle label="Horizontal?" path="horizontalChart" />
+
 {#each $globalStore.players as player, index}
   <Slider
     label={`${player.name}'s score`}
@@ -49,6 +53,7 @@
 <BarChart
   data={$globalStore.players}
   {height}
+  horizontal={$globalStore.horizontalChart}
   id="players-bar-chart"
   maxValue={100}
   {width}
