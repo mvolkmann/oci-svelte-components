@@ -78,11 +78,9 @@
     // Create a selection containing one SVG group for each data value.
     const barGroups = svg
       .selectAll('.bar')
-      .data(data, data => labelAccessor(data))
+      .data(data, data => labelAccessor(data) + valueAccessor(data))
       .enter()
       .append('g');
-    //.exit()
-    //.remove();
 
     // Create a rect in each SVG group.
     barGroups
@@ -129,6 +127,9 @@
         'y',
         data => PADDING + labelScale(labelAccessor(data)) + TEXT_HEIGHT
       );
+
+    //TODO: Why does adding this remove all the bars?
+    barGroups.exit().remove();
 
     // Add the value axis with minor tick marks.
     svg
