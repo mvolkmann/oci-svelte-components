@@ -62,8 +62,13 @@
     .domain(data.map(labelAccessor))
     .range([0, usableHeight]);
   const labelAxis = d3.axisLeft(labelScale);
-  const barSize = labelScale.bandwidth();
   const labelAxisTransform = `translate(${leftPadding}, ${padding})`;
+  let labelAxisSelector;
+
+  function updateLabelAxis(data) {
+    labelScale.domain(data.map(labelAccessor));
+    labelAxisSelector.call(labelAxis);
+  }
 
   onMount(() => {
     // Create a D3 selection from a DOM element.
@@ -87,7 +92,7 @@
       .attr('transform', valueAxisTransform);
 
     // Add the label axis with label values.
-    svg
+    labelAxisSelector = svg
       .append('g')
       .call(labelAxis)
       .attr('class', 'y-axis')
@@ -114,6 +119,10 @@
   }
 
   function renderChart(data) {
+    updateLabelAxis(data);
+    console.log('BarChart.svelte x: labelScale("Mark") =', labelScale('Mark'));
+    console.log('BarChart.svelte x: labelScale("Tami") =', labelScale('Tami'));
+
     // Create a selection containing one SVG group for each data value.
     const barGroups = svg
       .selectAll('.bar')
@@ -126,7 +135,7 @@
 
           bar
             .append('rect')
-            .attr('height', barSize)
+            .attr('height', labelScale.bandwidth())
             .attr('width', data => valueScale(valueAccessor(data)))
             .attr('x', leftPadding)
             .attr('y', data => padding + labelScale(labelAccessor(data)))
@@ -151,7 +160,10 @@
         update => {
           update
             .select('rect')
-            .attr('width', data => valueScale(valueAccessor(data)));
+            .attr('height', labelScale.bandwidth())
+            .attr('width', data => valueScale(valueAccessor(data)))
+            .attr('y', data => padding + labelScale(labelAccessor(data)));
+
           update
             .select('text')
             .classed('hide', data => valueAccessor(data) <= 5)
@@ -159,7 +171,12 @@
             .attr(
               'x',
               data => leftPadding + valueScale(valueAccessor(data)) - 3
-            ); // at end of bar
+            ) // at end of bar
+            .attr(
+              'y',
+              data => padding + labelScale(labelAccessor(data)) + TEXT_HEIGHT
+            );
+
           return update;
         },
         exit => {
