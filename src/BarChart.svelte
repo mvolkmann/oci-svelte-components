@@ -132,38 +132,13 @@
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
           updateRect(rect);
-
-          bar
-            .append('text')
-            .text(data => valueAccessor(data))
-            .classed('hide', data => valueAccessor(data) <= 5)
-            .attr(
-              'x',
-              data => leftPadding + valueScale(valueAccessor(data)) - 3
-            ) // at end of bar
-            .attr(
-              'y',
-              data => padding + labelScale(labelAccessor(data)) + TEXT_HEIGHT
-            );
+          updateText(bar.append('text'));
 
           return bar;
         },
         update => {
           updateRect(update.select('rect'));
-
-          update
-            .select('text')
-            .classed('hide', data => valueAccessor(data) <= 5)
-            .text(data => valueAccessor(data))
-            .attr(
-              'x',
-              data => leftPadding + valueScale(valueAccessor(data)) - 3
-            ) // at end of bar
-            .attr(
-              'y',
-              data => padding + labelScale(labelAccessor(data)) + TEXT_HEIGHT
-            );
-
+          updateText(update.select('text'));
           return update;
         },
         exit => {
@@ -183,6 +158,17 @@
       .attr('height', labelScale.bandwidth())
       .attr('width', data => valueScale(valueAccessor(data)))
       .attr('y', data => padding + labelScale(labelAccessor(data)));
+  }
+
+  function updateText(text) {
+    text
+      .classed('hide', data => valueAccessor(data) <= 5)
+      .text(data => valueAccessor(data))
+      .attr('x', data => leftPadding + valueScale(valueAccessor(data)) - 3)
+      .attr(
+        'y',
+        data => padding + labelScale(labelAccessor(data)) + TEXT_HEIGHT
+      );
   }
 </script>
 

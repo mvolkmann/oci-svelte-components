@@ -20,16 +20,15 @@
   const labelAccessor = player => player.name;
   const valueAccessor = player => player.score;
 
-  function addPlayer(name, score) {
+  function addPlayer() {
     const {players} = $globalStore;
-    players.push({name, score});
+    players.push({name: 'Player' + players.length, score: 50});
     $globalStore.players = players;
   }
 
   function removeFirstPlayer() {
     const {players} = $globalStore;
     players.shift();
-    console.log('BarChartView.svelte x: players =', players);
     $globalStore.players = players;
   }
 </script>
@@ -44,7 +43,7 @@
     showValue />
 {/each}
 
-<Button on:click={() => addPlayer('Wayne', 99)}>Add Player</Button>
+<Button on:click={() => addPlayer()}>Add Player</Button>
 <Button on:click={removeFirstPlayer}>Remove First Player</Button>
 
 <BarChart
