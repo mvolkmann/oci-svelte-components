@@ -8,101 +8,98 @@
   //export let horizontal = false;
   export let id;
   export let labelAccessor;
+  export let maxValue;
   export let valueAccessor;
   export let width;
 
-  $: classes = 'bar-chart' + (className ? ' ' + className : '');
-
-  const BAR_HEIGHT = 20;
-  const BAR_MARGIN = 4; // vertical spacing between
   const LEFT_PADDING = 70;
   const PADDING = 20;
-  const SVG_WIDTH = 400;
+  const TEXT_HEIGHT = 15;
+  const X_AXIS_HEIGHT = 30;
 
-  const barTotal = BAR_HEIGHT + BAR_MARGIN;
-  const usableHeight = data.length * barTotal;
-  const usableWidth = SVG_WIDTH - LEFT_PADDING - PADDING;
+  const usableHeight = height - PADDING * 2 - X_AXIS_HEIGHT;
+  const usableWidth = width - LEFT_PADDING - PADDING;
 
-  const maxValue = d3.max(data, valueAccessor);
+  $: classes = 'bar-chart' + (className ? ' ' + className : '');
+
+  // This is passed as a prop now.
+  //const maxValue = d3.max(data, valueAccessor);
 
   // Create a linear scale that maps values from zero to the maximum score
-  // to values from zero to the width of the SVG.
-  const widthScale = d3
+  // to values from zero to the usable width of the SVG.
+  const valueScale = d3
     .scaleLinear()
     .domain([0, maxValue])
     .range([0, usableWidth]);
 
-  const xAxisScale = d3
+  const valueAxisScale = d3
     .scaleLinear()
     .domain([0, maxValue])
     .range([0, usableWidth]);
-  const xAxisMinor = d3
-    .axisBottom(xAxisScale)
+  const valueAxisMinor = d3
+    .axisBottom(valueAxisScale)
     .ticks(maxValue) // show a tick at every 1
     .tickFormat('') // hides labels
     .tickSize(5); // length of each tick (default is 6)
-  const xAxisMajor = d3
-    .axisBottom(xAxisScale)
+  const valueAxisMajor = d3
+    .axisBottom(valueAxisScale)
     .ticks(maxValue / 10) // show a tick at every multiple of 10
     // highStore is guaranteed to be a multiple of 10.
     .tickPadding(10) // space between end of tick and label; default is 3
     .tickSize(10);
-  //.tickSize(-usableHeight); // to draw across chart
-  const xAxisTransform = `translate(${LEFT_PADDING}, ${
-    PADDING + data.length * barTotal
+  const valueAxisTransform = `translate(${LEFT_PADDING}, ${
+    PADDING + usableHeight
   })`;
 
-  // Generate tick values that will place the ticks
-  // at the vertical center of each of the bars.
-  const yTickValues = data.map((_, i) => i + 0.5);
-
-  const yAxisScale = d3
-    .scaleLinear()
-    .domain([data.length, 0]) // reversed order
-    .range([usableHeight, 0]); // top to bottom
-  /*
-  const yAxisScale = d3
+  const labelScale = d3
     .scaleBand()
-    .rangeRound([0, height])
+    .rangeRound([0, usableHeight])
     .padding(0.1) // 10% spread between all the bars
-    .domain(data.map(labelAccessor));
-  */
-  const yAxis = d3
-    .axisLeft(yAxisScale)
-    .ticks(data.length)
-    .tickFormat((_, i) => {
-      const datum = data[i];
-      return datum ? labelAccessor(datum) : '';
-    })
-    .tickValues(yTickValues);
+    .domain(data.map(labelAccessor))
+    .range([0, usableHeight]);
+  const labelAxis = d3.axisLeft(labelScale);
+  const barSize = labelScale.bandwidth();
+  const labelAxisTransform = `translate(${LEFT_PADDING}, ${PADDING})`;
+
+  let container, svg, tooltip;
 
   onMount(() => {
-    // Create an SVG element.
-    const container = d3.select('#' + id);
-    console.log('BarChart.svelte x: container =', container);
-    const svg = container.select('svg');
-    console.log('BarChart.svelte x: svg =', svg);
-    const tooltip = container.select('.tooltip');
+    container = d3.select('#' + id);
+    svg = container.select('svg');
+    tooltip = container.select('.tooltip');
+  });
 
-    // Create a selection containing one SVG group for each data value
-    // that are translated in the y-direction so they are visually separated.
+  // Re-render the chart any time data changes.
+  $: if (svg && data) renderChart(data);
+
+  function renderChart(data) {
+    console.log('BarChart.svelte renderChart: data =', data);
+
+    // Create a selection containing one SVG group for each data value.
     const barGroups = svg
-      .selectAll('g')
-      .data(data)
+      .selectAll('.bar')
+      .data(data, data => labelAccessor(data));
+    //.exit()
+    //.remove();
+
+    // Create a rect in each SVG group.
+    barGroups
       .enter()
       .append('g')
       .attr('class', 'bar')
-      .attr(
-        'transform',
-        (_, i) => `translate(${LEFT_PADDING}, ${PADDING + i * barTotal})`
-      );
-
-    // Create a rect for each data value.
-    barGroups
       .append('rect')
-      .attr('width', data => widthScale(valueAccessor(data)))
-      .attr('height', BAR_HEIGHT)
-      //.attr('height', yAxisScale.bandwidth())
+      .attr('height', barSize)
+      .attr('width', data => {
+        //TODO: This code is not executed again when data changes!
+        const value = valueAccessor(data);
+        console.log('BarChart.svelte x: value =', value);
+        const width = valueScale(value);
+        console.log('BarChart.svelte x: width =', width);
+        return width;
+      })
+      .attr('x', LEFT_PADDING)
+      .attr('y', data => PADDING + labelScale(labelAccessor(data)))
+      //.attr('height', labelScale.bandwidth())
       // Cannot use an arrow function because we need the value of "this".
       .on('mousemove', function (data) {
         // Configure the tooltip.
@@ -123,34 +120,38 @@
         d3.select(this).style('opacity', 1);
       });
 
-    // Create text for each data value.
+    // Create text for each SVG group.
     barGroups
+      .enter()
       .append('text')
       .text(data => valueAccessor(data))
-      .attr('x', data => widthScale(valueAccessor(data)) - 24) // at end of bar
-      .attr('y', barTotal / 2 + 3); // centered vertically
-    //.attr('y', data => yAxisScale(labelAccessor(data)));
-
-    svg
-      .append('g')
-      .call(xAxisMinor)
-      .attr('class', 'minor-x-axis')
-      .attr('transform', xAxisTransform);
-    svg
-      .append('g')
-      .call(xAxisMajor)
-      .attr('class', 'major-x-axis')
-      .attr('transform', xAxisTransform);
-
-    svg
-      .append('g')
-      .call(yAxis)
-      .attr('class', 'y-axis')
+      .attr('x', data => LEFT_PADDING + valueScale(valueAccessor(data)) - 24) // at end of bar
       .attr(
-        'transform',
-        `translate(${LEFT_PADDING}, ${PADDING - BAR_MARGIN / 2})`
+        'y',
+        data => PADDING + labelScale(labelAccessor(data)) + TEXT_HEIGHT
       );
-  });
+
+    // Add the value axis with minor tick marks.
+    svg
+      .append('g')
+      .call(valueAxisMinor)
+      .attr('class', 'minor-x-axis')
+      .attr('transform', valueAxisTransform);
+
+    // Add the value axis with major tick marks.
+    svg
+      .append('g')
+      .call(valueAxisMajor)
+      .attr('class', 'major-x-axis')
+      .attr('transform', valueAxisTransform);
+
+    // Add the label axis with label values.
+    svg
+      .append('g')
+      .call(labelAxis)
+      .attr('class', 'y-axis')
+      .attr('transform', labelAxisTransform);
+  }
 </script>
 
 <div class={classes} {id}>
@@ -180,17 +181,18 @@
     background-color: linen;
   }
 
+  .bar-chart :global(.y-axis .domain) {
+    display: none;
+  }
+
   .tooltip {
     position: absolute;
-    background: pink;
-    border: solid gray 1px;
+    background: orange;
+    border: none;
     border-radius: 5px;
+    color: white;
     opacity: 0; /* initially hidden */
     padding: 0.5rem;
     pointer-events: none;
-  }
-
-  .bar-chart :global(.y-axis .domain) {
-    display: none;
   }
 </style>

@@ -24,6 +24,7 @@
     "@storybook/addons": "^5.3.19",
     "@storybook/svelte": "^5.3.19",
     "@testing-library/svelte": "^3.0.0",
+    "@types/d3": "^5.7.2",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "eslint": "^7.1.0",
