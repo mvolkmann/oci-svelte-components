@@ -91,14 +91,14 @@
     svg
       .append('g')
       .call(valueAxisMajor)
-      .attr('class', 'major-x-axis')
+      .attr('class', 'value-axis-major')
       .attr('transform', valueAxisTransform);
 
     // Add the label axis with label values.
     labelAxisSelector = svg
       .append('g')
       .call(labelAxis)
-      .attr('class', 'y-axis')
+      .attr('class', 'label-axis')
       .attr('transform', labelAxisTransform);
   });
 
@@ -127,6 +127,8 @@
   }
 
   function renderChart(data) {
+    console.log('BarChart.svelte renderChart: entered');
+
     updateLabelAxis(data);
 
     svg
@@ -164,6 +166,7 @@
   }
 
   function updateRect(rect) {
+    console.log('BarChart.svelte updateRect: entered');
     rect
       .attr(minorSize, labelScale.bandwidth())
       .attr(majorSize, data => valueScale(valueAccessor(data)))
@@ -200,8 +203,8 @@
     display: none;
   }
 
-  .bar-chart :global(.major-x-axis > .tick > line) {
-    stroke-width: 2;
+  .bar-chart :global(.label-axis .domain) {
+    display: none;
   }
 
   .bar-chart :global(.minor-x-axis) {
@@ -212,8 +215,8 @@
     background-color: linen;
   }
 
-  .bar-chart :global(.y-axis .domain) {
-    display: none;
+  .bar-chart :global(.value-axis-major > .tick > line) {
+    stroke-width: 2;
   }
 
   .tooltip {
