@@ -149,7 +149,6 @@
   }
 
   function mouseMove(data) {
-    // Configure the tooltip.
     tooltip
       .text(valueAccessor(data))
       .style('left', d3.event.pageX + 'px')
@@ -215,7 +214,7 @@
   }
 
   function updateText(text) {
-    const minSize = horizontal ? 5 : 20;
+    const minSize = horizontal ? 5 : 12;
     text
       // Hide the text with CSS if it won't fit on the bar.
       .classed('hide', data => valueAccessor(data) < minSize)
@@ -265,10 +264,6 @@
     text-anchor: end;
   }
 
-  .vertical :global(.bar text) {
-    text-anchor: middle;
-  }
-
   .tooltip {
     position: absolute;
     background: orange;
@@ -278,5 +273,9 @@
     opacity: 0; /* initially hidden */
     padding: 0.5rem;
     pointer-events: none;
+  }
+
+  .vertical :global(.bar text) {
+    text-anchor: middle;
   }
 </style>
