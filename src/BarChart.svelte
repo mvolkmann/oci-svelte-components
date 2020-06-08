@@ -137,11 +137,9 @@
       : padding + usableMajor - getScaledValue(data) + 15;
   }
 
-  //TODO: Is it correct that this function just
-  //TODO: returns the opposite values of getTextX?
   function getTextMinorPosition(data) {
     return horizontal
-      ? padding + getScaledLabel(data) + 2 + labelScale.bandwidth() / 2
+      ? padding + getScaledLabel(data) + labelScale.bandwidth() / 2 + 2
       : padding +
           LABEL_WIDTH +
           getScaledLabel(data) +
