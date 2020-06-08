@@ -27,7 +27,10 @@
 
   let lastHorizontal = horizontal;
 
-  $: classes = 'bar-chart' + (className ? ' ' + className : '');
+  $: classes =
+    'bar-chart' +
+    (className ? ' ' + className : '') +
+    (horizontal ? ' horizontal' : ' vertical');
 
   $: {
     if (horizontal) {
@@ -124,29 +127,26 @@
       .attr('transform', labelAxisTransform);
   }
 
+  const getScaledLabel = data => labelScale(labelAccessor(data));
+
+  const getScaledValue = data => valueScale(valueAccessor(data));
+
   function getTextMajorPosition(data) {
     return horizontal
-      ? padding + LABEL_WIDTH + getValue(data) - 3
-      : padding + LABEL_WIDTH + getValue(data) - 3;
-    /*
-      : padding +
-          LABEL_WIDTH +
-          labelScale(labelAccessor(data)) +
-          2 +
-          labelScale.bandwidth() / 2;
-          */
+      ? padding + LABEL_WIDTH + getScaledValue(data) - 3
+      : padding + usableMajor - getScaledValue(data) + 15;
   }
 
   //TODO: Is it correct that this function just
   //TODO: returns the opposite values of getTextX?
   function getTextMinorPosition(data) {
-    return (
-      padding + labelScale(labelAccessor(data)) + 2 + labelScale.bandwidth() / 2
-    );
-    //: padding + LABEL_WIDTH + getValue(data) - 3;
+    return horizontal
+      ? padding + getScaledLabel(data) + 2 + labelScale.bandwidth() / 2
+      : padding +
+          LABEL_WIDTH +
+          getScaledLabel(data) +
+          labelScale.bandwidth() / 2;
   }
-
-  const getValue = data => valueScale(valueAccessor(data));
 
   function mouseMove(data) {
     // Configure the tooltip.
@@ -203,26 +203,24 @@
 
   function updateRect(rect) {
     rect
-      .attr(majorSize, getValue)
+      .attr(majorSize, getScaledValue)
       .attr(minorSize, labelScale.bandwidth())
       .attr(majorPosition, data =>
         horizontal
           ? padding + LABEL_WIDTH
-          : padding + usableHeight - getValue(data)
+          : padding + usableHeight - getScaledValue(data)
       )
       .attr(
         minorPosition,
-        data =>
-          padding +
-          (horizontal ? 0 : LABEL_WIDTH) +
-          labelScale(labelAccessor(data))
+        data => padding + (horizontal ? 0 : LABEL_WIDTH) + getScaledLabel(data)
       );
   }
 
   function updateText(text) {
+    const minSize = horizontal ? 5 : 20;
     text
       // Hide the text with CSS if it won't fit on the bar.
-      .classed('hide', data => valueAccessor(data) < 5)
+      .classed('hide', data => valueAccessor(data) < minSize)
       .text(valueAccessor)
       .attr(majorPosition, getTextMajorPosition)
       .attr(minorPosition, getTextMinorPosition);
@@ -242,7 +240,6 @@
   .bar-chart :global(.bar text) {
     fill: white;
     pointer-events: none;
-    text-anchor: end;
   }
 
   .bar-chart :global(.hide) {
@@ -263,6 +260,14 @@
 
   .bar-chart :global(.value-axis-minor) {
     color: orange;
+  }
+
+  .horizontal :global(.bar text) {
+    text-anchor: end;
+  }
+
+  .vertical :global(.bar text) {
+    text-anchor: middle;
   }
 
   .tooltip {
