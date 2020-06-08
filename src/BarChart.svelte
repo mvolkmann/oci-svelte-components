@@ -23,6 +23,7 @@
   let container, labelAxis, labelAxisSelector, labelAxisTransform, labelScale;
   let majorPosition, majorSize, minorPosition, minorSize, svg, tooltip;
   let valueAxisMajor, valueAxisMinor, valueAxisTransform, valueScale;
+  let usableMajor, usableMinor;
 
   let lastHorizontal = horizontal;
 
@@ -41,8 +42,8 @@
       minorSize = 'width';
     }
 
-    const usableMajor = horizontal ? usableWidth : usableHeight;
-    const usableMinor = horizontal ? usableHeight : usableWidth;
+    usableMajor = horizontal ? usableWidth : usableHeight;
+    usableMinor = horizontal ? usableHeight : usableWidth;
 
     valueScale = d3.scaleLinear().domain([0, maxValue]).range([0, usableMajor]);
 
@@ -52,7 +53,7 @@
     const valueAxisScale = d3
       .scaleLinear()
       .domain([0, maxValue])
-      .range([0, usableMajor]);
+      .range(horizontal ? [0, usableMajor] : [usableMajor, 0]);
     valueAxisMinor = d3[valueAxisMethodName](valueAxisScale)
       .ticks(maxValue) // show a tick at every 1
       .tickFormat('') // hides labels
@@ -72,7 +73,7 @@
       .domain(data.map(labelAccessor))
       .range([0, usableMinor]);
     labelAxis = d3[labelAxisMethodName](labelScale);
-    const labelAxisTranslateX = padding + (horizontal ? LABEL_WIDTH : 0);
+    const labelAxisTranslateX = padding + LABEL_WIDTH;
     const labelAxisTranslateY = horizontal ? padding : padding + usableMinor;
     labelAxisTransform = `translate(${labelAxisTranslateX}, ${labelAxisTranslateY})`;
 
@@ -100,11 +101,13 @@
 
   function addAxes() {
     // Add the value axis with minor tick marks.
-    svg
-      .append('g')
-      .call(valueAxisMinor)
-      .attr('class', 'axis value-axis-minor')
-      .attr('transform', valueAxisTransform);
+    if (usableMinor > 150)
+      // otherwise not enough room for minor ticks
+      svg
+        .append('g')
+        .call(valueAxisMinor)
+        .attr('class', 'axis value-axis-minor')
+        .attr('transform', valueAxisTransform);
 
     // Add the value axis with major tick marks.
     svg
@@ -195,10 +198,17 @@
   }
 
   function updateRect(rect) {
+    console.log('BarChart.svelte updateRect: majorPosition =', majorPosition);
+    console.log('BarChart.svelte updateRect: minorPosition =', minorPosition);
+    const getSize = data => valueScale(valueAccessor(data));
     rect
-      .attr(majorSize, data => valueScale(valueAccessor(data)))
+      .attr(majorSize, getSize)
       .attr(minorSize, labelScale.bandwidth())
-      .attr(majorPosition, padding + LABEL_WIDTH)
+      .attr(majorPosition, data =>
+        horizontal
+          ? padding + LABEL_WIDTH
+          : padding + usableHeight - getSize(data)
+      )
       .attr(minorPosition, data => padding + labelScale(labelAccessor(data)));
   }
 
