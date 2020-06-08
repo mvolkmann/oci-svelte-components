@@ -162,8 +162,6 @@
   }
 
   function renderChart(data) {
-    console.log('BarChart.svelte renderChart: entered');
-
     updateLabelAxis(data);
 
     svg

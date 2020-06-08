@@ -16,7 +16,7 @@
     horizontalChart: true
   });
 
-  const height = 200;
+  const height = 250; //200;
   const width = 400;
 
   const labelAccessor = player => player.name;
