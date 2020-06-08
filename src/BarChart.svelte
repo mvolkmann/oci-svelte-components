@@ -62,7 +62,7 @@
       .ticks(maxValue / 10) // show a tick at every multiple of 10
       .tickPadding(10) // space between end of tick and label; default is 3
       .tickSize(10); // length of each tick (default is 6)
-    const valueAxisTranslateX = padding + (horizontal ? LABEL_WIDTH : 0);
+    const valueAxisTranslateX = padding + LABEL_WIDTH;
     const valueAxisTranslateY = horizontal ? padding + usableMinor : padding;
     valueAxisTransform = `translate(${valueAxisTranslateX}, ${valueAxisTranslateY})`;
 
@@ -74,7 +74,7 @@
       .range([0, usableMinor]);
     labelAxis = d3[labelAxisMethodName](labelScale);
     const labelAxisTranslateX = padding + LABEL_WIDTH;
-    const labelAxisTranslateY = horizontal ? padding : padding + usableMinor;
+    const labelAxisTranslateY = horizontal ? padding : padding + usableMajor;
     labelAxisTransform = `translate(${labelAxisTranslateX}, ${labelAxisTranslateY})`;
 
     if (svg) {
@@ -101,7 +101,7 @@
 
   function addAxes() {
     // Add the value axis with minor tick marks.
-    if (usableMinor > 150)
+    if (usableMajor > 150)
       // otherwise not enough room for minor ticks
       svg
         .append('g')
@@ -208,7 +208,13 @@
           ? padding + LABEL_WIDTH
           : padding + usableHeight - getValue(data)
       )
-      .attr(minorPosition, data => padding + labelScale(labelAccessor(data)));
+      .attr(
+        minorPosition,
+        data =>
+          padding +
+          (horizontal ? 0 : LABEL_WIDTH) +
+          labelScale(labelAccessor(data))
+      );
   }
 
   function updateText(text) {
