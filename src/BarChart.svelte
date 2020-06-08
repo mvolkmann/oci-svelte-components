@@ -15,7 +15,7 @@
   // We could compute this based on the rendered height of the x-axis,
   // but it is needed before that is rendered.
   const BOTTOM_AXIS_HEIGHT = 30;
-  const LABEL_WIDTH = 50;
+  const LABEL_WIDTH = 50; // to leave space for y-axis labels
 
   const usableHeight = height - padding * 2 - BOTTOM_AXIS_HEIGHT;
   const usableWidth = width - padding * 2 - LABEL_WIDTH;
@@ -85,8 +85,10 @@
 
       // If the chart direction has changed, recreate the axes.
       if (horizontal !== lastHorizontal) {
+        // Remove an recreate all axes.
         svg.selectAll('.axis').remove();
         addAxes();
+
         lastHorizontal = horizontal;
       }
     }
