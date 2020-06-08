@@ -124,24 +124,26 @@
       .attr('transform', labelAxisTransform);
   }
 
-  function getTextX(data) {
+  function getTextMajorPosition(data) {
     return horizontal
       ? padding + LABEL_WIDTH + getValue(data) - 3
+      : padding + LABEL_WIDTH + getValue(data) - 3;
+    /*
       : padding +
+          LABEL_WIDTH +
           labelScale(labelAccessor(data)) +
           2 +
           labelScale.bandwidth() / 2;
+          */
   }
 
   //TODO: Is it correct that this function just
   //TODO: returns the opposite values of getTextX?
-  function getTextY(data) {
-    return horizontal
-      ? padding +
-          labelScale(labelAccessor(data)) +
-          2 +
-          labelScale.bandwidth() / 2
-      : padding + LABEL_WIDTH + getValue(data) - 3;
+  function getTextMinorPosition(data) {
+    return (
+      padding + labelScale(labelAccessor(data)) + 2 + labelScale.bandwidth() / 2
+    );
+    //: padding + LABEL_WIDTH + getValue(data) - 3;
   }
 
   const getValue = data => valueScale(valueAccessor(data));
@@ -222,8 +224,8 @@
       // Hide the text with CSS if it won't fit on the bar.
       .classed('hide', data => valueAccessor(data) < 5)
       .text(valueAccessor)
-      .attr(majorPosition, getTextX)
-      .attr(minorPosition, getTextY);
+      .attr(majorPosition, getTextMajorPosition)
+      .attr(minorPosition, getTextMinorPosition);
   }
 </script>
 
