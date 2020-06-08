@@ -2,15 +2,15 @@
   import * as d3 from 'd3';
   import {onMount} from 'svelte';
 
-  export let className = '';
-  export let data;
-  export let height;
-  export let horizontal = false;
-  export let labelAccessor;
-  export let maxValue;
-  export let padding = 20;
-  export let valueAccessor;
-  export let width;
+  export let className = ''; // to give parent components a handle on styling
+  export let data; // array typically containing objects
+  export let height; // of chart area
+  export let horizontal = false; // true for horizontal bars; false for vertical
+  export let labelAccessor; // function that computes a label from a data element
+  export let maxValue; // maximum computed value of a data element
+  export let padding = 20; // on all sides of SVG
+  export let valueAccessor; // function that computes a value from a data element
+  export let width; // of chart area
 
   // We could compute this based on the rendered height of the x-axis,
   // but it is needed before that is rendered.
