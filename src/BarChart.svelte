@@ -7,7 +7,6 @@
   export let height;
   export let horizontal = false;
   export let labelAccessor;
-  export let leftPadding = 70;
   export let maxValue;
   export let padding = 20;
   export let valueAccessor;
@@ -16,9 +15,10 @@
   // We could compute this based on the rendered height of the x-axis,
   // but it is needed before that is rendered.
   const BOTTOM_AXIS_HEIGHT = 30;
+  const LABEL_WIDTH = 50;
 
   const usableHeight = height - padding * 2 - BOTTOM_AXIS_HEIGHT;
-  const usableWidth = width - leftPadding - padding;
+  const usableWidth = width - padding * 2 - LABEL_WIDTH;
 
   let container, labelAxis, labelAxisSelector, labelAxisTransform, labelScale;
   let majorPosition, majorSize, minorPosition, minorSize, svg, tooltip;
@@ -60,7 +60,9 @@
       // highStore is guaranteed to be a multiple of 10.
       .tickPadding(10) // space between end of tick and label; default is 3
       .tickSize(10);
-    valueAxisTransform = `translate(${leftPadding}, ${padding + usableMinor})`;
+    const valueAxisTranslateX = padding + (horizontal ? LABEL_WIDTH : 0);
+    const valueAxisTranslateY = horizontal ? padding + usableMinor : padding;
+    valueAxisTransform = `translate(${valueAxisTranslateX}, ${valueAxisTranslateY})`;
 
     labelScale = d3
       .scaleBand()
@@ -69,7 +71,9 @@
       .domain(data.map(labelAccessor))
       .range([0, usableMinor]);
     labelAxis = d3[labelAxisMethodName](labelScale);
-    labelAxisTransform = `translate(${leftPadding}, ${padding})`;
+    const labelAxisTranslateX = padding + (horizontal ? LABEL_WIDTH : 0);
+    const labelAxisTranslateY = horizontal ? padding : padding + usableMinor;
+    labelAxisTransform = `translate(${labelAxisTranslateX}, ${labelAxisTranslateY})`;
 
     if (svg) renderChart(data);
   }
@@ -104,7 +108,7 @@
   });
 
   function getTextX(data) {
-    return leftPadding + valueScale(valueAccessor(data)) - 3;
+    return padding + LABEL_WIDTH + valueScale(valueAccessor(data)) - 3;
   }
 
   function getTextY(data) {
@@ -144,7 +148,7 @@
           // Append an SVG rect element to the group.
           const rect = bar
             .append('rect')
-            .attr(majorPosition, leftPadding)
+            .attr(majorPosition, padding + LABEL_WIDTH)
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
           updateRect(rect);
