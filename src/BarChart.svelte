@@ -45,7 +45,15 @@
     valueScale = d3.scaleLinear().domain([0, maxValue]).range([0, usableMajor]);
 
     const valueAxisMethodName = horizontal ? 'axisBottom' : 'axisLeft';
+    console.log(
+      'BarChart.svelte x: valueAxisMethodName =',
+      valueAxisMethodName
+    );
     const labelAxisMethodName = horizontal ? 'axisLeft' : 'axisBottom';
+    console.log(
+      'BarChart.svelte x: labelAxisMethodName =',
+      labelAxisMethodName
+    );
 
     const valueAxisScale = d3
       .scaleLinear()
@@ -57,9 +65,8 @@
       .tickSize(5); // length of each tick (default is 6)
     valueAxisMajor = d3[valueAxisMethodName](valueAxisScale)
       .ticks(maxValue / 10) // show a tick at every multiple of 10
-      // highStore is guaranteed to be a multiple of 10.
       .tickPadding(10) // space between end of tick and label; default is 3
-      .tickSize(10);
+      .tickSize(10); // length of each tick (default is 6)
     const valueAxisTranslateX = padding + (horizontal ? LABEL_WIDTH : 0);
     const valueAxisTranslateY = horizontal ? padding + usableMinor : padding;
     valueAxisTransform = `translate(${valueAxisTranslateX}, ${valueAxisTranslateY})`;
@@ -78,6 +85,7 @@
     if (svg) renderChart(data);
   }
 
+  //TODO: Need to run some of this code again if value of horizontal changes.
   onMount(() => {
     // Create a D3 selection from a DOM element.
     const containerSelection = d3.select(container);
@@ -85,11 +93,15 @@
     svg = containerSelection.select('svg');
     tooltip = containerSelection.select('.tooltip');
 
+    addAxes();
+  });
+
+  function addAxes() {
     // Add the value axis with minor tick marks.
     svg
       .append('g')
       .call(valueAxisMinor)
-      .attr('class', 'minor-x-axis')
+      .attr('class', 'value-axis-minor')
       .attr('transform', valueAxisTransform);
 
     // Add the value axis with major tick marks.
@@ -105,15 +117,26 @@
       .call(labelAxis)
       .attr('class', 'label-axis')
       .attr('transform', labelAxisTransform);
-  });
-
-  function getTextX(data) {
-    return padding + LABEL_WIDTH + valueScale(valueAccessor(data)) - 3;
   }
 
+  function getTextX(data) {
+    return horizontal
+      ? padding + LABEL_WIDTH + valueScale(valueAccessor(data)) - 3
+      : padding +
+          labelScale(labelAccessor(data)) +
+          2 +
+          labelScale.bandwidth() / 2;
+  }
+
+  //TODO: Is it correct that this function just
+  //TODO: returns the opposite values of getTextX?
   function getTextY(data) {
-    const barHeight = labelScale.bandwidth();
-    return padding + labelScale(labelAccessor(data)) + 2 + barHeight / 2;
+    return horizontal
+      ? padding +
+          labelScale(labelAccessor(data)) +
+          2 +
+          labelScale.bandwidth() / 2
+      : padding + LABEL_WIDTH + valueScale(valueAccessor(data)) - 3;
   }
 
   function mouseMove(data) {
@@ -171,7 +194,6 @@
   }
 
   function updateRect(rect) {
-    console.log('BarChart.svelte updateRect: entered');
     rect
       .attr(minorSize, labelScale.bandwidth())
       .attr(majorSize, data => valueScale(valueAccessor(data)))
@@ -212,16 +234,16 @@
     display: none;
   }
 
-  .bar-chart :global(.minor-x-axis) {
-    color: orange;
-  }
-
   .bar-chart :global(svg) {
     background-color: linen;
   }
 
   .bar-chart :global(.value-axis-major > .tick > line) {
     stroke-width: 2;
+  }
+
+  .bar-chart :global(.value-axis-minor) {
+    color: orange;
   }
 
   .tooltip {
