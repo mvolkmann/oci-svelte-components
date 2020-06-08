@@ -134,7 +134,7 @@
   function getTextMajorPosition(data) {
     return horizontal
       ? padding + LABEL_WIDTH + getScaledValue(data) - 3
-      : padding + usableMajor - getScaledValue(data) + 15;
+      : padding + usableMajor - getScaledValue(data) + 4;
   }
 
   function getTextMinorPosition(data) {
@@ -183,7 +183,7 @@
           updateRect(rect);
 
           // Append an SVG text element to the group.
-          const text = bar.append('text').attr('alignment-baseline', 'middle');
+          const text = bar.append('text');
           updateText(text);
         },
         update => {
@@ -221,7 +221,8 @@
       .classed('hide', data => valueAccessor(data) < minSize)
       .text(valueAccessor)
       .attr(majorPosition, getTextMajorPosition)
-      .attr(minorPosition, getTextMinorPosition);
+      .attr(minorPosition, getTextMinorPosition)
+      .attr('alignment-baseline', horizontal ? 'middle' : 'hanging');
   }
 </script>
 
