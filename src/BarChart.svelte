@@ -24,6 +24,8 @@
   let majorPosition, majorSize, minorPosition, minorSize, svg, tooltip;
   let valueAxisMajor, valueAxisMinor, valueAxisTransform, valueScale;
 
+  let lastHorizontal = horizontal;
+
   $: classes = 'bar-chart' + (className ? ' ' + className : '');
 
   $: {
@@ -45,15 +47,7 @@
     valueScale = d3.scaleLinear().domain([0, maxValue]).range([0, usableMajor]);
 
     const valueAxisMethodName = horizontal ? 'axisBottom' : 'axisLeft';
-    console.log(
-      'BarChart.svelte x: valueAxisMethodName =',
-      valueAxisMethodName
-    );
     const labelAxisMethodName = horizontal ? 'axisLeft' : 'axisBottom';
-    console.log(
-      'BarChart.svelte x: labelAxisMethodName =',
-      labelAxisMethodName
-    );
 
     const valueAxisScale = d3
       .scaleLinear()
@@ -82,7 +76,16 @@
     const labelAxisTranslateY = horizontal ? padding : padding + usableMinor;
     labelAxisTransform = `translate(${labelAxisTranslateX}, ${labelAxisTranslateY})`;
 
-    if (svg) renderChart(data);
+    if (svg) {
+      renderChart(data);
+
+      // If the chart direction has changed, recreate the axes.
+      if (horizontal !== lastHorizontal) {
+        svg.selectAll('.axis').remove();
+        addAxes();
+        lastHorizontal = horizontal;
+      }
+    }
   }
 
   //TODO: Need to run some of this code again if value of horizontal changes.
@@ -101,21 +104,21 @@
     svg
       .append('g')
       .call(valueAxisMinor)
-      .attr('class', 'value-axis-minor')
+      .attr('class', 'axis value-axis-minor')
       .attr('transform', valueAxisTransform);
 
     // Add the value axis with major tick marks.
     svg
       .append('g')
       .call(valueAxisMajor)
-      .attr('class', 'value-axis-major')
+      .attr('class', 'axis value-axis-major')
       .attr('transform', valueAxisTransform);
 
     // Add the label axis with label values.
     labelAxisSelector = svg
       .append('g')
       .call(labelAxis)
-      .attr('class', 'label-axis')
+      .attr('class', 'axis label-axis')
       .attr('transform', labelAxisTransform);
   }
 
