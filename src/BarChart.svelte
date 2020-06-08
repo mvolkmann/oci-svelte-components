@@ -126,7 +126,7 @@
 
   function getTextX(data) {
     return horizontal
-      ? padding + LABEL_WIDTH + valueScale(valueAccessor(data)) - 3
+      ? padding + LABEL_WIDTH + getValue(data) - 3
       : padding +
           labelScale(labelAccessor(data)) +
           2 +
@@ -141,8 +141,10 @@
           labelScale(labelAccessor(data)) +
           2 +
           labelScale.bandwidth() / 2
-      : padding + LABEL_WIDTH + valueScale(valueAccessor(data)) - 3;
+      : padding + LABEL_WIDTH + getValue(data) - 3;
   }
+
+  const getValue = data => valueScale(valueAccessor(data));
 
   function mouseMove(data) {
     // Configure the tooltip.
@@ -198,16 +200,13 @@
   }
 
   function updateRect(rect) {
-    console.log('BarChart.svelte updateRect: majorPosition =', majorPosition);
-    console.log('BarChart.svelte updateRect: minorPosition =', minorPosition);
-    const getSize = data => valueScale(valueAccessor(data));
     rect
-      .attr(majorSize, getSize)
+      .attr(majorSize, getValue)
       .attr(minorSize, labelScale.bandwidth())
       .attr(majorPosition, data =>
         horizontal
           ? padding + LABEL_WIDTH
-          : padding + usableHeight - getSize(data)
+          : padding + usableHeight - getValue(data)
       )
       .attr(minorPosition, data => padding + labelScale(labelAccessor(data)));
   }
