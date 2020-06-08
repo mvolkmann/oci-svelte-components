@@ -88,7 +88,6 @@
     }
   }
 
-  //TODO: Need to run some of this code again if value of horizontal changes.
   onMount(() => {
     // Create a D3 selection from a DOM element.
     const containerSelection = d3.select(container);
@@ -174,7 +173,6 @@
           // Append an SVG rect element to the group.
           const rect = bar
             .append('rect')
-            .attr(majorPosition, padding + LABEL_WIDTH)
             .on('mousemove', mouseMove)
             .on('mouseout', mouseOut);
           updateRect(rect);
@@ -198,8 +196,9 @@
 
   function updateRect(rect) {
     rect
-      .attr(minorSize, labelScale.bandwidth())
       .attr(majorSize, data => valueScale(valueAccessor(data)))
+      .attr(minorSize, labelScale.bandwidth())
+      .attr(majorPosition, padding + LABEL_WIDTH)
       .attr(minorPosition, data => padding + labelScale(labelAccessor(data)));
   }
 
