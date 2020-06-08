@@ -44,17 +44,18 @@
 
     valueScale = d3.scaleLinear().domain([0, maxValue]).range([0, usableMajor]);
 
+    const valueAxisMethodName = horizontal ? 'axisBottom' : 'axisLeft';
+    const labelAxisMethodName = horizontal ? 'axisLeft' : 'axisBottom';
+
     const valueAxisScale = d3
       .scaleLinear()
       .domain([0, maxValue])
       .range([0, usableMajor]);
-    valueAxisMinor = d3
-      .axisBottom(valueAxisScale)
+    valueAxisMinor = d3[valueAxisMethodName](valueAxisScale)
       .ticks(maxValue) // show a tick at every 1
       .tickFormat('') // hides labels
       .tickSize(5); // length of each tick (default is 6)
-    valueAxisMajor = d3
-      .axisBottom(valueAxisScale)
+    valueAxisMajor = d3[valueAxisMethodName](valueAxisScale)
       .ticks(maxValue / 10) // show a tick at every multiple of 10
       // highStore is guaranteed to be a multiple of 10.
       .tickPadding(10) // space between end of tick and label; default is 3
@@ -67,7 +68,7 @@
       .padding(0.1) // 10% spread between all the bars
       .domain(data.map(labelAccessor))
       .range([0, usableMinor]);
-    labelAxis = d3.axisLeft(labelScale);
+    labelAxis = d3[labelAxisMethodName](labelScale);
     labelAxisTransform = `translate(${leftPadding}, ${padding})`;
 
     if (svg) renderChart(data);
