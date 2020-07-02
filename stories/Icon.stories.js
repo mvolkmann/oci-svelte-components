@@ -2,6 +2,8 @@ import * as solid from '@fortawesome/free-solid-svg-icons';
 import * as brands from '@fortawesome/free-brands-svg-icons';
 import Icon from '../src/Icon.svelte';
 
+console.log('Icon.stories.js x: solid =', solid);
+
 export default {title: 'Icon'};
 
 export const heart = () => ({
@@ -17,4 +19,14 @@ export const js = () => ({
 export const node = () => ({
   Component: Icon,
   props: {color: '#2F6D1C', icon: brands.faNode, size: '200px'}
+});
+
+export const table = () => ({
+  Component: Icon,
+  props: {icon: solid.faTable}
+});
+
+export const th = () => ({
+  Component: Icon,
+  props: {icon: solid.faTh}
 });

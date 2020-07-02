@@ -106,13 +106,14 @@
 
   function addAxes() {
     // Add the value axis with minor tick marks.
-    if (usableMajor > 150)
+    if (usableMajor > 150) {
       // otherwise not enough room for minor ticks
       svg
         .append('g')
         .call(valueAxisMinor)
         .attr('class', 'axis value-axis-minor')
         .attr('transform', valueAxisTransform);
+    }
 
     // Add the value axis with major tick marks.
     svg
@@ -154,12 +155,10 @@
       .style('left', d3.event.pageX + 'px')
       .style('top', d3.event.pageY + 'px');
     tooltip.style('opacity', 1); // shows tooltip
-    d3.select(this).style('opacity', 0.5); // fades bar
   }
 
   function mouseOut() {
     tooltip.style('opacity', 0); // hides tooltip
-    d3.select(this).style('opacity', 1); // restores bar opacity
   }
 
   function renderChart(data) {
@@ -195,11 +194,19 @@
 
   function updateLabelAxis(data) {
     labelScale.domain(data.map(labelAccessor));
-    labelAxisSelector.call(labelAxis);
+    //labelAxisSelector.call(labelAxis);
+    labelAxis(labelAxisSelector);
+  }
+
+  function myTransition(selection) {
+    return selection
+      .transition()
+      .duration(500)
+      .ease(d3.easeLinear);
   }
 
   function updateRect(rect) {
-    rect
+    myTransition(rect)
       .attr(majorSize, getScaledValue)
       .attr(minorSize, labelScale.bandwidth())
       .attr(majorPosition, data =>
@@ -215,9 +222,12 @@
 
   function updateText(text) {
     const minSize = horizontal ? 5 : 12;
-    text
-      // Hide the text with CSS if it won't fit on the bar.
-      .classed('hide', data => valueAccessor(data) < minSize)
+
+    // Hide the text with CSS if it won't fit on the bar.
+    //TODO: Why does this need to be done before the transition is applied?
+    const newText = text.classed('hide', data => valueAccessor(data) < minSize);
+
+    myTransition(newText)
       .text(valueAccessor)
       .attr(majorPosition, getTextMajorPosition)
       .attr(minorPosition, getTextMinorPosition)
@@ -233,6 +243,11 @@
 <style>
   .bar-chart :global(.bar rect) {
     fill: cornflowerblue;
+    transition: opacity 0.5s;
+  }
+
+  .bar-chart :global(.bar rect:hover) {
+    opacity: 0.5;
   }
 
   .bar-chart :global(.bar text) {
