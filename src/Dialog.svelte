@@ -5,18 +5,18 @@
    * This is used by the caller to open and close the dialog.
    * The dialog is initially closed.
    *
-   * To open the dialog as a modal, `dialogRef.current.showModal()`.
+   * To open the dialog as a modal, `dialogRef.showModal()`.
    * This does not allow interaction with elements outside the dialog.
    *
-   * To open the dialog as a non-modal, `dialogRef.current.show()`.
+   * To open the dialog as a non-modal, `dialogRef.show()`.
    * This allows interaction with elements outside the dialog.
    *
-   * To close the dialog, `dialogRef.current.close()`.
+   * To close the dialog, `dialogRef.close()`.
    *
    * @param {boolean} canClose - boolean that determines whether
    *   a close "X" should appear (defaults to true)
    * @param {string} className - CSS class name to apply to dialog element
-   * @param {ReactElement} icon - an icon to display before the title
+   * @param {component} icon - an icon to display before the title
    * @param {function} onClose - a function to call when the dialog is closed
    * @param {string} title - to display in the dialog header
    */
@@ -30,7 +30,7 @@
   export let canClose = true;
   export let className = '';
   export let icon = undefined;
-  export let onClose;
+  export let onClose = undefined;
   export let ref;
   export let title;
 

@@ -83,10 +83,10 @@
       <div class="text" />
       <div class="buttons">
         <Button className="small" on:click={() => respond(dialogRef, true)}>
-          {'Yes'}
+          Yes
         </Button>
         <Button className="small" on:click={() => respond(dialogRef, false)}>
-          {'No'}
+          No
         </Button>
       </div>
     </div>
