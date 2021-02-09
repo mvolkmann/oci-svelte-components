@@ -45,9 +45,24 @@
     ref.close();
     if (onClose) onClose();
   }
+
+  // This closes the dialog if the user clicks outside it.
+  function onClick(event) {
+    const x = event.clientX;
+    const y = event.clientY;
+    const box = ref?.current?.getBoundingClientRect();
+    if (box) {
+      const inside =
+        box.x <= x &&
+        x <= box.x + box.width &&
+        box.y <= y &&
+        y <= box.y + box.height;
+      if (!inside) close();
+    }
+  }
 </script>
 
-<dialog bind:this={ref} class={classes}>
+<dialog bind:this={ref} class={classes} on:click={onClick}>
   {#if title}
     <header>
       <Icon color="white" {icon} />
