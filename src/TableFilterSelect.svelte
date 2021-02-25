@@ -16,6 +16,7 @@
 
 <Select
   className="table-filter-select"
+  label={filter.title}
   on:blur={onChange}
   on:change={onChange}
   {options}

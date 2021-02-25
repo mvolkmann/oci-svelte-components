@@ -84,11 +84,11 @@
     </div>
     {#if showCustomDateRange}
       <div class="row">
-        <label class="date">
+        <label class="date" for="start-date">
           Start Date
           <TableFilterInput {filter} property="value1" />
         </label>
-        <label class="date">
+        <label class="date" for="end-date">
           End Date
           <TableFilterInput {filter} property="value2" />
         </label>
